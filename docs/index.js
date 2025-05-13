@@ -277,13 +277,16 @@
 	 */
 
 	var PopStateEventType = "popstate";
-	function createBrowserHistory(options = {}) {
-	  function createBrowserLocation(window2, globalHistory) {
+	function createHashHistory(options = {}) {
+	  function createHashLocation(window2, globalHistory) {
 	    let {
-	      pathname,
-	      search,
-	      hash
-	    } = window2.location;
+	      pathname = "/",
+	      search = "",
+	      hash = ""
+	    } = parsePath(window2.location.hash.substring(1));
+	    if (!pathname.startsWith("/") && !pathname.startsWith(".")) {
+	      pathname = "/" + pathname;
+	    }
 	    return createLocation("", {
 	      pathname,
 	      search,
@@ -292,10 +295,20 @@
 	    // state defaults to `null` because `window.history.state` does
 	    globalHistory.state && globalHistory.state.usr || null, globalHistory.state && globalHistory.state.key || "default");
 	  }
-	  function createBrowserHref(window2, to) {
-	    return typeof to === "string" ? to : createPath(to);
+	  function createHashHref(window2, to) {
+	    let base = window2.document.querySelector("base");
+	    let href = "";
+	    if (base && base.getAttribute("href")) {
+	      let url = window2.location.href;
+	      let hashIndex = url.indexOf("#");
+	      href = hashIndex === -1 ? url : url.slice(0, hashIndex);
+	    }
+	    return href + "#" + (typeof to === "string" ? to : createPath(to));
 	  }
-	  return getUrlBasedHistory(createBrowserLocation, createBrowserHref, null, options);
+	  function validateHashLocation(location, to) {
+	    warning(location.pathname.charAt(0) === "/", `relative pathnames are not supported in hash history.push(${JSON.stringify(to)})`);
+	  }
+	  return getUrlBasedHistory(createHashLocation, createHashHref, validateHashLocation, options);
 	}
 	function invariant(value, message) {
 	  if (value === false || value === null || typeof value === "undefined") {
@@ -1863,14 +1876,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    window.__reactRouterVersion = "7.1.5";
 	  }
 	} catch (e) {}
-	function BrowserRouter({
+	function HashRouter({
 	  basename,
 	  children,
 	  window: window2
 	}) {
 	  let historyRef = React__namespace.useRef();
 	  if (historyRef.current == null) {
-	    historyRef.current = createBrowserHistory({
+	    historyRef.current = createHashHistory({
 	      window: window2,
 	      v5Compat: true
 	    });
@@ -30513,7 +30526,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	styleInject(css_248z$k);
 
 	const Divide = ({ id, title, href }) => {
-	    return (React.createElement("div", { className: styles$k.divide, id: id }, href || id ? (React.createElement("a", { href: href !== null && href !== void 0 ? href : `#${id}`, target: href ? '_blank' : '_self' }, title)) : (React.createElement("span", null, title))));
+	    return (React.createElement("div", { className: styles$k.divide, id: id }, href ? (React.createElement("a", { href: href, target: "_blank" }, title)) : (React.createElement("span", null, title))));
 	};
 
 	var css_248z$j = ".style_icon-button__rNtrO{position:relative}.style_icon-button__rNtrO .style_icon__bWYYs{background-color:unset;border:unset;cursor:pointer;display:inline-block;opacity:.5;transition:all .1s;user-select:none}.style_icon-button__rNtrO.style_active__K8iSF .style_icon__bWYYs{color:#333;opacity:1}.style_icon-button__rNtrO:hover .style_icon__bWYYs{opacity:1}";
@@ -48011,7 +48024,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	            "\u5F53\u4F60\u77E5\u9053\u5982\u4F55\u5177\u4F53\u5B9E\u73B0\u4E00\u4E2A\u81EA\u5B9A\u4E49\u7684\u53D8\u5F62\u6A21\u5F0F\u7C7B\u540E\uFF0C\u4F60\u5C31\u53EF\u4EE5\u653E\u5F00\u624B\u811A\u53BB\u5B9E\u73B0\u4E86\uFF0C\u7531\u4E8E\u7BC7\u5E45\u95EE\u9898\uFF0C\u8FD9\u91CC\u5C31\u4E0D\u5C55\u5F00\u5177\u4F53\u5B9E\u73B0\u7684\u4EE3\u7801\u4E86\uFF0C\u4F46\u4F60\u53EF\u4EE5\u67E5\u9605\u8BE5",
 	            React.createElement(Quote, null, "Github"),
 	            "\u9879\u76EE\u4E2D\u7684",
-	            React.createElement(Quote, { link: "/sections/advanced-usage/demos/01-customization/index.tsx" }, "\u793A\u4F8B\u4EE3\u7801"),
+	            React.createElement(Quote, { link: "https://github.com/huanjinliu/fabric-warpvas/blob/master/docs/sections/advanced-usage/demos/01-customization/index.tsx" }, "\u793A\u4F8B\u4EE3\u7801"),
 	            "\u6765\u5B66\u4E60\u5176\u5177\u4F53\u5B9E\u73B0\u3002"),
 	        React.createElement(Message.left, null,
 	            "\u8FD9\u91CC\u5F53\u6211\u4EEC\u5B9E\u73B0\u4E86\u65B0\u4EA4\u4E92\u6A21\u5F0F",
@@ -50393,7 +50406,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    image.src = url;
 	});
 
-	var css_248z = "*{box-sizing:border-box;margin:0;padding:0}::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-track{background:transparent;border-radius:2px}::-webkit-scrollbar-thumb{background:#66666633;border-radius:8px;transition:all .1s}::-webkit-scrollbar-thumb:hover{background:#66666666}::-webkit-scrollbar-corner{background:transparent}body,html{overflow:hidden}.style_docs__hZIAM{height:100vh;overflow-x:hidden;overflow-y:auto;padding:32px 20px 0;scroll-behavior:smooth}.style_docs__hZIAM .style_tab__qcCaH{align-items:center;display:flex;justify-content:center;margin-top:18px}.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa{color:#a9a9a9;cursor:pointer;font-size:14px;font-weight:700;margin:0 8px;padding:0 4px;position:relative;text-align:center;text-decoration:none}.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa:after{border-bottom:1px solid;bottom:0;content:\"\";display:block;height:0;left:50%;position:absolute;transform:translateX(-50%);transition:width .1s;width:0}.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa.style_active__hg-sw,.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa:hover{color:#324346}.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa.style_active__hg-sw:after,.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa:hover:after{width:100%}.style_docs__hZIAM>footer,.style_docs__hZIAM>header,.style_docs__hZIAM>main{margin:0 auto;max-width:900px}.style_docs__hZIAM>header{padding:12px 0;text-align:center}.style_docs__hZIAM>header h1{color:#324346}.style_docs__hZIAM>header p{color:gray;margin-top:16px}.style_docs__hZIAM>header p span{white-space:nowrap}.style_docs__hZIAM>footer{bottom:0;display:flex;justify-content:center;position:sticky;z-index:999999}.style_docs__hZIAM>footer .style_outline__e5LS-{max-height:250px;position:relative;transition:all .75s;width:196px}.style_docs__hZIAM>footer .style_outline__e5LS-.style_hidden__9-jzJ{max-height:46px;overflow:hidden}.style_docs__hZIAM>footer .style_outline-content__fooFQ{background-color:#fff;border-radius:8px 8px 0 0;box-shadow:0 0 3px 0 rgba(0,0,0,.2),0 0 1px 0 rgba(0,0,0,.12),inset 0 0 1px 0 rgba(0,0,0,.08);margin:48px 4px 0;max-height:200px;overflow-x:hidden;overflow-y:auto;padding:4px 8px 4px 20px}.style_docs__hZIAM>footer .style_outline-content__fooFQ li{color:#a9a9a9;margin:4px 0}.style_docs__hZIAM>footer .style_outline-content__fooFQ li a{background-color:#f9f9f9;border-radius:4px;color:inherit;cursor:pointer;display:block;font-size:12px;padding:4px 8px;scroll-behavior:smooth;text-decoration:none;transition:all .2s}.style_docs__hZIAM>footer .style_outline-content__fooFQ li a:hover{background-color:#f1f1f1;color:#4a7b7b}.style_docs__hZIAM>footer .style_outline-group-name__tq0TI{color:gray;font-size:12px;font-weight:600;list-style:none;padding:4px 0}.style_docs__hZIAM>footer .style_outline-button__3P3Y6{cursor:pointer;right:4px}.style_docs__hZIAM>footer .style_buttons__FEoDM,.style_docs__hZIAM>footer .style_outline-button__3P3Y6{background-color:#fff;border-radius:8px;box-shadow:0 0 3px 0 rgba(0,0,0,.2),0 0 1px 0 rgba(0,0,0,.12),inset 0 0 1px 0 rgba(0,0,0,.08);display:flex;gap:12px;justify-content:center;padding:4px 8px;position:absolute;top:4px}.style_docs__hZIAM>footer .style_buttons__FEoDM{left:4px}.style_docs__hZIAM>footer .style_upload-image__mZKHd{background-color:#fff;border-radius:50%;box-shadow:inset 0 0 1px 0 rgba(0,0,0,.12);height:100%;left:0;pointer-events:none;position:absolute;top:0;width:100%}";
+	var css_248z = "*{box-sizing:border-box;margin:0;padding:0}::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-track{background:transparent;border-radius:2px}::-webkit-scrollbar-thumb{background:#66666633;border-radius:8px;transition:all .1s}::-webkit-scrollbar-thumb:hover{background:#66666666}::-webkit-scrollbar-corner{background:transparent}body,html{overflow:hidden}.style_docs__hZIAM{height:100vh;overflow-x:hidden;overflow-y:auto;padding:32px 20px 0;scroll-behavior:smooth}.style_docs__hZIAM .style_tab__qcCaH{align-items:center;display:flex;justify-content:center;margin-top:18px}.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa{color:#a9a9a9;cursor:pointer;font-size:14px;font-weight:700;margin:0 8px;padding:0 4px;position:relative;text-align:center;text-decoration:none}.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa:after{border-bottom:1px solid;bottom:0;content:\"\";display:block;height:0;left:50%;position:absolute;transform:translateX(-50%);transition:width .1s;width:0}.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa.style_active__hg-sw,.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa:hover{color:#324346}.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa.style_active__hg-sw:after,.style_docs__hZIAM .style_tab__qcCaH .style_tab-item__8IpMa:hover:after{width:100%}.style_docs__hZIAM>footer,.style_docs__hZIAM>header,.style_docs__hZIAM>main{margin:0 auto;max-width:900px}.style_docs__hZIAM>header{padding:12px 0;text-align:center}.style_docs__hZIAM>header h1{color:#324346}.style_docs__hZIAM>header p{color:gray;margin-top:16px}.style_docs__hZIAM>header p span{white-space:nowrap}.style_docs__hZIAM>footer{bottom:0;display:flex;justify-content:center;position:sticky;z-index:999999}.style_docs__hZIAM>footer .style_outline__e5LS-{max-height:250px;position:relative;transition:all .75s;width:196px}.style_docs__hZIAM>footer .style_outline__e5LS-.style_hidden__9-jzJ{max-height:46px;overflow:hidden}.style_docs__hZIAM>footer .style_outline-content__fooFQ{background-color:#fff;border-radius:8px 8px 0 0;box-shadow:0 0 3px 0 rgba(0,0,0,.2),0 0 1px 0 rgba(0,0,0,.12),inset 0 0 1px 0 rgba(0,0,0,.08);margin:48px 4px 0;max-height:200px;overflow-x:hidden;overflow-y:auto;padding:4px 8px 4px 20px}.style_docs__hZIAM>footer .style_outline-content__fooFQ li{color:#a9a9a9;margin:4px 0}.style_docs__hZIAM>footer .style_outline-content__fooFQ li span{background-color:#f9f9f9;border-radius:4px;color:inherit;cursor:pointer;display:block;font-size:12px;padding:4px 8px;scroll-behavior:smooth;text-decoration:none;transition:all .2s}.style_docs__hZIAM>footer .style_outline-content__fooFQ li span:hover{background-color:#f1f1f1;color:#4a7b7b}.style_docs__hZIAM>footer .style_outline-group-name__tq0TI{color:gray;font-size:12px;font-weight:600;list-style:none;padding:4px 0}.style_docs__hZIAM>footer .style_outline-button__3P3Y6{cursor:pointer;right:4px}.style_docs__hZIAM>footer .style_buttons__FEoDM,.style_docs__hZIAM>footer .style_outline-button__3P3Y6{background-color:#fff;border-radius:8px;box-shadow:0 0 3px 0 rgba(0,0,0,.2),0 0 1px 0 rgba(0,0,0,.12),inset 0 0 1px 0 rgba(0,0,0,.08);display:flex;gap:12px;justify-content:center;padding:4px 8px;position:absolute;top:4px}.style_docs__hZIAM>footer .style_buttons__FEoDM{left:4px}.style_docs__hZIAM>footer .style_upload-image__mZKHd{background-color:#fff;border-radius:50%;box-shadow:inset 0 0 1px 0 rgba(0,0,0,.12);height:100%;left:0;pointer-events:none;position:absolute;top:0;width:100%}";
 	var styles = {"docs":"style_docs__hZIAM","tab":"style_tab__qcCaH","tab-item":"style_tab-item__8IpMa","active":"style_active__hg-sw","outline":"style_outline__e5LS-","hidden":"style_hidden__9-jzJ","outline-content":"style_outline-content__fooFQ","outline-group-name":"style_outline-group-name__tq0TI","outline-button":"style_outline-button__3P3Y6","buttons":"style_buttons__FEoDM","upload-image":"style_upload-image__mZKHd","tabItem":"style_tab-item__8IpMa","outlineContent":"style_outline-content__fooFQ","outlineGroupName":"style_outline-group-name__tq0TI","outlineButton":"style_outline-button__3P3Y6","uploadImage":"style_upload-image__mZKHd"};
 	styleInject(css_248z);
 
@@ -50449,17 +50462,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    React.useEffect(() => {
 	        loadImage(DEFAULT_PLACEHOLDER).then(setPlaceholder);
 	    }, []);
-	    // 如果有锚点，自动滚动到该锚点
-	    React.useEffect(() => {
-	        window.onload = function () {
-	            const anchor = window.location.hash;
-	            if (anchor) {
-	                const element = document.querySelector(anchor);
-	                if (element) {
-	                    element.scrollIntoView({ behavior: 'smooth' });
-	                }
-	            }
-	        };
+	    // 滚动到特定锚点处
+	    const handleScrollTo = React.useCallback((id) => {
+	        var _a;
+	        const element = document.getElementById(id);
+	        if (!element)
+	            return;
+	        const rect = element.getBoundingClientRect();
+	        const container = (_a = document.querySelector('#docs')) === null || _a === void 0 ? void 0 : _a.children[0];
+	        container === null || container === void 0 ? void 0 : container.scrollTo({ top: rect.top + container.scrollTop });
 	    }, []);
 	    return (React.createElement(DocsContext.Provider, { value: { placeholder, setPlaceholder } },
 	        React.createElement("div", { className: styles.docs },
@@ -50476,9 +50487,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	                index < arr.length - 1 && React.createElement("span", { className: styles.divide }, "/"))))),
 	            React.createElement("main", null,
 	                React.createElement(Routes, null,
-	                    React.createElement(Route, { path: "/", element: React.createElement(Introduction, null) }),
+	                    React.createElement(Route, { index: true, element: React.createElement(Introduction, null) }),
 	                    React.createElement(Route, { path: "/documentation", element: React.createElement(API, null) }),
-	                    React.createElement(Route, { path: "*", element: React.createElement(Navigate, { to: "/", replace: true }) }))),
+	                    React.createElement(Route, { path: "*", element: React.createElement(Navigate, { to: "/" }) }))),
 	            React.createElement("footer", null,
 	                React.createElement("div", { className: classnames(styles.outline, {
 	                        [styles.hidden]: !outlineVisible,
@@ -50514,16 +50525,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	                            return (React.createElement(React.Fragment, null,
 	                                React.createElement("li", { className: styles.outlineGroupName }, title),
 	                                children.map((child) => (React.createElement("li", { key: child.anchor },
-	                                    React.createElement("a", { href: `#${child.anchor}` }, child.title))))));
+	                                    React.createElement("span", { onClick: () => handleScrollTo(child.anchor) }, child.title))))));
 	                        }
 	                        return (React.createElement("li", { key: anchor },
-	                            React.createElement("a", { href: `#${anchor}` }, title)));
+	                            React.createElement("span", { onClick: () => handleScrollTo(anchor) }, title)));
 	                    })))))));
 	};
 
 	const root = createRoot(document.getElementById('docs'));
 	root.render(React.createElement(reactActivationExports.AliveScope, null,
-	    React.createElement(BrowserRouter, null,
+	    React.createElement(HashRouter, null,
 	        React.createElement(Docs, null))));
 
 })(React, ReactDOM, fabric);

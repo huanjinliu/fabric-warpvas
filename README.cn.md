@@ -26,8 +26,8 @@ pnpm add fabric fabric-warpvas
 - **内置扭曲和透明变形效果**：提供了两种常见的变形效果，图像扭曲和透视变形。
 
   <div style="display: flex; justify-content: center;">
-    <img src="https://raw.githubusercontent.com/huanjinliu/fabric-warpvas/master/docs/resources/gifs/warp.gif" alt="warp" style="width: 33%" />
-    <img src="https://raw.githubusercontent.com/huanjinliu/fabric-warpvas/master/docs/resources/gifs/perspective.gif" alt="perspective" style="width: 33%" />
+    <img src="https://raw.githubusercontent.com/huanjinliu/fabric-warpvas/master/docs/resources/gifs/warp.gif" alt="warp" />
+    <img src="https://raw.githubusercontent.com/huanjinliu/fabric-warpvas/master/docs/resources/gifs/perspective.gif" alt="perspective" />
   </div>
 
 - **辅助显示效果**：提供选项以在变形图像上添加分隔线和分割点等辅助显示效果，以协助观察图像变形效果。

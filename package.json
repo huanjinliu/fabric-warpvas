@@ -7,7 +7,6 @@
     "transform",
     "image",
     "canvas",
-    "webgl",
     "distortion",
     "fabric-js",
     "warpvas"

@@ -81,19 +81,6 @@ const Docs = () => {
     loadImage(DEFAULT_PLACEHOLDER).then(setPlaceholder);
   }, []);
 
-  // 如果有锚点，自动滚动到该锚点
-  useEffect(() => {
-    window.onload = function () {
-      const anchor = window.location.hash;
-      if (anchor) {
-        const element = document.querySelector(anchor);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
-      }
-    };
-  }, []);
-
   // 滚动到特定锚点处
   const handleScrollTo = useCallback((id: string) => {
     const element = document.getElementById(id);
@@ -131,9 +118,9 @@ const Docs = () => {
         </nav>
         <main>
           <Routes>
-            <Route path="/" element={<Introduction />} />
+            <Route index element={<Introduction />} />
             <Route path="/documentation" element={<API />} />
-            <Route path="*" element={<Navigate to="/" replace />} />
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>
         <footer>

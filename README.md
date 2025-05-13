@@ -26,8 +26,8 @@ Note: `Fabric.js` is required as a peer dependency (v6+).
 - **Built-in Warp Effects**: Offers two common warping effects - image distortion and perspective transformation.
 
   <div style="display: flex; justify-content: center;">
-    <img src="https://raw.githubusercontent.com/huanjinliu/fabric-warpvas/master/docs/resources/gifs/warp.gif" alt="warp" style="width: 33%" />
-    <img src="https://raw.githubusercontent.com/huanjinliu/fabric-warpvas/master/docs/resources/gifs/perspective.gif" alt="perspective" style="width: 33%" />
+    <img src="https://raw.githubusercontent.com/huanjinliu/fabric-warpvas/master/docs/resources/gifs/warp.gif" alt="warp" />
+    <img src="https://raw.githubusercontent.com/huanjinliu/fabric-warpvas/master/docs/resources/gifs/perspective.gif" alt="perspective" />
   </div>
 
 - **Visual Guides**: Options to add grid lines and control points for better warping visualization.
