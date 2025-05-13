@@ -37,7 +37,7 @@
     }
   },
   "scripts": {
-    "start": "pnpm link . && npm run dev",
+    "start": "npm link . && npm run dev",
     "dev": "rollup --config --watch --environment NODE_ENV:development,ROLLUP_WATCH:true",
     "build": "rollup --config --environment NODE_ENV:production && npm run docs:api",
     "build:dev": "rollup --config --environment NODE_ENV:development && npm run docs:api",
@@ -134,16 +134,10 @@
     "fabric": "^6.0.0"
   },
   "dependencies": {
-    "fabric-warpvas": "link:",
     "warpvas": "^1.0.1",
     "warpvas-perspective": "^1.0.1"
   },
   "engines": {
     "node": ">=14.0.0"
-  },
-  "pnpm": {
-    "overrides": {
-      "fabric-warpvas": "link:"
-    }
   }
 }
