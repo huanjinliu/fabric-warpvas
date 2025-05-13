@@ -21,7 +21,7 @@ const QuickStart = () => {
         <QuickStartDemo />
       </Message.left>
       <Message.right>
-        <span className={styles.amazing}>简直太棒了！感谢你为我分享这么棒的工具！</span>
+        <span className={styles.amazing}>简直太棒了！</span>
       </Message.right>
     </section>
   );

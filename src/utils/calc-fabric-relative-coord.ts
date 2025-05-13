@@ -1,4 +1,4 @@
-import { fabric } from 'fabric';
+import { FabricObject, Path, Point, util } from 'fabric/es';
 
 /**
  * 计算某个点位相对于 Fabric.js 特定对象的坐标位置
@@ -9,28 +9,27 @@ import { fabric } from 'fabric';
  *
  * @param target - 目标 Fabric.js 对象
  *
- * @returns {fabric.Point} 转换后的相对坐标点
+ * @returns {Point} 转换后的相对坐标点
  */
 export const calcFabricRelativeCoord = (
   position: { left?: number; top?: number },
-  target: fabric.Object,
+  target: FabricObject,
 ) => {
   const { left = 0, top = 0 } = position;
 
   // 路径对象比较特殊，要处理自身偏移
   if (target.type === 'path') {
-    const path = target as fabric.Path;
+    const path = target as Path;
 
     // 计算路径的变换矩阵
     const pathMatrix = path.calcOwnMatrix();
 
     // 计算路径偏移量
-    const offset = fabric.util.transformPoint(path.pathOffset, pathMatrix, true);
+    const offset = path.pathOffset.transform(pathMatrix, true);
 
     // 计算相对坐标点
-    const point = fabric.util.transformPoint(
-      new fabric.Point(left + offset.x, top + offset.y),
-      fabric.util.invertTransform(pathMatrix),
+    const point = new Point(left + offset.x, top + offset.y).transform(
+      util.invertTransform(pathMatrix),
     );
 
     return point;
@@ -40,10 +39,7 @@ export const calcFabricRelativeCoord = (
   const matrix = target.calcOwnMatrix();
 
   // 计算相对坐标点
-  const point = fabric.util.transformPoint(
-    new fabric.Point(left, top),
-    fabric.util.invertTransform(matrix),
-  );
+  const point = new Point(left, top).transform(util.invertTransform(matrix));
 
   return point;
 };

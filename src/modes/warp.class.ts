@@ -1,18 +1,23 @@
-import { fabric } from "fabric";
-import type { Bezier } from "bezier-js";
-import { Warpvas, utils } from "warpvas";
-import defaults from "lodash-es/defaults";
-import type { FabricWarpvas } from "../fabric-warpvas.class";
-import BaseMode, {
-  BaseOptions,
-  SUB_THEME_COLOR,
-  THEME_COLOR,
-} from "./base.class";
 import {
-  calcFabricRelativeCoord,
-  calcFabricCanvasCoord,
-  registerLimitMoveEvent,
-} from "@utils";
+  ActiveSelection,
+  BasicTransformEvent,
+  Canvas,
+  Circle,
+  FabricObject,
+  Line,
+  Point,
+  Rect,
+  TMat2D,
+  TPointerEvent,
+  TPointerEventInfo,
+  util,
+} from 'fabric/es';
+import type { Bezier } from 'bezier-js';
+import { Warpvas, utils } from 'warpvas';
+import defaults from 'lodash-es/defaults';
+import type { FabricWarpvas } from '../fabric-warpvas.class';
+import BaseMode, { BaseOptions, SUB_THEME_COLOR, THEME_COLOR } from './base.class';
+import { calcFabricRelativeCoord, calcFabricCanvasCoord, registerLimitMoveEvent } from '@utils';
 
 const { calcMatrix } = utils;
 
@@ -25,13 +30,13 @@ const { calcMatrix } = utils;
  */
 export enum VertexType {
   /** 左上角顶点 */
-  TOP_LEFT = "tl",
+  TOP_LEFT = 'tl',
   /** 右上角顶点 */
-  TOP_RIGHT = "tr",
+  TOP_RIGHT = 'tr',
   /** 左下角顶点 */
-  BOTTOM_LEFT = "bl",
+  BOTTOM_LEFT = 'bl',
   /** 右下角顶点 */
-  BOTTOM_RIGHT = "br",
+  BOTTOM_RIGHT = 'br',
 }
 
 /**
@@ -43,24 +48,24 @@ type WarpObjects = {
    * @param object - 默认的控制点对象
    * @returns 作为顶点控制点对象的fabric元素对象，可使用默认对象以外的新对象
    */
-  control: (object: fabric.Object) => fabric.Object;
+  control: (object: FabricObject) => FabricObject;
   /**
    * 可配置扭曲控制点的方法
    * @param object - 默认的控制点对象
    * @returns 作为扭曲控制点对象的fabric元素对象，可使用默认对象以外的新对象
    */
-  curveControl: (object: fabric.Object) => fabric.Object;
+  curveControl: (object: FabricObject) => FabricObject;
   /**
    * 可配置插入控制点的方法
    * @param object - 默认的控制点对象
    * @returns 作为插入控制点对象的fabric元素对象，可使用默认对象以外的新对象
    */
-  insertControl: (object: fabric.Object) => fabric.Object;
+  insertControl: (object: FabricObject) => FabricObject;
   /**
    * 可配置顶点控制点与扭曲控制点之间连线样式的方法
    * @param line - 连线对象
    */
-  line: (line: fabric.Line) => void;
+  line: (line: Line) => void;
 };
 
 /**
@@ -87,7 +92,7 @@ type WarpOptions = BaseOptions<{
    *
    * @default 'None' 表示禁用移动约束
    */
-  enableConstraintKey?: string | "none";
+  enableConstraintKey?: string | 'none';
 }>;
 
 /**
@@ -113,7 +118,7 @@ type WarpOptions = BaseOptions<{
  * - index: 控制点在曲线上的索引
  */
 type Control = {
-  majorControl: fabric.Object;
+  majorControl: FabricObject;
   curve: Bezier;
   rowIndex: number;
   colIndex: number;
@@ -123,8 +128,8 @@ type Control = {
   vertexType: VertexType;
   subControls: {
     attach: [curve: Bezier, vertexIndex: number];
-    object: fabric.Object;
-    line: fabric.Line;
+    object: FabricObject;
+    line: Line;
     index: number;
   }[];
 };
@@ -180,7 +185,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
   /**
    * 变形模式的唯一标识名称
    */
-  public name = "warp";
+  public name = 'warp';
 
   /**
    * 模式配置
@@ -188,7 +193,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
   public options: Required<WarpOptions> = {
     themeColor: THEME_COLOR,
     subThemeColor: SUB_THEME_COLOR,
-    enableConstraintKey: "None",
+    enableConstraintKey: 'None',
     enableGridSplit: true,
   };
 
@@ -206,10 +211,10 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
   protected _styleSetters = {
     image: () => {},
     path: () => {},
-    control: (control: fabric.Object) => control,
-    curveControl: (control: fabric.Object) => control,
-    insertControl: (control: fabric.Object) => control,
-    line: (line: fabric.Line) => {},
+    control: (control: FabricObject) => control,
+    curveControl: (control: FabricObject) => control,
+    insertControl: (control: FabricObject) => control,
+    line: (line: Line) => {},
   };
 
   /**
@@ -230,7 +235,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
    * 用于临时存储当前正在交互的插入点对象。
    * 当用户点击贴图内部时创建，确认插入或取消时清除。
    */
-  private _insertControlObject: fabric.Object | null = null;
+  private _insertControlObject: FabricObject | null = null;
 
   /**
    * 创建扭曲变形模式实例
@@ -267,8 +272,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
       const _row: Coord[][] = [];
       row.forEach((col, colIndex) => {
         const _col: Coord[] = [];
-        const { vertical, horizontal } =
-          warpvas.regionCurves[rowIndex][colIndex];
+        const { vertical, horizontal } = warpvas.regionCurves[rowIndex][colIndex];
         for (let h = 0; h < horizontal.length; h++) {
           for (let v = 0; v < vertical.length; v++) {
             const point1 = vertical[v].get(h / (horizontal.length - 1));
@@ -293,12 +297,10 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
    * 返回所有用于控制贴图顶点的主控制点对象列表。
    * 这些控制点位于贴图的四个角和边缘分割点位置。
    *
-   * @returns {fabric.Object[]} 顶点控制点对象数组
+   * @returns {FabricObject[]} 顶点控制点对象数组
    */
-  get controlObjects(): fabric.Object[] {
-    return Array.from(this._positionControlMap.values()).map(
-      (item) => item.majorControl,
-    );
+  get controlObjects(): FabricObject[] {
+    return Array.from(this._positionControlMap.values()).map((item) => item.majorControl);
   }
 
   /**
@@ -307,9 +309,9 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
    * 返回所有用于调整曲线形状的次要控制点对象列表。
    * 这些控制点位于边缘曲线的中间位置，用于调整曲线的弯曲程度。
    *
-   * @returns {fabric.Object[]} 曲线控制点对象数组
+   * @returns {FabricObject[]} 曲线控制点对象数组
    */
-  get subControlObjects(): fabric.Object[] {
+  get subControlObjects(): FabricObject[] {
     return Array.from(this._positionControlMap.values())
       .map((item) => item.subControls.map((i) => i.object))
       .flat(1);
@@ -322,9 +324,9 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
    * 当用户点击贴图内部时会创建此控制点，
    * 用户可以通过点击它来在该位置添加新的分割点。
    *
-   * @returns {fabric.Object | null} 插入控制点对象，如果不存在则返回 null
+   * @returns {FabricObject | null} 插入控制点对象，如果不存在则返回 null
    */
-  get insertControlObject(): fabric.Object | null {
+  get insertControlObject(): FabricObject | null {
     return this._insertControlObject;
   }
 
@@ -334,9 +336,9 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
    * 返回所有连接主控制点和曲线控制点的线段对象列表。
    * 这些线段用于可视化控制点之间的关系。
    *
-   * @returns {fabric.Line[]} 连接线对象数组
+   * @returns {Line[]} 连接线对象数组
    */
-  get lineObjects(): fabric.Line[] {
+  get lineObjects(): Line[] {
     return Array.from(this._positionControlMap.values())
       .map((item) => item.subControls.map((i) => i.line))
       .flat(1);
@@ -379,10 +381,10 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
     if (!areaBounds) return;
 
     // 交互元素
-    const allObjects: fabric.Object[] = [];
+    const allObjects: FabricObject[] = [];
 
     // 操作对象与控制器映射
-    const objectControlMap = new Map<fabric.Object, string>();
+    const objectControlMap = new Map<FabricObject, string>();
 
     // 插入交互点
     this._insertControlObject = this._styleSetters.insertControl(
@@ -393,19 +395,15 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
     const restoreObjectsOrder = () => {
       fabricCanvas.renderOnAddRemove = false;
       this._positionControlMap.forEach((item) => {
-        item.subControls.forEach((i) => i.line.canvas?.bringToFront(i.line));
+        item.subControls.forEach((i) => i.line.canvas?.bringObjectToFront(i.line));
       });
       this._positionControlMap.forEach((item) => {
-        item.subControls.forEach((i) =>
-          i.object.canvas?.bringToFront(i.object),
-        );
+        item.subControls.forEach((i) => i.object.canvas?.bringObjectToFront(i.object));
       });
       this._positionControlMap.forEach((item) => {
-        item.majorControl.canvas?.bringToFront(item.majorControl);
+        item.majorControl.canvas?.bringObjectToFront(item.majorControl);
       });
-      this._insertControlObject?.canvas?.bringToFront(
-        this._insertControlObject,
-      );
+      this._insertControlObject?.canvas?.bringObjectToFront(this._insertControlObject);
       fabricCanvas.renderOnAddRemove = true;
       fabricCanvas.requestRenderAll();
     };
@@ -423,11 +421,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
 
           // 在画布的实际坐标
           const points = curve.points.map((point: Coord) =>
-            fabric.util.transformPoint(
-              new fabric.Point(
-                point.x - path.pathOffset.x,
-                point.y - path.pathOffset.y,
-              ),
+            new Point(point.x - path.pathOffset.x, point.y - path.pathOffset.y).transform(
               path.calcOwnMatrix(),
             ),
           );
@@ -449,8 +443,8 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
             }[direction]![Math.sign(vertexIndex)];
 
             // 构建位置ID
-            const positionRow = rowIndex + (vertexType.startsWith("b") ? 1 : 0);
-            const positionCol = colIndex + (vertexType.endsWith("r") ? 1 : 0);
+            const positionRow = rowIndex + (vertexType.startsWith('b') ? 1 : 0);
+            const positionCol = colIndex + (vertexType.endsWith('r') ? 1 : 0);
             const positionID = `${positionRow}-${positionCol}`;
 
             // 如果已经存在对应顶点元素则直接复用
@@ -483,28 +477,23 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
               return item.attach[0] === curve && item.attach[1] === vertexIndex;
             });
             if (!hadCreated) {
-              const subControl = this._styleSetters.curveControl(
-                this._createDefaultCurveControl(),
-              );
+              const subControl = this._styleSetters.curveControl(this._createDefaultCurveControl());
               subControl.set({
                 left: point.x,
                 top: point.y,
               });
 
               // 连接线
-              const line = new fabric.Line(
-                [point.x, point.y, vertexPoint.x, vertexPoint.y],
-                {
-                  stroke: "rgba(200, 200, 200, 0.8)",
-                  strokeWidth: 1,
-                  strokeUniform: true,
-                  visible: false,
-                  evented: false,
-                  selectable: false,
-                  originX: "center",
-                  originY: "center",
-                },
-              );
+              const line = new Line([point.x, point.y, vertexPoint.x, vertexPoint.y], {
+                stroke: 'rgba(200, 200, 200, 0.8)',
+                strokeWidth: 1,
+                strokeUniform: true,
+                visible: false,
+                evented: false,
+                selectable: false,
+                originX: 'center',
+                originY: 'center',
+              });
               this._styleSetters.line(line);
               fabricCanvas.add(line, subControl);
               allObjects.push(line, subControl);
@@ -529,7 +518,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
       const { majorControl, subControls } = item;
       // 曲线控制点移动事件
       subControls.forEach(({ attach: [curve], object, line, index }) => {
-        object.on("moving", () => {
+        object.on('moving', () => {
           const path = fabricWarpvas.curvePathMap.get(curve)!;
           const point = calcFabricRelativeCoord(object, path);
 
@@ -544,10 +533,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
               // 角度保持和路径节点相向
               angle:
                 90 +
-                (Math.atan2(
-                  object.top! - majorControl.top!,
-                  object.left! - majorControl.left!,
-                ) *
+                (Math.atan2(object.top! - majorControl.top!, object.left! - majorControl.left!) *
                   180) /
                   Math.PI,
             })
@@ -568,45 +554,45 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
         });
       });
       // 控制点选中才显示曲线控制点
-      majorControl.on("selected", () => {
-        if (fabricCanvas.getActiveObject() === majorControl) {
-          subControls.forEach(({ object, line }) => {
-            object.set("visible", true);
-            line.set("visible", true);
-            majorControl.canvas?.requestRenderAll();
-          });
-        }
-      });
-      majorControl.on("deselected", () => {
-        subControls.forEach(({ object, line }) => {
-          object.set("visible", false);
-          line.set("visible", false);
-          majorControl.canvas?.requestRenderAll();
-        });
-      });
-      subControls.forEach(({ object }) => {
-        object.on("selected", () => {
-          subControls.forEach(({ object, line }) => {
-            object.set("visible", true);
-            line.set("visible", true);
-            object.canvas?.requestRenderAll();
-          });
-        });
-        object.on("deselected", () => {
-          subControls.forEach(({ object, line }) => {
-            object.set("visible", false);
-            line.set("visible", false);
-            object.canvas?.requestRenderAll();
-          });
-        });
-      });
+      // majorControl.on('selected', () => {
+      //   if (fabricCanvas.getActiveObject() === majorControl) {
+      //     subControls.forEach(({ object, line }) => {
+      //       object.set('visible', true);
+      //       line.set('visible', true);
+      //       majorControl.canvas?.requestRenderAll();
+      //     });
+      //   }
+      // });
+      // majorControl.on('deselected', () => {
+      //   subControls.forEach(({ object, line }) => {
+      //     object.set('visible', false);
+      //     line.set('visible', false);
+      //     majorControl.canvas?.requestRenderAll();
+      //   });
+      // });
+      // subControls.forEach(({ object }) => {
+      //   object.on('selected', () => {
+      //     subControls.forEach(({ object, line }) => {
+      //       object.set('visible', true);
+      //       line.set('visible', true);
+      //       object.canvas?.requestRenderAll();
+      //     });
+      //   });
+      //   object.on('deselected', () => {
+      //     subControls.forEach(({ object, line }) => {
+      //       object.set('visible', false);
+      //       line.set('visible', false);
+      //       object.canvas?.requestRenderAll();
+      //     });
+      //   });
+      // });
     });
 
     // 注册控点变换事件
     const registerObjectTransformEvent = () => {
       const handleTransformTargets = () => {
         const selectObjects = fabricCanvas.getActiveObjects();
-        const movingControlObjects = new Set<fabric.Object>();
+        const movingControlObjects = new Set<FabricObject>();
 
         for (const object of selectObjects) {
           const id = objectControlMap.get(object);
@@ -622,20 +608,11 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
           // 如果不是移动的对象，不做更新操作
           if (!isMoving) return;
 
-          const {
-            curve,
-            majorControl,
-            rowIndex,
-            colIndex,
-            vertexType,
-            vertexIndex,
-            subControls,
-          } = control;
+          const { curve, majorControl, rowIndex, colIndex, vertexType, vertexIndex, subControls } =
+            control;
 
           const path = fabricWarpvas.curvePathMap.get(curve)!;
-          const transformInfo = fabric.util.qrDecompose(
-            majorControl.calcTransformMatrix(false),
-          );
+          const transformInfo = util.qrDecompose(majorControl.calcTransformMatrix(false));
           const absolutePosition = {
             left: transformInfo.translateX,
             top: transformInfo.translateY,
@@ -644,13 +621,10 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
 
           // 记录旧的相对点和绝对位置
           const oldPoint = curve.points[vertexIndex];
-          const oldPosition = fabric.util.transformPoint(
-            new fabric.Point(
-              oldPoint.x - path.pathOffset.x,
-              oldPoint.y - path.pathOffset.y,
-            ),
-            path.calcOwnMatrix(),
-          );
+          const oldPosition = new Point(
+            oldPoint.x - path.pathOffset.x,
+            oldPoint.y - path.pathOffset.y,
+          ).transform(path.calcOwnMatrix());
 
           // 改变的距离
           const relativeDiff = {
@@ -661,13 +635,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
             left: absolutePosition.left! - oldPosition.x,
             top: absolutePosition.top! - oldPosition.y,
           };
-          fabricWarpvas.warpvas!.updateVertexCoord(
-            rowIndex,
-            colIndex,
-            vertexType,
-            point,
-            false,
-          );
+          fabricWarpvas.warpvas!.updateVertexCoord(rowIndex, colIndex, vertexType, point, false);
 
           // 对应的控制点跟随变换
           subControls.forEach(({ attach, object, line, index }) => {
@@ -697,30 +665,31 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
           movingControlObjects.clear();
         }
       };
-      const handleSaveTransformRecord = (e: fabric.IEvent) => {
+      const handleSaveTransformRecord = (
+        e: BasicTransformEvent<TPointerEvent> & {
+          target: FabricObject;
+        },
+      ) => {
         const target = e.target;
-        if (!target || e.action !== "drag") return;
+        if (!target || e.transform.action !== 'drag') return;
         if (
-          target.type === "activeSelection" &&
-          (target as fabric.ActiveSelection)
+          target.type === 'activeSelection' &&
+          (target as ActiveSelection)
             .getObjects()
             .some(this.controlObjects.includes.bind(this.controlObjects))
         ) {
           fabricWarpvas.record();
           return;
         }
-        if (
-          this.controlObjects.includes(target) ||
-          this.subControlObjects.includes(target)
-        ) {
+        if (this.controlObjects.includes(target) || this.subControlObjects.includes(target)) {
           fabricWarpvas.record();
         }
       };
-      fabricCanvas.on("object:moving", handleTransformTargets);
-      fabricCanvas.on("object:modified", handleSaveTransformRecord);
+      fabricCanvas.on('object:moving', handleTransformTargets);
+      fabricCanvas.on('object:modified', handleSaveTransformRecord);
       return () => {
-        fabricCanvas.off("object:moving", handleTransformTargets);
-        fabricCanvas.off("object:modified", handleSaveTransformRecord);
+        fabricCanvas.off('object:moving', handleTransformTargets);
+        fabricCanvas.off('object:modified', handleSaveTransformRecord);
       };
     };
 
@@ -728,8 +697,8 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
     const registerInsertPointEvent = () => {
       let splitPointer: Coord | null = null;
       let splitPoint: Coord | null = null;
-      let splitPointInfo: ReturnType<Warpvas["getHitInfo"]> = null;
-      const handleMouseDown = (e: fabric.IEvent<Event>) => {
+      let splitPointInfo: ReturnType<Warpvas['getHitInfo']> = null;
+      const handleMouseDown = (e: TPointerEventInfo<TPointerEvent>) => {
         // 仅左键有效
         if ((e as any).e.buttons !== 1) return;
 
@@ -738,7 +707,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
         // 是否点击交互点
         const touchInteractPoint = e.target === this._insertControlObject;
         const touchWarpvasObject = e.target === fabricWarpvas.warpvasObject;
-        if (e.pointer && this._insertControlObject) {
+        if (e.viewportPoint && this._insertControlObject) {
           if (touchInteractPoint) {
             fabricCanvas.selection = false;
           } else {
@@ -749,7 +718,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
           }
 
           if (touchWarpvasObject) {
-            const pointer = calcFabricCanvasCoord(fabricCanvas, e.pointer);
+            const pointer = calcFabricCanvasCoord(fabricCanvas, e.viewportPoint);
             const point = calcFabricRelativeCoord(
               { left: pointer.x, top: pointer.y },
               fabricWarpvas.paths![0],
@@ -768,17 +737,14 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
                 ][clickPart] as [Coord, Coord, Coord],
               );
               splitPointer = pointer;
-              splitPoint = fabric.util.transformPoint(
-                point,
-                fabric.util.invertTransform(matrix),
-              );
+              splitPoint = point.transform(util.invertTransform(matrix as TMat2D));
             }
           }
         }
 
         // 添加整体移动交互
-        const handleMouseMove = (e: fabric.IEvent<Event>) => {
-          if (!e.pointer) return;
+        const handleMouseMove = (e: TPointerEventInfo<TPointerEvent>) => {
+          if (!e.viewportPoint) return;
           if (fabricCanvas.selection) return;
           if (!this._insertControlObject) return;
           if (!touchInteractPoint) return;
@@ -786,31 +752,28 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
           const warpvas = fabricWarpvas.warpvas;
           if (!warpvas) return;
 
-          const pointer = calcFabricCanvasCoord(fabricCanvas, e.pointer);
+          const pointer = calcFabricCanvasCoord(fabricCanvas, e.viewportPoint);
           const offset = {
             x: pointer.x - this._insertControlObject.left!,
             y: pointer.y - this._insertControlObject.top!,
           };
           const bezierSet = new WeakSet<Bezier>([]);
-          warpvas.forEachRegionBoundCoords(
-            (rowIndex, colIndex, direction, bezier) => {
-              // 避免重复处理
-              if (bezierSet.has(bezier)) return bezier.points;
-              bezierSet.add(bezier);
-              const path = fabricWarpvas.curvePathMap.get(bezier)!;
-              // 计算相对于变形对象自身的偏移
-              const relativeOffset = fabric.util.transformPoint(
-                new fabric.Point(offset.x, offset.y),
-                fabric.util.invertTransform(path.calcOwnMatrix()),
-                true,
-              );
-              return bezier.points.map((point) => {
-                point.x += relativeOffset.x;
-                point.y += relativeOffset.y;
-                return point;
-              });
-            },
-          );
+          warpvas.forEachRegionBoundCoords((rowIndex, colIndex, direction, bezier) => {
+            // 避免重复处理
+            if (bezierSet.has(bezier)) return bezier.points;
+            bezierSet.add(bezier);
+            const path = fabricWarpvas.curvePathMap.get(bezier)!;
+            // 计算相对于变形对象自身的偏移
+            const relativeOffset = new Point(offset.x, offset.y).transform(
+              util.invertTransform(path.calcOwnMatrix()),
+              true,
+            );
+            return bezier.points.map((point) => {
+              point.x += relativeOffset.x;
+              point.y += relativeOffset.y;
+              return point;
+            });
+          });
 
           (
             [
@@ -818,7 +781,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
               fabricWarpvas.warpvasObject,
               ...(fabricWarpvas.paths ?? []),
               ...allObjects,
-            ] as fabric.Object[]
+            ] as FabricObject[]
           ).forEach((object) => {
             object
               .set({
@@ -832,10 +795,10 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
             skipHistoryRecording: true,
           });
         };
-        const handleMouseUp = (e: fabric.IEvent<Event>) => {
+        const handleMouseUp = (e: TPointerEventInfo<TPointerEvent>) => {
           const mouseupStemp = performance.now();
           const isClick = mouseupStemp - mousedownStemp < 200;
-          if (isClick && e.pointer && this._insertControlObject) {
+          if (isClick && e.viewportPoint && this._insertControlObject) {
             // 点击交互点拆分贴图
             if (touchInteractPoint) {
               fabricCanvas.remove(this._insertControlObject);
@@ -863,15 +826,15 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
           }
 
           fabricCanvas.selection = true;
-          fabricCanvas.off("mouse:up", handleMouseUp);
-          fabricCanvas.off("mouse:move", handleMouseMove);
+          fabricCanvas.off('mouse:up', handleMouseUp);
+          fabricCanvas.off('mouse:move', handleMouseMove);
         };
-        fabricCanvas.on("mouse:move", handleMouseMove);
-        fabricCanvas.on("mouse:up", handleMouseUp);
+        fabricCanvas.on('mouse:move', handleMouseMove);
+        fabricCanvas.on('mouse:up', handleMouseUp);
       };
-      fabricCanvas.on("mouse:down", handleMouseDown);
+      fabricCanvas.on('mouse:down', handleMouseDown);
       return () => {
-        fabricCanvas.off("mouse:down", handleMouseDown);
+        fabricCanvas.off('mouse:down', handleMouseDown);
       };
     };
 
@@ -879,7 +842,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
     const registerSelectEvent = () => {
       const handleSelectTargets = () => {
         const selectObjects = fabricCanvas.getActiveObjects();
-        const selectControlObjects = new Set<fabric.Object>();
+        const selectControlObjects = new Set<FabricObject>();
 
         for (const object of selectObjects) {
           const id = objectControlMap.get(object);
@@ -910,21 +873,21 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
         fabricCanvas.requestRenderAll();
       };
 
-      fabricCanvas.on("selection:created", handleSelectTargets);
-      fabricCanvas.on("selection:updated", handleSelectTargets);
-      fabricCanvas.on("selection:cleared", handleSelectTargets);
+      fabricCanvas.on('selection:created', handleSelectTargets);
+      fabricCanvas.on('selection:updated', handleSelectTargets);
+      fabricCanvas.on('selection:cleared', handleSelectTargets);
 
       return () => {
-        fabricCanvas.off("selection:created", handleSelectTargets);
-        fabricCanvas.off("selection:updated", handleSelectTargets);
-        fabricCanvas.off("selection:cleared", handleSelectTargets);
+        fabricCanvas.off('selection:created', handleSelectTargets);
+        fabricCanvas.off('selection:updated', handleSelectTargets);
+        fabricCanvas.off('selection:cleared', handleSelectTargets);
       };
     };
 
     // 注册按下 Delete/Backspace 删除控件
     const registerDeleteEvent = () => {
       // 处理分割点删除
-      const handleDeleteSplitPoint = (targets: fabric.Object[]) => {
+      const handleDeleteSplitPoint = (targets: FabricObject[]) => {
         const controls: Control[] = [];
         for (const target of targets) {
           const id = objectControlMap.get(target);
@@ -946,16 +909,16 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
       };
       // 处理键盘按下事件
       const handleKeyDown = (e: KeyboardEvent) => {
-        if (["Delete", "Backspace"].includes(e.key)) {
-          const targets = (fabricCanvas as fabric.Canvas).getActiveObjects();
+        if (['Delete', 'Backspace'].includes(e.key)) {
+          const targets = (fabricCanvas as Canvas).getActiveObjects();
           if (!targets) return;
           handleDeleteSplitPoint(targets);
         }
       };
-      window.addEventListener("keydown", handleKeyDown);
+      window.addEventListener('keydown', handleKeyDown);
 
       return () => {
-        window.removeEventListener("keydown", handleKeyDown);
+        window.removeEventListener('keydown', handleKeyDown);
       };
     };
 
@@ -963,7 +926,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
     const { enableConstraintKey, enableGridSplit } = this.options;
     const registers = [
       [
-        enableConstraintKey.toUpperCase() !== "NONE",
+        enableConstraintKey.toUpperCase() !== 'NONE',
         registerLimitMoveEvent(fabricCanvas, enableConstraintKey),
       ],
       [true, registerObjectTransformEvent],
@@ -972,14 +935,12 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
       [enableGridSplit, registerDeleteEvent],
     ] as const;
 
-    const unregisters = registers.map(
-      ([enable, register]) => enable && register(),
-    );
+    const unregisters = registers.map(([enable, register]) => enable && register());
 
     return () => {
       // 取消各类事件注册
       unregisters.forEach((unregister) => {
-        if (typeof unregister === "function") unregister();
+        if (typeof unregister === 'function') unregister();
       });
 
       // 移除所有交互元素
@@ -1001,15 +962,15 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
    *
    * @returns {fabric.Circle} 返回 Fabric.js 圆形对象
    */
-  private _createDefaultControl(themeColor: string): fabric.Circle {
-    return new fabric.Circle({
+  private _createDefaultControl(themeColor: string): Circle {
+    return new Circle({
       radius: 4,
       fill: themeColor,
-      stroke: "#ffffff",
-      paintFirst: "fill",
+      stroke: '#ffffff',
+      paintFirst: 'fill',
       strokeWidth: 1,
-      originX: "center",
-      originY: "center",
+      originX: 'center',
+      originY: 'center',
       hasControls: false,
       hasBorders: false,
     });
@@ -1022,20 +983,20 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
    *
    * @returns {fabric.Rect} 返回 Fabric.js 矩形对象
    */
-  private _createDefaultCurveControl(): fabric.Rect {
-    return new fabric.Rect({
+  private _createDefaultCurveControl(): Rect {
+    return new Rect({
       width: 6,
       height: 6,
-      fill: "rgba(255, 255, 255, 1)",
-      stroke: "rgba(200, 200, 200, 0.8)",
+      fill: 'rgba(255, 255, 255, 1)',
+      stroke: 'rgba(200, 200, 200, 0.8)',
       strokeWidth: 1,
       strokeUniform: true,
       // shadow: '0 0 3px rgba(0, 0, 0, 0.6)',
       visible: false,
       hasControls: false,
       hasBorders: false,
-      originX: "center",
-      originY: "center",
+      originX: 'center',
+      originY: 'center',
     });
   }
 
@@ -1047,14 +1008,14 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
    *
    * @returns {fabric.Circle} 返回 Fabric.js 圆形对象
    */
-  private _createDefaultInsertControl(themeColor: string): fabric.Circle {
-    return new fabric.Circle({
+  private _createDefaultInsertControl(themeColor: string): Circle {
+    return new Circle({
       radius: 4,
-      fill: "rgba(255, 255, 255, 0.2)",
+      fill: 'rgba(255, 255, 255, 0.2)',
       stroke: themeColor,
       strokeWidth: 1,
-      originX: "center",
-      originY: "center",
+      originX: 'center',
+      originY: 'center',
       selectable: false,
       hasControls: false,
       hasBorders: false,

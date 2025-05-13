@@ -1,4 +1,4 @@
-import { fabric } from 'fabric';
+import { Canvas, Point, StaticCanvas, util } from 'fabric/es';
 
 /**
  * 将画布DOM坐标转换为 Fabric.js 画布坐标系中的坐标
@@ -12,15 +12,9 @@ import { fabric } from 'fabric';
  *   @property {number} x - 相对于画布 DOM 左边的x坐标
  *   @property {number} y - 相对于画布 DOM 顶部的y坐标
  *
- * @returns {fabric.Point} 转换后的画布坐标点
+ * @returns {Point} 转换后的画布坐标点
  */
-export const calcFabricCanvasCoord = (
-  canvas: fabric.Canvas | fabric.StaticCanvas,
-  offset: Coord,
-) => {
+export const calcFabricCanvasCoord = (canvas: Canvas | StaticCanvas, offset: Coord) => {
   const matrix = canvas.viewportTransform ?? [1, 0, 0, 1, 0, 0];
-  return fabric.util.transformPoint(
-    new fabric.Point(offset.x, offset.y),
-    fabric.util.invertTransform(matrix),
-  );
+  return new Point(offset.x, offset.y).transform(util.invertTransform(matrix));
 };

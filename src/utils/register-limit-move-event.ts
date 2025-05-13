@@ -1,3 +1,5 @@
+import type { BasicTransformEvent, Canvas, FabricObject, TPointerEvent } from 'fabric/es';
+
 /**
  * 注册按键限制元素移动
  *
@@ -6,7 +8,7 @@
  *
  * @returns 注销回调
  */
-export const registerLimitMoveEvent = (fabricCanvas: fabric.Canvas, key: string) => () => {
+export const registerLimitMoveEvent = (fabricCanvas: Canvas, key: string) => () => {
   // 记录按下状态
   let press = false;
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -16,7 +18,11 @@ export const registerLimitMoveEvent = (fabricCanvas: fabric.Canvas, key: string)
     press = e.key.toUpperCase() === key.toUpperCase();
   };
   // 元素移动时按键添加移动限制
-  const handleMovingLimit = (e: fabric.IEvent) => {
+  const handleMovingLimit = (
+    e: BasicTransformEvent<TPointerEvent> & {
+      target: FabricObject;
+    },
+  ) => {
     if (press && e.target && e.transform) {
       const { left: newLeft = 0, top: newTop = 0 } = e.target;
       const { left, top } = e.transform.original;

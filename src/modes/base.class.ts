@@ -1,9 +1,9 @@
-import type { fabric } from "fabric";
-import type { Bezier } from "bezier-js";
-import { Warpvas } from "warpvas";
-import defaults from "lodash-es/defaults";
-import type { FabricWarpvas } from "../fabric-warpvas.class";
-import { AbstractMode } from "../abstract-mode.class";
+import type { FabricImage, FabricObject, Path } from 'fabric';
+import type { Bezier } from 'bezier-js';
+import { Warpvas } from 'warpvas';
+import defaults from 'lodash-es/defaults';
+import type { FabricWarpvas } from '../fabric-warpvas.class';
+import { AbstractMode } from '../abstract-mode.class';
 
 /**
  * 默认主题色
@@ -12,7 +12,7 @@ import { AbstractMode } from "../abstract-mode.class";
  *
  * @default '#33333399' 半透明深灰
  */
-export const THEME_COLOR = "#33333399";
+export const THEME_COLOR = '#33333399';
 
 /**
  * 默认副主题色
@@ -21,7 +21,7 @@ export const THEME_COLOR = "#33333399";
  *
  * @default '#333333ff' 深灰
  */
-export const SUB_THEME_COLOR = "#333333ff";
+export const SUB_THEME_COLOR = '#333333ff';
 
 /**
  * 交互元素的样式配置器类型
@@ -30,22 +30,20 @@ export const SUB_THEME_COLOR = "#333333ff";
  *
  * @template T - 扩展的样式设置器类型，默认为空的对象方法映射
  */
-export type BaseStyleSetters<
-  T = Record<string, (...rgs: any[]) => fabric.Object>,
-> = T & {
+export type BaseStyleSetters<T = Record<string, (...rgs: any[]) => FabricObject>> = T & {
   /**
    * 配置变形后贴图的样式
    *
    * @param image - fabric.Image 实例，代表变形对象，无论是什么 Fabric 对象，在进入变形后操作对象都是 fabric.Image 实例
    */
-  image: (image: fabric.Image) => void;
+  image: (image: FabricImage) => void;
 
   /**
    * 配置网格边界线的样式
    *
    * @param path - fabric.Path 实例，代表网格的边界线
    */
-  path: (path: fabric.Path) => void;
+  path: (path: Path) => void;
 };
 
 /**
@@ -92,7 +90,7 @@ class BaseMode<Objects, Options> extends AbstractMode {
    *
    * @remarks 该模式基类不对外开放
    */
-  public name = "__base__";
+  public name = '__base__';
 
   /**
    * 模式配置
@@ -234,15 +232,15 @@ class BaseMode<Objects, Options> extends AbstractMode {
             stroke: this.options.themeColor,
             strokeWidth: 1,
             strokeUniform: true,
-            fill: "transparent",
+            fill: 'transparent',
             selectable: false,
             evented: false,
-            originX: "center",
-            originY: "center",
+            originX: 'center',
+            originY: 'center',
           });
           this._styleSetters.path(path);
           // 重置回原路径中心，避免轮廓宽度使路径发生偏移
-          path.setPositionByOrigin(originCenterPoint, "center", "center");
+          path.setPositionByOrigin(originCenterPoint, 'center', 'center');
         } else {
           // 移除中间不可视路径
           fabricCanvas.remove(path);

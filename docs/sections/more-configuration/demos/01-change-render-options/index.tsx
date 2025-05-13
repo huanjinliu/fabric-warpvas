@@ -1,8 +1,8 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { fabric } from 'fabric';
+import { FabricImage } from 'fabric/es';
 import { FabricWarpvas } from 'fabric-warpvas';
 import Warp from 'fabric-warpvas/modes/warp';
-import { Canvas, Code, TextSwitch } from 'docs/components';
+import { Canvas as XCanvas, Code, TextSwitch } from 'docs/components';
 import type { CanvasHandlers } from 'docs/components/canvas';
 import { DocsContext } from 'docs/docs';
 import styles from './style.less';
@@ -33,7 +33,7 @@ const ChangeRenderOptions = () => {
       Math.min(placeholder.naturalWidth, placeholder.naturalHeight);
 
     // 创建元素
-    const object = new fabric.Image(placeholder, {
+    const object = new FabricImage(placeholder, {
       left: width / 2,
       top: height / 2,
       scaleX: scale,
@@ -94,7 +94,7 @@ const ChangeRenderOptions = () => {
 
   return (
     <div className={styles.demo}>
-      <Canvas className={styles.canvas} ref={_canvasRef} />
+      <XCanvas className={styles.canvas} ref={_canvasRef} />
       <Code
         className={styles.code}
         link="sections/more-configuration/codes/change-render-options-demo.ts"

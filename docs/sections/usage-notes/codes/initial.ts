@@ -1,8 +1,8 @@
-import { fabric } from 'fabric';
+import { Canvas } from 'fabric/es';
 
 // 创建 fabric 画布对象
 const element = document.createElement('canvas');
-const canvas = new fabric.Canvas(element);
+const canvas = new Canvas(element);
 
 // 取消当前元素选中
 canvas.discardActiveObject();

@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useRef } from 'react';
-import { fabric } from 'fabric';
+import { FabricImage } from 'fabric/es';
 import { FabricWarpvas, AbstractMode } from 'fabric-warpvas';
 import type { Warpvas } from 'Warpvas';
 import { utils } from 'Warpvas';
@@ -50,8 +50,8 @@ export class ConvexMode extends AbstractMode {
     if (!fabricCanvas) return;
 
     fabricCanvas.on('mouse:move', (e) => {
-      if (!e.pointer) return;
-      const pointer = calcFabricCanvasCoord(fabricCanvas, e.pointer);
+      if (!e.viewportPoint) return;
+      const pointer = calcFabricCanvasCoord(fabricCanvas, e.viewportPoint);
 
       const path = fabricWarpvas.paths?.[0];
       if (!path) return;
@@ -88,7 +88,7 @@ const Customization = () => {
       Math.min(placeholder.naturalWidth, placeholder.naturalHeight);
 
     // 创建元素
-    const object = new fabric.Image(placeholder, {
+    const object = new FabricImage(placeholder, {
       left: width / 2,
       top: height / 2,
       scaleX: scale,

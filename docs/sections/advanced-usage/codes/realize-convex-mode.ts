@@ -1,12 +1,12 @@
-import { fabric } from 'fabric';
+import { Canvas, FabricImage } from 'fabric/es';
 import { FabricWarpvas } from 'fabric-warpvas';
 import { ConvexMode } from /*-import-url-*/ '../demos/01-customization' /**/;
 
 // 创建交互画布，此处简化了代码
-const canvas = new fabric.Canvas(document.createElement('canvas'));
+const canvas = new Canvas(document.createElement('canvas'));
 
 // 创建元素，此处简化了代码
-const object = new fabric.Image(new Image());
+const object = new FabricImage(new Image());
 
 // 进入交互态
 /*---*/

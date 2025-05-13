@@ -1,4 +1,4 @@
-import { fabric } from 'fabric';
+import { Canvas, FabricImage, FabricObject, Group, Path, Point } from 'fabric/es';
 import cloneDeep from 'lodash-es/cloneDeep';
 import defaults from 'lodash-es/defaults';
 import { Warpvas } from 'warpvas';
@@ -111,7 +111,7 @@ export class FabricWarpvas {
   /**
    * Fabric.js 画布实例，作为变形的载体画布
    */
-  canvas: fabric.Canvas;
+  canvas: Canvas;
 
   /**
    * 实例配置选项，包含历史记录开关和变化监听器等配置
@@ -128,7 +128,7 @@ export class FabricWarpvas {
    * 当前正在编辑的 Fabric 对象，可以是任何 Fabric.js 对象类型（图片、文本等）
    * @default null
    */
-  target: fabric.Object | null = null;
+  target: FabricObject | null = null;
 
   /**
    * 目标对象的画布表示，存储目标对象的原始图像数据
@@ -139,23 +139,23 @@ export class FabricWarpvas {
   /**
    * 变形后的图像对象，在画布上显示的实际图像对象
    */
-  warpvasObject?: fabric.Image;
+  warpvasObject?: FabricImage;
 
   /**
    * 网格路径元素列表，存储所有用于表示网格线的 Fabric.Path 对象
    * @remarks 用于显示变形网格和处理交互
    */
-  paths?: fabric.Path[];
+  paths?: Path[];
 
   /**
    * 贝塞尔曲线到路径对象的映射，用于快速查找曲线对应的路径对象
    */
-  curvePathMap = new WeakMap<Bezier, fabric.Path>();
+  curvePathMap = new WeakMap<Bezier, Path>();
 
   /**
    * 路径对象到贝塞尔曲线的映射，用于快速查找路径对应的曲线对象
    */
-  pathCurveMap = new WeakMap<fabric.Path, Bezier>();
+  pathCurveMap = new WeakMap<Path, Bezier>();
 
   /**
    * 当前激活的变形模式，控制图像变形的交互方式和效果
@@ -255,23 +255,7 @@ export class FabricWarpvas {
    * 1. 创建实例后，需要调用 enterEditing 方法才能开始编辑
    * 2. 启用历史记录会消耗额外的内存，请根据实际需求选择是否启用
    */
-  constructor(canvas: fabric.Canvas, options: Partial<FabricWarpvasOptions> = {}) {
-    // 检查 fabric.js 是否存在
-    if (typeof fabric === 'undefined') {
-      throw new Error(
-        '[Fabric-Warpvas] fabric.js is required for FabricWarpvas class.\n' +
-          'Please install and import fabric.js first.',
-      );
-    }
-
-    // 检查传入的 canvas 是否是有效的 fabric.Canvas 实例
-    if (!(canvas instanceof fabric.Canvas)) {
-      throw new Error(
-        '[Fabric-Warpvas] Invalid canvas parameter.\n' +
-          'Please provide a valid fabric.Canvas instance.',
-      );
-    }
-
+  constructor(canvas: Canvas, options: Partial<FabricWarpvasOptions> = {}) {
     this.canvas = canvas;
     this.options = defaults(options, {
       enableHistory: false,
@@ -331,15 +315,14 @@ export class FabricWarpvas {
 
     // 添加新的元素
     const warpvasCanvas = this.warpvas.render();
-    console.log(warpvasCanvas);
 
     // 记录变形操作数据
     if (!options.skipHistoryRecording) this.record();
 
     // 创建对应路径列表
-    const paths: fabric.Path[] = [];
-    const curvePathMap = new WeakMap<Bezier, fabric.Path>();
-    const pathCurveMap = new WeakMap<fabric.Path, Bezier>();
+    const paths: Path[] = [];
+    const curvePathMap = new WeakMap<Bezier, Path>();
+    const pathCurveMap = new WeakMap<Path, Bezier>();
 
     const rowCount = this.warpvas.regionCurves.length;
     const colCount = this.warpvas.regionCurves[0].length;
@@ -352,7 +335,7 @@ export class FabricWarpvas {
             const curve = curves[i];
             // 重叠的路径不重复创建
             if (curvePathMap.has(curve)) continue;
-            const path = new fabric.Path(curve.toSVG());
+            const path = new Path(curve.toSVG());
             paths.push(path);
             curvePathMap.set(curve, path);
             pathCurveMap.set(path, curve);
@@ -362,7 +345,7 @@ export class FabricWarpvas {
     }
 
     // 成组形成网格元素后抵消偏移使网格元素和源目标元素重合
-    const grip = new fabric.Group(paths);
+    const grip = new Group(paths);
     const { width: gridWidth = 0, height: gridHeight = 0 } = grip;
     const { left: gridOffsetX = 0, top: gridOffsetY = 0 } = grip;
 
@@ -389,14 +372,10 @@ export class FabricWarpvas {
             (this._warpvasBoundary.bottom + this._warpvasBoundary.top) / 2,
         }
       : { x: 0, y: 0 };
-    const offset = fabric.util.transformPoint(
-      new fabric.Point(
-        relativeOffset.x * this._warpvasScaleX,
-        relativeOffset.y * this._warpvasScaleY,
-      ),
-      object.calcOwnMatrix(),
-      true,
-    );
+    const offset = new Point(
+      relativeOffset.x * this._warpvasScaleX,
+      relativeOffset.y * this._warpvasScaleY,
+    ).transform(object.calcOwnMatrix(), true);
 
     const centerCoord = object.getCenterPoint();
 
@@ -415,7 +394,7 @@ export class FabricWarpvas {
     grip.set(fabricObjectOptions);
 
     // 销毁网格成组关系，才能使路径直接相对画布布局
-    grip.destroy();
+    grip.removeAll();
 
     const warpvasObjectOptions = {
       ...fabricObjectOptions,
@@ -427,9 +406,10 @@ export class FabricWarpvas {
     };
     let warpvasObject = this.warpvasObject;
     if (warpvasObject) {
-      warpvasObject.setElement(warpvasCanvas as any, warpvasObjectOptions);
+      warpvasObject.setElement(warpvasCanvas as any);
+      warpvasObject.set(warpvasObjectOptions);
     } else {
-      warpvasObject = new fabric.Image(warpvasCanvas, warpvasObjectOptions);
+      warpvasObject = new FabricImage(warpvasCanvas, warpvasObjectOptions as any);
     }
 
     this.warpvasObject = warpvasObject;
@@ -555,7 +535,7 @@ export class FabricWarpvas {
    * @see leaveEditing 退出变形模式
    */
   enterEditing(
-    target: fabric.Object,
+    target: FabricObject,
     sourceCanvas: HTMLCanvasElement | null,
     mode: AbstractMode,
     beforeFirstRender?: (warpvas: Warpvas) => void,

@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { fabric } from 'fabric';
+import { FabricImage } from 'fabric/es';
 import { FabricWarpvas } from 'fabric-warpvas';
 import Perspective from 'fabric-warpvas/modes/perspective';
 import Warp from 'fabric-warpvas/modes/warp';
@@ -37,7 +37,7 @@ const LimitTextureOutputSize = () => {
       Math.min(placeholder.naturalWidth, placeholder.naturalHeight);
 
     // 创建元素
-    const object = new fabric.Image(placeholder, {
+    const object = new FabricImage(placeholder, {
       left: width / 2,
       top: height / 2,
       scaleX: scale,

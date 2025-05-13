@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { fabric } from 'fabric';
+import { FabricImage } from 'fabric/es';
 import { FabricWarpvas } from 'fabric-warpvas';
 import Warp from 'fabric-warpvas/modes/warp';
 import Perspective from 'fabric-warpvas/modes/perspective';
-import { Canvas, Code, Icon, Quote, TextSegment } from 'docs/components';
+import { Canvas as XCanvas, Code, Icon, Quote, TextSegment } from 'docs/components';
 import type { CanvasHandlers } from 'docs/components/canvas';
 import useUploader from 'docs/hooks/use-uploader';
 import { DocsContext } from 'docs/docs';
@@ -45,7 +45,7 @@ const QuickStart = () => {
       Math.min(placeholder.naturalWidth, placeholder.naturalHeight);
 
     // 创建元素
-    const object = new fabric.Image(placeholder, {
+    const object = new FabricImage(placeholder, {
       left: width / 2,
       top: height / 2,
       scaleX: scale,
@@ -89,7 +89,7 @@ const QuickStart = () => {
   return (
     <>
       <div className={styles.demo}>
-        <Canvas className={styles.canvas} ref={_canvasRef} />
+        <XCanvas className={styles.canvas} ref={_canvasRef} />
         <Code className={styles.code} link="sections/quick-start/codes/quick-start-demo.ts">
           {(key) => {
             switch (key) {

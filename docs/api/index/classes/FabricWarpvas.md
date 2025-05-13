@@ -98,7 +98,7 @@ Fabric.js 画布实例，作为变形的载体画布
 
 ### curvePathMap
 
-> **curvePathMap**: `WeakMap`\<`Bezier`, `Path`\>
+> **curvePathMap**: `WeakMap`\<`Bezier`, `Path`\<`Partial`\<`PathProps`\>, `SerializedPathProps`, `ObjectEvents`\>\>
 
 贝塞尔曲线到路径对象的映射，用于快速查找曲线对应的路径对象
 
@@ -128,7 +128,7 @@ null
 
 ### pathCurveMap
 
-> **pathCurveMap**: `WeakMap`\<`Path`, `Bezier`\>
+> **pathCurveMap**: `WeakMap`\<`Path`\<`Partial`\<`PathProps`\>, `SerializedPathProps`, `ObjectEvents`\>, `Bezier`\>
 
 路径对象到贝塞尔曲线的映射，用于快速查找路径对应的曲线对象
 
@@ -136,7 +136,7 @@ null
 
 ### paths?
 
-> `optional` **paths**: `Path`[]
+> `optional` **paths**: `Path`\<`Partial`\<`PathProps`\>, `SerializedPathProps`, `ObjectEvents`\>[]
 
 网格路径元素列表，存储所有用于表示网格线的 Fabric.Path 对象
 
@@ -148,7 +148,7 @@ null
 
 ### target
 
-> **target**: `null` \| `Object` = `null`
+> **target**: `null` \| `FabricObject`\<`Partial`\<`FabricObjectProps`\>, `SerializedObjectProps`, `ObjectEvents`\> = `null`
 
 当前正在编辑的 Fabric 对象，可以是任何 Fabric.js 对象类型（图片、文本等）
 
@@ -190,7 +190,7 @@ null
 
 ### warpvasObject?
 
-> `optional` **warpvasObject**: `Image`
+> `optional` **warpvasObject**: `FabricImage`\<`Partial`\<`ImageProps`\>, `SerializedImageProps`, `ObjectEvents`\>
 
 变形后的图像对象，在画布上显示的实际图像对象
 
@@ -208,7 +208,7 @@ null
 
 ##### target
 
-`Object`
+`FabricObject`
 
 目标变形 Fabric 对象（如图片、文本等）
 

@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef } from 'react';
 import classnames from 'classnames';
-import { fabric } from 'fabric';
+import { Canvas, TMat2D } from 'fabric/es';
 import throttle from 'lodash-es/throttle';
 import styles from './style.less';
 
@@ -10,12 +10,12 @@ interface CanvasProps {
 }
 
 export interface CanvasHandlers {
-  getCanvas: () => fabric.Canvas | null;
+  getCanvas: () => Canvas | null;
 }
 
-const Canvas = forwardRef<CanvasHandlers, CanvasProps>(({ className, children }, ref) => {
+const XCanvas = forwardRef<CanvasHandlers, CanvasProps>(({ className, children }, ref) => {
   const _canvasRef = useRef<HTMLCanvasElement>(null);
-  const _fabricCanvasRef = useRef<fabric.Canvas>();
+  const _fabricCanvasRef = useRef<Canvas>();
 
   useImperativeHandle(ref, () => ({
     getCanvas: () => {
@@ -30,7 +30,7 @@ const Canvas = forwardRef<CanvasHandlers, CanvasProps>(({ className, children },
     if (!canvas) return;
 
     const parentNode = canvas.parentNode as HTMLDivElement;
-    const fabricCanvas = new fabric.Canvas(canvas, {
+    const fabricCanvas = new Canvas(canvas, {
       width: parentNode.clientWidth,
       height: parentNode.clientHeight,
       selectionColor: 'rgba(180, 180, 180, 0.2)',
@@ -50,8 +50,7 @@ const Canvas = forwardRef<CanvasHandlers, CanvasProps>(({ className, children },
             const { width = 0, height = 0 } = fabricCanvas;
             if (newWidth === width && newHeight === height) return;
 
-            fabricCanvas.setWidth(newWidth);
-            fabricCanvas.setHeight(newHeight);
+            fabricCanvas.setDimensions({ width: newWidth, height: newHeight });
 
             const matrix = fabricCanvas.viewportTransform;
             if (matrix) {
@@ -59,7 +58,7 @@ const Canvas = forwardRef<CanvasHandlers, CanvasProps>(({ className, children },
                 ...matrix.slice(0, 4),
                 matrix[4] + (newWidth - width) / 2,
                 matrix[5] + (newHeight - height) / 2,
-              ]);
+              ] as TMat2D);
             }
             fabricCanvas.renderAll();
           },
@@ -87,4 +86,4 @@ const Canvas = forwardRef<CanvasHandlers, CanvasProps>(({ className, children },
   );
 });
 
-export default Canvas;
+export default XCanvas;

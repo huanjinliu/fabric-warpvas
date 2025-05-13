@@ -1,19 +1,18 @@
-import { fabric } from "fabric";
-import type { Bezier } from "bezier-js";
-import type { Warpvas } from "warpvas";
-import perspective from "warpvas-perspective";
-import defaults from "lodash-es/defaults";
-import type { FabricWarpvas } from "../fabric-warpvas.class";
-import BaseMode, {
-  BaseOptions,
-  SUB_THEME_COLOR,
-  THEME_COLOR,
-} from "./base.class";
 import {
-  calcFabricCanvasCoord,
-  calcFabricRelativeCoord,
-  registerLimitMoveEvent,
-} from "@utils";
+  BasicTransformEvent,
+  Circle,
+  FabricObject,
+  Point,
+  TPointerEvent,
+  TPointerEventInfo,
+} from 'fabric/es';
+import type { Bezier } from 'bezier-js';
+import type { Warpvas } from 'warpvas';
+import perspective from 'warpvas-perspective';
+import defaults from 'lodash-es/defaults';
+import type { FabricWarpvas } from '../fabric-warpvas.class';
+import BaseMode, { BaseOptions, SUB_THEME_COLOR, THEME_COLOR } from './base.class';
+import { calcFabricCanvasCoord, calcFabricRelativeCoord, registerLimitMoveEvent } from '@utils';
 
 /**
  * 变形区域的顶点类型枚举
@@ -24,13 +23,13 @@ import {
  */
 export enum VertexType {
   /** 左上角顶点 */
-  TOP_LEFT = "tl",
+  TOP_LEFT = 'tl',
   /** 右上角顶点 */
-  TOP_RIGHT = "tr",
+  TOP_RIGHT = 'tr',
   /** 左下角顶点 */
-  BOTTOM_LEFT = "bl",
+  BOTTOM_LEFT = 'bl',
   /** 右下角顶点 */
-  BOTTOM_RIGHT = "br",
+  BOTTOM_RIGHT = 'br',
 }
 
 /**
@@ -58,7 +57,7 @@ type PerspectiveOptions = BaseOptions<{
    *
    * @default 'None' 表示禁用移动约束
    */
-  enableConstraintKey?: string | "none";
+  enableConstraintKey?: string | 'none';
 }>;
 
 /**
@@ -108,14 +107,14 @@ class Perspective extends BaseMode<
      * @param object - 默认的控制点对象
      * @returns 作为控制点对象的fabric元素对象，可使用默认对象以外的新对象
      */
-    control: (object: fabric.Object) => fabric.Object;
+    control: (object: FabricObject) => FabricObject;
   },
   PerspectiveOptions
 > {
   /**
    * 变形模式的唯一标识名称
    */
-  public name = "perspective";
+  public name = 'perspective';
 
   /**
    * 模式配置
@@ -125,7 +124,7 @@ class Perspective extends BaseMode<
     subThemeColor: SUB_THEME_COLOR,
     enableDragResize: true,
     minimumDragThreshold: 50,
-    enableConstraintKey: "None",
+    enableConstraintKey: 'None',
   };
 
   /**
@@ -141,7 +140,7 @@ class Perspective extends BaseMode<
    * @internal 仅供内部使用
    */
   private _objectControlMap = new Map<
-    fabric.Object,
+    FabricObject,
     {
       curve: Bezier;
       targetPointIdx: number;
@@ -162,7 +161,7 @@ class Perspective extends BaseMode<
   protected _styleSetters = {
     image: () => {},
     path: () => {},
-    control: (control: fabric.Object) => control,
+    control: (control: FabricObject) => control,
   };
 
   /**
@@ -202,7 +201,7 @@ class Perspective extends BaseMode<
    *
    * 返回当前透视变形模式中的所有控制点对象。
    *
-   * @returns {fabric.Object[]} 返回所有控制点对象的数组
+   * @returns {FabricObject[]} 返回所有控制点对象的数组
    *
    * @example
    * ```typescript
@@ -214,11 +213,11 @@ class Perspective extends BaseMode<
    *
    * // 2.将所有控制点移到最上层
    * perspective.controlObjects.forEach(control => {
-   *   canvas.bringToFront(control);
+   *   canvas.bringObjectToFront(control);
    * });
    * ```
    */
-  get controlObjects(): fabric.Object[] {
+  get controlObjects(): FabricObject[] {
     return Array.from(this._objectControlMap.keys());
   }
 
@@ -280,25 +279,19 @@ class Perspective extends BaseMode<
           // 添加曲线的控制点和控制线
           const path = fabricWarpvas.curvePathMap.get(curve)!;
           const points = curve.points.map((point: Coord) =>
-            fabric.util.transformPoint(
-              new fabric.Point(
-                point.x - path.pathOffset.x,
-                point.y - path.pathOffset.y,
-              ),
+            new Point(point.x - path.pathOffset.x, point.y - path.pathOffset.y).transform(
               path.calcOwnMatrix(),
             ),
           );
 
           // 控制点
-          const control = this._styleSetters.control(
-            this._createDefaultControl(),
-          );
+          const control = this._styleSetters.control(this._createDefaultControl());
           const dotPosition = (
             {
-              top: "first",
-              right: "first",
-              bottom: "last",
-              left: "last",
+              top: 'first',
+              right: 'first',
+              bottom: 'last',
+              left: 'last',
             } as const
           )[direction]!;
           const targetPointIdx = { first: 0, last: 3 }[dotPosition]!;
@@ -322,15 +315,18 @@ class Perspective extends BaseMode<
 
     // 注册控点变换事件
     const registerObjectTransformEvent = () => {
-      const handleMovingControl = (e: fabric.IEvent<Event>) => {
+      const handleMovingControl = (
+        e: BasicTransformEvent<TPointerEvent> & {
+          target: FabricObject;
+        },
+      ) => {
         if (!e.target) return;
 
         const control = this._objectControlMap.get(e.target);
         if (!control) return;
 
         const object = e.target;
-        const { curve, targetPointIdx, rowIndex, colIndex, vertexType } =
-          control;
+        const { curve, targetPointIdx, rowIndex, colIndex, vertexType } = control;
         const path = fabricWarpvas.curvePathMap.get(curve)!;
         const pathMatrix = path.calcOwnMatrix();
         const point = calcFabricRelativeCoord(object, path);
@@ -338,28 +334,14 @@ class Perspective extends BaseMode<
         // 记录旧的位置，如果无效变换则复原原位置
         const cachePoint = { ...curve.points[targetPointIdx] };
         try {
-          fabricWarpvas.warpvas!.updateVertexCoord(
-            rowIndex,
-            colIndex,
-            vertexType,
-            point,
-          );
+          fabricWarpvas.warpvas!.updateVertexCoord(rowIndex, colIndex, vertexType, point);
           fabricWarpvas.render(false, { skipHistoryRecording: true });
         } catch {
           // 复原点的位置
-          fabricWarpvas.warpvas!.updateVertexCoord(
-            rowIndex,
-            colIndex,
-            vertexType,
-            cachePoint,
-          );
+          fabricWarpvas.warpvas!.updateVertexCoord(rowIndex, colIndex, vertexType, cachePoint);
           fabricWarpvas.render(false, { skipHistoryRecording: true });
           const points = curve.points.map((point) =>
-            fabric.util.transformPoint(
-              new fabric.Point(
-                point.x - path.pathOffset.x,
-                point.y - path.pathOffset.y,
-              ),
+            new Point(point.x - path.pathOffset.x, point.y - path.pathOffset.y).transform(
               pathMatrix,
             ),
           );
@@ -371,31 +353,35 @@ class Perspective extends BaseMode<
         } finally {
           // 如果有控制元素，必须放在最顶端
           this.controlObjects.forEach((object) => {
-            fabricCanvas.bringToFront(object);
+            fabricCanvas.bringObjectToFront(object);
           });
         }
       };
 
       // 记录变换数据
-      const handleSaveTransformRecord = (e: fabric.IEvent) => {
+      const handleSaveTransformRecord = (
+        e: BasicTransformEvent<TPointerEvent> & {
+          target: FabricObject;
+        },
+      ) => {
         const target = e.target;
-        if (!target || e.action !== "drag") return;
+        if (!target || e.transform.action !== 'drag') return;
         if (this.controlObjects.includes(target)) {
           fabricWarpvas.record();
         }
       };
-      fabricCanvas.on("object:moving", handleMovingControl);
-      fabricCanvas.on("object:modified", handleSaveTransformRecord);
+      fabricCanvas.on('object:moving', handleMovingControl);
+      fabricCanvas.on('object:modified', handleSaveTransformRecord);
       return () => {
-        fabricCanvas.off("object:moving", handleMovingControl);
-        fabricCanvas.off("object:modified", handleSaveTransformRecord);
+        fabricCanvas.off('object:moving', handleMovingControl);
+        fabricCanvas.off('object:modified', handleSaveTransformRecord);
       };
     };
 
     // 注册拖动修改透视位置事件
     const registerDragResizeEvent = () => {
       // 添加拖动修改透视位置事件
-      const handleMoveDownBefore = (e: fabric.IEvent<Event>) => {
+      const handleMoveDownBefore = (e: TPointerEventInfo<TPointerEvent>) => {
         // 仅左键有效
         if ((e as any).e.buttons !== 1) return;
         if (e.target && e.target.selectable) return;
@@ -405,10 +391,10 @@ class Perspective extends BaseMode<
         let hasResized = false;
 
         fabricCanvas.selection = false;
-        const leftTop = calcFabricCanvasCoord(fabricCanvas, e.pointer!);
+        const leftTop = calcFabricCanvasCoord(fabricCanvas, e.viewportPoint!);
 
-        const handleMove = (e: fabric.IEvent<Event>) => {
-          const bottomRight = calcFabricCanvasCoord(fabricCanvas, e.pointer!);
+        const handleMove = (e: TPointerEventInfo<TPointerEvent>) => {
+          const bottomRight = calcFabricCanvasCoord(fabricCanvas, e.viewportPoint!);
 
           // 尺寸太小不进行操作
           if (
@@ -420,9 +406,7 @@ class Perspective extends BaseMode<
 
           const leftTopPoint = calcFabricRelativeCoord(
             { left: leftTop.x, top: leftTop.y },
-            fabricWarpvas.curvePathMap.get(
-              fabricWarpvas.warpvas!.regionBoundaryCurves[0][0].top,
-            )!,
+            fabricWarpvas.curvePathMap.get(fabricWarpvas.warpvas!.regionBoundaryCurves[0][0].top)!,
           );
           const bottomRightPoint = calcFabricRelativeCoord(
             { left: bottomRight.x, top: bottomRight.y },
@@ -431,50 +415,35 @@ class Perspective extends BaseMode<
             )!,
           );
 
-          fabricWarpvas.warpvas!.updateVertexCoord(
-            0,
-            0,
-            VertexType.TOP_LEFT,
-            leftTopPoint,
-          );
+          fabricWarpvas.warpvas!.updateVertexCoord(0, 0, VertexType.TOP_LEFT, leftTopPoint);
           fabricWarpvas.warpvas!.updateVertexCoord(0, 0, VertexType.TOP_RIGHT, {
             x: bottomRightPoint.x,
             y: leftTopPoint.y,
           });
-          fabricWarpvas.warpvas!.updateVertexCoord(
-            0,
-            0,
-            VertexType.BOTTOM_LEFT,
-            {
-              x: leftTopPoint.x,
-              y: bottomRightPoint.y,
-            },
-          );
-          fabricWarpvas.warpvas!.updateVertexCoord(
-            0,
-            0,
-            VertexType.BOTTOM_RIGHT,
-            bottomRightPoint,
-          );
+          fabricWarpvas.warpvas!.updateVertexCoord(0, 0, VertexType.BOTTOM_LEFT, {
+            x: leftTopPoint.x,
+            y: bottomRightPoint.y,
+          });
+          fabricWarpvas.warpvas!.updateVertexCoord(0, 0, VertexType.BOTTOM_RIGHT, bottomRightPoint);
           fabricWarpvas.render(true, { skipHistoryRecording: true });
 
           hasResized = true;
         };
 
-        const handleUp = (e: fabric.IEvent<Event>) => {
+        const handleUp = (e: TPointerEventInfo<TPointerEvent>) => {
           if (hasResized) fabricWarpvas.record();
           fabricCanvas.selection = true;
-          fabricCanvas.off("mouse:move", handleMove);
-          fabricCanvas.off("mouse:up", handleUp);
+          fabricCanvas.off('mouse:move', handleMove);
+          fabricCanvas.off('mouse:up', handleUp);
         };
 
-        fabricCanvas.on("mouse:move", handleMove);
-        fabricCanvas.on("mouse:up", handleUp);
+        fabricCanvas.on('mouse:move', handleMove);
+        fabricCanvas.on('mouse:up', handleUp);
       };
-      fabricCanvas.on("mouse:down:before", handleMoveDownBefore);
+      fabricCanvas.on('mouse:down:before', handleMoveDownBefore);
 
       return () => {
-        fabricCanvas.off("mouse:down:before", handleMoveDownBefore);
+        fabricCanvas.off('mouse:down:before', handleMoveDownBefore);
       };
     };
 
@@ -483,21 +452,19 @@ class Perspective extends BaseMode<
 
     const registers = [
       [
-        enableConstraintKey.toUpperCase() !== "NONE",
+        enableConstraintKey.toUpperCase() !== 'NONE',
         registerLimitMoveEvent(fabricCanvas, enableConstraintKey),
       ],
       [enableDragResize, registerDragResizeEvent],
       [true, registerObjectTransformEvent],
     ] as const;
 
-    const unregisters = registers.map(
-      ([enable, register]) => enable && register(),
-    );
+    const unregisters = registers.map(([enable, register]) => enable && register());
 
     return () => {
       // 取消各类事件注册
       unregisters.forEach((unregister) => {
-        if (typeof unregister === "function") unregister();
+        if (typeof unregister === 'function') unregister();
       });
 
       // 移除所有交互元素
@@ -513,15 +480,15 @@ class Perspective extends BaseMode<
    *
    * @returns {fabric.Circle} 返回一个 fabric.Circle 实例作为控制点
    */
-  private _createDefaultControl(): fabric.Circle {
-    return new fabric.Circle({
+  private _createDefaultControl(): Circle {
+    return new Circle({
       radius: 4,
       fill: this.options.themeColor,
-      stroke: "#ffffff",
-      paintFirst: "fill",
+      stroke: '#ffffff',
+      paintFirst: 'fill',
       strokeWidth: 1,
-      originX: "center",
-      originY: "center",
+      originX: 'center',
+      originY: 'center',
       hasControls: false,
       hasBorders: false,
     });
