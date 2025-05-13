@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/huanjinliu/fabric-warpvas/compare/v1.0.0...v1.0.1) (2025-05-13)
+
+
+### Bug Fixes
+
+* **mode:** 修复错误隐藏变形模式中间控制点逻辑 ([1354f64](https://github.com/huanjinliu/fabric-warpvas/commit/1354f64c2acd1256bcdbf6631760730ef527a7eb))
+
 ## 1.0.0 (2025-05-13)
 
 
