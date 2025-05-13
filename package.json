@@ -1,6 +1,6 @@
 {
   "name": "fabric-warpvas",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "This JavaScript library helps you efficiently build image warping tools on Fabric.js",
   "keywords": [
     "fabric",
