@@ -2,8 +2,8 @@
 node_modules
 
 # build
-dist
-modes
+/dist
+/modes
 
 # vscode setting
 .vscode
