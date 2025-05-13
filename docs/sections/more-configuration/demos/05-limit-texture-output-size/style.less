@@ -1,0 +1,50 @@
+.demo {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 8px;
+  .preview {
+    flex: 1;
+    .duration {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      text-align: center;
+      color: lightgray;
+    }
+  }
+
+  .code {
+    flex: 1;
+
+    .method {
+      position: absolute;
+      inset: 0;
+      color: #4a7b7b;
+      padding-left: 34px;
+      &.option {
+        cursor: pointer;
+        color: lightgray;
+        box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.04);
+        .text {
+          text-decoration: line-through;
+        }
+        &:hover {
+          color: darkgray;
+          background-color: #f1f1f1;
+        }
+        &::after {
+          content: '点击切换';
+          position: absolute;
+          right: 8px;
+          display: inline-block;
+          font-size: 10px;
+          user-select: none;
+        }
+      }
+    }
+  }
+}

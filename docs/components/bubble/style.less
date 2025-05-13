@@ -1,0 +1,115 @@
+@background-color: #f5f5f5;
+
+.bubble {
+  display: flex;
+  align-items: flex-start;
+  margin: 16px 0;
+
+  & > main {
+    padding: 0 20px;
+    overflow: hidden;
+  }
+
+  &.left {
+    justify-content: flex-start;
+
+    .avatar {
+      transform: scaleX(-1);
+    }
+
+    .content::after {
+      left: -15px;
+      border: 8px solid transparent;
+      border-right-color: @background-color;
+    }
+  }
+
+  &.right {
+    justify-content: flex-start;
+    flex-direction: row-reverse;
+
+    .content::after {
+      right: -15px;
+      border: 8px solid transparent;
+      border-left-color: @background-color;
+    }
+  }
+
+  &.long {
+    main {
+      flex: 1;
+    }
+
+    .content {
+      width: 100%;
+    }
+  }
+
+  .avatar {
+    flex: none;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: @background-color;
+    text-align: center;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      // margin-top: -5px;
+    }
+  }
+
+  .block {
+    flex: none;
+    width: 48px;
+    height: 48px;
+  }
+
+  .content {
+    max-width: 100%;
+    position: relative;
+    padding: 12px 16px;
+    display: inline-block;
+    background-color: @background-color;
+    color: #333;
+    font-size: 12px;
+    border-radius: 8px;
+    line-height: 24px;
+
+    & > div > p {
+      margin: 0.5em 0;
+    }
+
+    &::after {
+      content: '';
+      display: block;
+      // width: 8px;
+      // height: 8px;
+      // background-color: red;
+      position: absolute;
+      top: 10px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    & > main {
+      padding: 0 12px;
+      overflow: hidden;
+    }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .block {
+      width: 36px;
+      height: 36px;
+    }
+  }
+}

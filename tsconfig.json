@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "ignoreDeprecations": "5.0",
+    "jsx": "react",
+    "target": "ES6",
+    "lib": ["dom", "ESNext"],
+    "module": "ES6",
+    "moduleResolution": "bundler",
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": "./dist",
+    "esModuleInterop": true,
+    "types": ["jest"],
+    "forceConsistentCasingInFileNames": true,
+    "importsNotUsedAsValues": "error",
+    "verbatimModuleSyntax": false,
+    "strict": true,
+    "noImplicitAny": false,
+    "noImplicitThis": false,
+    "skipLibCheck": false,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "@": ["src"],
+      "@core": ["src/core"],
+      "@utils": ["src/utils"],
+      "@modes": ["src/modes"],
+      "@theme": ["src/theme"]
+    }
+  }
+}

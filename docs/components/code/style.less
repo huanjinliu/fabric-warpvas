@@ -1,0 +1,63 @@
+@keyframes toggle-animation {
+  0% {
+    top: -2px;
+  }
+  50% {
+    top: 2px;
+  }
+  100% {
+    top: -2px;
+  }
+}
+.code {
+  position: relative;
+  min-width: 200px;
+  background-color: #fefefe;
+  .content {
+    overflow-y: hidden;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    transition: max-height 300ms;
+    & > pre {
+      font-size: 12px;
+      line-height: 32px;
+      min-width: 100%;
+      display: inline-block;
+      & > * {
+        height: 32px;
+        text-wrap: nowrap;
+        counter-increment: line;
+        &::before {
+          position: relative;
+          content: counter(line);
+          display: inline-block;
+          width: 20px;
+          text-align: center;
+          font-size: 10px;
+          color: lightgray;
+          z-index: 1;
+        }
+      }
+      & > *:nth-child(odd) {
+        background-color: #f9f9f9;
+      }
+      .line {
+        position: relative;
+      }
+    }
+  }
+  .toggle {
+    position: sticky;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    text-align: center;
+    width: 100%;
+    background: linear-gradient(to top, white, rgba(255, 255, 255, 0.6));
+    cursor: pointer;
+    .icon {
+      position: relative;
+      animation: toggle-animation 500ms ease infinite;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# Dependency directories
+node_modules
+
+# build
+dist
+modes
+
+# vscode setting
+.vscode
+
+# other
+.DS_Store
+stats.html

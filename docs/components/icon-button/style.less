@@ -1,0 +1,19 @@
+.icon-button {
+  position: relative;
+  .icon {
+    display: inline-block;
+    border: unset;
+    background-color: unset;
+    cursor: pointer;
+    opacity: 0.5;
+    transition: all 0.1s;
+    user-select: none;
+  }
+  &.active .icon {
+    opacity: 1;
+    color: #333;
+  }
+  &:hover .icon {
+    opacity: 1;
+  }
+}

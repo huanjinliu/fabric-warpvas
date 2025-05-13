@@ -1,0 +1,38 @@
+.segment {
+  display: inline-flex;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+  .option {
+    position: relative;
+    min-width: 40px;
+    text-align: center;
+    line-height: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    color: darkgray;
+    padding: 0 4px;
+    transition: all 75ms;
+    background-color: white;
+    .tooltip {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(3px);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    &.selected {
+      color: currentColor;
+      background: #f1f1f1;
+    }
+    &:hover {
+      color: currentColor;
+      background-color: #f1f1f1;
+      .tooltip {
+        opacity: 1;
+      }
+    }
+  }
+}

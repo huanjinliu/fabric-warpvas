@@ -1,0 +1,21 @@
+.divide {
+  position: relative;
+  text-align: center;
+  font-size: 12px;
+  padding: 24px 0 16px;
+  & > * {
+    text-decoration: none;
+    color: darkgray !important;
+    &::before,
+    &::after {
+      content: '-';
+      margin: 0 8px;
+    }
+  }
+  & > a {
+    scroll-behavior: smooth;
+    &:hover {
+      color: gray !important;
+    }
+  }
+}

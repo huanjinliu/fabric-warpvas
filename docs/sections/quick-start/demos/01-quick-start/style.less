@@ -1,0 +1,36 @@
+.demo {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  flex-wrap: wrap;
+  background-color: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: 8px;
+  .canvas {
+    min-height: 300px;
+    min-width: 200px;
+    flex: 1;
+  }
+  .code {
+    flex: 1;
+  }
+  .upload-button {
+    display: inline-flex;
+    align-items: center;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: 0 4px;
+    line-height: 20px;
+    font-size: 10px;
+    background-color: white;
+    border-radius: 6px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    box-shadow: 1px 1px 3px 0px rgba(0, 0, 0, 0.04);
+    margin: 0 4px;
+    &:hover {
+      color: gray;
+    }
+  }
+}
