@@ -554,38 +554,38 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
         });
       });
       // 控制点选中才显示曲线控制点
-      // majorControl.on('selected', () => {
-      //   if (fabricCanvas.getActiveObject() === majorControl) {
-      //     subControls.forEach(({ object, line }) => {
-      //       object.set('visible', true);
-      //       line.set('visible', true);
-      //       majorControl.canvas?.requestRenderAll();
-      //     });
-      //   }
-      // });
-      // majorControl.on('deselected', () => {
-      //   subControls.forEach(({ object, line }) => {
-      //     object.set('visible', false);
-      //     line.set('visible', false);
-      //     majorControl.canvas?.requestRenderAll();
-      //   });
-      // });
-      // subControls.forEach(({ object }) => {
-      //   object.on('selected', () => {
-      //     subControls.forEach(({ object, line }) => {
-      //       object.set('visible', true);
-      //       line.set('visible', true);
-      //       object.canvas?.requestRenderAll();
-      //     });
-      //   });
-      //   object.on('deselected', () => {
-      //     subControls.forEach(({ object, line }) => {
-      //       object.set('visible', false);
-      //       line.set('visible', false);
-      //       object.canvas?.requestRenderAll();
-      //     });
-      //   });
-      // });
+      majorControl.on('selected', () => {
+        if (fabricCanvas.getActiveObject() === majorControl) {
+          subControls.forEach(({ object, line }) => {
+            object.set('visible', true);
+            line.set('visible', true);
+            majorControl.canvas?.requestRenderAll();
+          });
+        }
+      });
+      majorControl.on('deselected', () => {
+        subControls.forEach(({ object, line }) => {
+          object.set('visible', false);
+          line.set('visible', false);
+          majorControl.canvas?.requestRenderAll();
+        });
+      });
+      subControls.forEach(({ object }) => {
+        object.on('selected', () => {
+          subControls.forEach(({ object, line }) => {
+            object.set('visible', true);
+            line.set('visible', true);
+            object.canvas?.requestRenderAll();
+          });
+        });
+        object.on('deselected', () => {
+          subControls.forEach(({ object, line }) => {
+            object.set('visible', false);
+            line.set('visible', false);
+            object.canvas?.requestRenderAll();
+          });
+        });
+      });
     });
 
     // 注册控点变换事件

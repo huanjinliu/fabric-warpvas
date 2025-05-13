@@ -61831,12 +61831,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        width: e,
 	        height: o
 	      } = this,
-	      r = -e / 2,
-	      s = -o / 2,
+	      s = -e / 2,
+	      r = -o / 2,
 	      n = this.rx ? Math.min(this.rx, e / 2) : 0,
 	      i = this.ry ? Math.min(this.ry, o / 2) : 0,
 	      l = 0 !== n || 0 !== i;
-	    t.beginPath(), t.moveTo(r + n, s), t.lineTo(r + e - n, s), l && t.bezierCurveTo(r + e - S$2 * n, s, r + e, s + S$2 * i, r + e, s + i), t.lineTo(r + e, s + o - i), l && t.bezierCurveTo(r + e, s + o - S$2 * i, r + e - S$2 * n, s + o, r + e - n, s + o), t.lineTo(r + n, s + o), l && t.bezierCurveTo(r + S$2 * n, s + o, r, s + o - S$2 * i, r, s + o - i), t.lineTo(r, s + i), l && t.bezierCurveTo(r, s + S$2 * i, r + S$2 * n, s, r + n, s), t.closePath(), this._renderPaintInOrder(t);
+	    t.beginPath(), t.moveTo(s + n, r), t.lineTo(s + e - n, r), l && t.bezierCurveTo(s + e - S$2 * n, r, s + e, r + S$2 * i, s + e, r + i), t.lineTo(s + e, r + o - i), l && t.bezierCurveTo(s + e, r + o - S$2 * i, s + e - S$2 * n, r + o, s + e - n, r + o), t.lineTo(s + n, r + o), l && t.bezierCurveTo(s + S$2 * n, r + o, s, r + o - S$2 * i, s, r + o - i), t.lineTo(s, r + i), l && t.bezierCurveTo(s, r + S$2 * i, s + S$2 * n, r, s + n, r), t.closePath(), this._renderPaintInOrder(t);
 	  }
 	  toObject() {
 	    let t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : [];
@@ -61847,22 +61847,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      width: t,
 	      height: e,
 	      rx: o,
-	      ry: r
+	      ry: s
 	    } = this;
-	    return ["<rect ", "COMMON_PARTS", 'x="'.concat(-t / 2, '" y="').concat(-e / 2, '" rx="').concat(o, '" ry="').concat(r, '" width="').concat(t, '" height="').concat(e, '" />\n')];
+	    return ["<rect ", "COMMON_PARTS", 'x="'.concat(-t / 2, '" y="').concat(-e / 2, '" rx="').concat(o, '" ry="').concat(s, '" width="').concat(t, '" height="').concat(e, '" />\n')];
 	  }
 	  static async fromElement(t, e, o) {
-	    const r$1 = Ms(t, this.ATTRIBUTE_NAMES, o),
+	    const s$1 = Ms(t, this.ATTRIBUTE_NAMES, o),
 	      {
-	        left: s$1 = 0,
+	        left: r$1 = 0,
 	        top: n = 0,
 	        width: a = 0,
 	        height: h = 0,
 	        visible: u = !0
-	      } = r$1,
-	      p = r(r$1, w$1);
-	    return new this(s(s(s({}, e), p), {}, {
-	      left: s$1,
+	      } = s$1,
+	      d = r(s$1, w$1);
+	    return new this(s(s(s({}, e), d), {}, {
+	      left: r$1,
 	      top: n,
 	      width: a,
 	      height: h,
@@ -61874,18 +61874,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	  rx: 0,
 	  ry: 0
 	}), t$1(E$1, "ATTRIBUTE_NAMES", [...rs, "x", "y", "rx", "ry", "width", "height"]), I$2.setClass(E$1), I$2.setSVGClass(E$1);
-	const k$1 = ["x1", "y1", "x2", "y2"],
-	  R$1 = ["x1", "y1", "x2", "y2"],
+	const R$1 = ["x1", "y1", "x2", "y2"],
+	  k$1 = ["x1", "y1", "x2", "y2"],
 	  P$1 = ["x1", "x2", "y1", "y2"];
-	let S$1 = class S extends ss {
+	let A$1 = class A extends ss {
 	  constructor() {
-	    let [t, e, o, r] = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : [0, 0, 0, 0],
-	      s = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
-	    super(), Object.assign(this, S.ownDefaults), this.setOptions(s), this.x1 = t, this.x2 = o, this.y1 = e, this.y2 = r, this._setWidthHeight();
+	    let [t, e, o, s] = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : [0, 0, 0, 0],
+	      r = arguments.length > 1 && void 0 !== arguments[1] ? arguments[1] : {};
+	    super(), Object.assign(this, A.ownDefaults), this.setOptions(r), this.x1 = t, this.x2 = o, this.y1 = e, this.y2 = s, this._setWidthHeight();
 	    const {
 	      left: n,
 	      top: i
-	    } = s;
+	    } = r;
 	    "number" == typeof n && this.set(O$1, n), "number" == typeof i && this.set(F$1, i);
 	  }
 	  _setWidthHeight() {
@@ -61893,11 +61893,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      x1: t,
 	      y1: e,
 	      x2: o,
-	      y2: r
+	      y2: s
 	    } = this;
-	    this.width = Math.abs(o - t), this.height = Math.abs(r - e);
+	    this.width = Math.abs(o - t), this.height = Math.abs(s - e);
 	    const {
-	        left: s,
+	        left: r,
 	        top: n,
 	        width: i,
 	        height: a
@@ -61906,9 +61906,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        y: e
 	      }, {
 	        x: o,
-	        y: r
+	        y: s
 	      }]),
-	      l = new q(s + i / 2, n + a / 2);
+	      l = new q(r + i / 2, n + a / 2);
 	    this.setPositionByOrigin(l, _$1, _$1);
 	  }
 	  _set(t, e) {
@@ -61919,8 +61919,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    const e = this.calcLinePoints();
 	    t.moveTo(e.x1, e.y1), t.lineTo(e.x2, e.y2), t.lineWidth = this.strokeWidth;
 	    const o = t.strokeStyle;
-	    var r;
-	    _t(this.stroke) ? t.strokeStyle = this.stroke.toLive(t) : t.strokeStyle = null !== (r = this.stroke) && void 0 !== r ? r : t.fillStyle, this.stroke && this._renderStroke(t), t.strokeStyle = o;
+	    var s;
+	    _t(this.stroke) ? t.strokeStyle = this.stroke.toLive(t) : t.strokeStyle = null !== (s = this.stroke) && void 0 !== s ? s : t.fillStyle, this.stroke && this._renderStroke(t), t.strokeStyle = o;
 	  }
 	  _findCenterFromElement() {
 	    return new q((this.x1 + this.x2) / 2, (this.y1 + this.y2) / 2);
@@ -61938,15 +61938,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        x1: t,
 	        x2: e,
 	        y1: o,
-	        y2: r,
-	        width: s,
+	        y2: s,
+	        width: r,
 	        height: n
 	      } = this,
 	      i = t <= e ? -1 : 1,
-	      a = o <= r ? -1 : 1;
+	      a = o <= s ? -1 : 1;
 	    return {
-	      x1: i * s / 2,
-	      x2: i * -s / 2,
+	      x1: i * r / 2,
+	      x2: i * -r / 2,
 	      y1: a * n / 2,
 	      y2: a * -n / 2
 	    };
@@ -61956,43 +61956,43 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      x1: t,
 	      x2: e,
 	      y1: o,
-	      y2: r
+	      y2: s
 	    } = this.calcLinePoints();
-	    return ["<line ", "COMMON_PARTS", 'x1="'.concat(t, '" y1="').concat(o, '" x2="').concat(e, '" y2="').concat(r, '" />\n')];
+	    return ["<line ", "COMMON_PARTS", 'x1="'.concat(t, '" y1="').concat(o, '" x2="').concat(e, '" y2="').concat(s, '" />\n')];
 	  }
 	  static async fromElement(t, e, o) {
-	    const r$1 = Ms(t, this.ATTRIBUTE_NAMES, o),
+	    const s = Ms(t, this.ATTRIBUTE_NAMES, o),
 	      {
-	        x1: s = 0,
+	        x1: r$1 = 0,
 	        y1: n = 0,
 	        x2: i = 0,
 	        y2: a = 0
-	      } = r$1;
-	    return new this([s, n, i, a], r(r$1, k$1));
+	      } = s;
+	    return new this([r$1, n, i, a], r(s, R$1));
 	  }
 	  static fromObject(t) {
 	    let {
 	        x1: e,
 	        y1: o,
-	        x2: r$1,
-	        y2: s$1
+	        x2: s$1,
+	        y2: r$1
 	      } = t,
-	      n = r(t, R$1);
+	      n = r(t, k$1);
 	    return this._fromObject(s(s({}, n), {}, {
-	      points: [e, o, r$1, s$1]
+	      points: [e, o, s$1, r$1]
 	    }), {
 	      extraParam: "points"
 	    });
 	  }
 	};
-	t$1(S$1, "type", "Line"), t$1(S$1, "cacheProperties", [...ge, ...P$1]), t$1(S$1, "ATTRIBUTE_NAMES", rs.concat(P$1)), I$2.setClass(S$1), I$2.setSVGClass(S$1);
+	t$1(A$1, "type", "Line"), t$1(A$1, "cacheProperties", [...ge, ...P$1]), t$1(A$1, "ATTRIBUTE_NAMES", rs.concat(P$1)), I$2.setClass(A$1), I$2.setSVGClass(A$1);
 	const {
-	  calcMatrix: I$1
+	  calcMatrix: S$1
 	} = A$3;
-	var A$1;
+	var I$1;
 	!function (t) {
 	  t.TOP_LEFT = "tl", t.TOP_RIGHT = "tr", t.BOTTOM_LEFT = "bl", t.BOTTOM_RIGHT = "br";
-	}(A$1 || (A$1 = {}));
+	}(I$1 || (I$1 = {}));
 	let B$1 = class B extends ye$1 {
 	  constructor(t = {}) {
 	    super(t), this.name = "warp", this.options = {
@@ -62012,24 +62012,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	  static execute(t) {
 	    if (!t.regionCurves) return [];
 	    const e = [];
-	    return t.regionBoundaryCurves.forEach((o, r) => {
-	      const s = [];
+	    return t.regionBoundaryCurves.forEach((o, s) => {
+	      const r = [];
 	      o.forEach((e, o) => {
 	        const n = [],
 	          {
 	            vertical: i,
 	            horizontal: a
-	          } = t.regionCurves[r][o];
+	          } = t.regionCurves[s][o];
 	        for (let t = 0; t < a.length; t++) for (let e = 0; e < i.length; e++) {
 	          const o = i[e].get(t / (a.length - 1)),
-	            r = a[t].get(e / (i.length - 1));
+	            s = a[t].get(e / (i.length - 1));
 	          n.push({
-	            x: (o.x + r.x) / 2,
-	            y: (o.y + r.y) / 2
+	            x: (o.x + s.x) / 2,
+	            y: (o.y + s.y) / 2
 	          });
 	        }
-	        s.push(n);
-	      }), e.push(s);
+	        r.push(n);
+	      }), e.push(r);
 	    }), e;
 	  }
 	  get controlObjects() {
@@ -62051,9 +62051,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    var e;
 	    const o = t.canvas;
 	    if (!o) return;
-	    const r = null === (e = t.warpvas) || void 0 === e ? void 0 : e.regionBoundaryCurves;
-	    if (!r) return;
-	    const s = [],
+	    const s = null === (e = t.warpvas) || void 0 === e ? void 0 : e.regionBoundaryCurves;
+	    if (!s) return;
+	    const r = [],
 	      n = new Map();
 	    this._insertControlObject = this._styleSetters.insertControl(this._createDefaultInsertControl(this.options.themeColor));
 	    const i = () => {
@@ -62073,7 +62073,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        null === (e = t.majorControl.canvas) || void 0 === e || e.bringObjectToFront(t.majorControl);
 	      }), null === (e = null === (t = this._insertControlObject) || void 0 === t ? void 0 : t.canvas) || void 0 === e || e.bringObjectToFront(this._insertControlObject), o.renderOnAddRemove = !0, o.requestRenderAll();
 	    };
-	    r.forEach((e, r) => {
+	    s.forEach((e, s) => {
 	      e.forEach((e, i) => {
 	        const a = e;
 	        Object.entries(a).forEach(([e]) => {
@@ -62084,30 +62084,30 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	            if (0 === a || 3 === a) return;
 	            const c = [0, 0, 3, 3][a],
 	              u = h[c],
-	              p = {
-	                top: [A$1.TOP_LEFT, A$1.TOP_RIGHT],
-	                bottom: [A$1.BOTTOM_LEFT, A$1.BOTTOM_RIGHT],
-	                right: [A$1.TOP_RIGHT, A$1.BOTTOM_RIGHT],
-	                left: [A$1.TOP_LEFT, A$1.BOTTOM_LEFT]
+	              d = {
+	                top: [I$1.TOP_LEFT, I$1.TOP_RIGHT],
+	                bottom: [I$1.BOTTOM_LEFT, I$1.BOTTOM_RIGHT],
+	                right: [I$1.TOP_RIGHT, I$1.BOTTOM_RIGHT],
+	                left: [I$1.TOP_LEFT, I$1.BOTTOM_LEFT]
 	              }[e][Math.sign(c)],
-	              f = r + (p.startsWith("b") ? 1 : 0),
-	              d = i + (p.endsWith("r") ? 1 : 0),
-	              y = `${f}-${d}`;
-	            let b = this._positionControlMap.get(y);
+	              f = s + (d.startsWith("b") ? 1 : 0),
+	              p = i + (d.endsWith("r") ? 1 : 0),
+	              v = `${f}-${p}`;
+	            let b = this._positionControlMap.get(v);
 	            if (!b) {
 	              const t = this._styleSetters.control(this._createDefaultControl(this.options.themeColor));
 	              t.set({
 	                left: u.x,
 	                top: u.y
-	              }), o.add(t), s.push(t), b = {
+	              }), o.add(t), r.push(t), b = {
 	                majorControl: t,
 	                curve: l,
-	                rowIndex: r,
+	                rowIndex: s,
 	                colIndex: i,
 	                splitDotRowIndex: f,
-	                splitDotColIndex: d,
+	                splitDotColIndex: p,
 	                vertexIndex: c,
-	                vertexType: p,
+	                vertexType: d,
 	                subControls: []
 	              };
 	            }
@@ -62117,7 +62117,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	                left: t.x,
 	                top: t.y
 	              });
-	              const r = new S$1([t.x, t.y, u.x, u.y], {
+	              const s = new A$1([t.x, t.y, u.x, u.y], {
 	                stroke: "rgba(200, 200, 200, 0.8)",
 	                strokeWidth: 1,
 	                strokeUniform: !0,
@@ -62127,43 +62127,79 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	                originX: "center",
 	                originY: "center"
 	              });
-	              this._styleSetters.line(r), o.add(r, e), s.push(r, e), b.subControls.push({
+	              this._styleSetters.line(s), o.add(s, e), r.push(s, e), b.subControls.push({
 	                attach: [l, c],
 	                object: e,
-	                line: r,
+	                line: s,
 	                index: a
 	              });
 	            }
-	            this._positionControlMap.set(y, b), n.set(b.majorControl, y);
+	            this._positionControlMap.set(v, b), n.set(b.majorControl, v);
 	          });
 	        });
 	      });
 	    }), i(), this._positionControlMap.forEach(e => {
 	      const {
-	        majorControl: o,
+	        majorControl: s,
 	        subControls: r
 	      } = e;
 	      r.forEach(({
 	        attach: [e],
-	        object: r,
-	        line: s,
+	        object: o,
+	        line: r,
 	        index: n
 	      }) => {
-	        r.on("moving", () => {
+	        o.on("moving", () => {
 	          const a = t.curvePathMap.get(e),
-	            l = Vs(r, a),
+	            l = Vs(o, a),
 	            c = e.points[n],
 	            h = l.x - c.x,
 	            u = l.y - c.y;
-	          r.set({
-	            angle: 90 + 180 * Math.atan2(r.top - o.top, r.left - o.left) / Math.PI
-	          }).setCoords(), e.points[n].x += h, e.points[n].y += u, s.set({
-	            x1: r.left,
-	            y1: r.top,
-	            x2: o.left,
-	            y2: o.top
+	          o.set({
+	            angle: 90 + 180 * Math.atan2(o.top - s.top, o.left - s.left) / Math.PI
+	          }).setCoords(), e.points[n].x += h, e.points[n].y += u, r.set({
+	            x1: o.left,
+	            y1: o.top,
+	            x2: s.left,
+	            y2: s.top
 	          }), t.requestRender(!1, i, {
 	            skipHistoryRecording: !0
+	          });
+	        });
+	      }), s.on("selected", () => {
+	        o.getActiveObject() === s && r.forEach(({
+	          object: t,
+	          line: e
+	        }) => {
+	          var o;
+	          t.set("visible", !0), e.set("visible", !0), null === (o = s.canvas) || void 0 === o || o.requestRenderAll();
+	        });
+	      }), s.on("deselected", () => {
+	        r.forEach(({
+	          object: t,
+	          line: e
+	        }) => {
+	          var o;
+	          t.set("visible", !1), e.set("visible", !1), null === (o = s.canvas) || void 0 === o || o.requestRenderAll();
+	        });
+	      }), r.forEach(({
+	        object: t
+	      }) => {
+	        t.on("selected", () => {
+	          r.forEach(({
+	            object: t,
+	            line: e
+	          }) => {
+	            var o;
+	            t.set("visible", !0), e.set("visible", !0), null === (o = t.canvas) || void 0 === o || o.requestRenderAll();
+	          });
+	        }), t.on("deselected", () => {
+	          r.forEach(({
+	            object: t,
+	            line: e
+	          }) => {
+	            var o;
+	            t.set("visible", !1), e.set("visible", !1), null === (o = t.canvas) || void 0 === o || o.requestRenderAll();
 	          });
 	        });
 	      });
@@ -62175,17 +62211,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      c = [["NONE" !== a.toUpperCase(), Bs(o, a)], [!0, () => {
 	        const e = () => {
 	            const e = o.getActiveObjects(),
-	              r = new Set();
+	              s = new Set();
 	            for (const t of e) {
 	              const e = n.get(t);
 	              if (!e) continue;
-	              this._positionControlMap.get(e) && r.add(t);
+	              this._positionControlMap.get(e) && s.add(t);
 	            }
 	            Array.from(this._positionControlMap.values()).forEach(e => {
-	              if (!r.has(e.majorControl)) return;
+	              if (!s.has(e.majorControl)) return;
 	              const {
 	                  curve: o,
-	                  majorControl: s,
+	                  majorControl: r,
 	                  rowIndex: n,
 	                  colIndex: i,
 	                  vertexType: a,
@@ -62193,83 +62229,83 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	                  subControls: c
 	                } = e,
 	                h = t.curvePathMap.get(o),
-	                u = lt(s.calcTransformMatrix(!1)),
-	                p = {
+	                u = lt(r.calcTransformMatrix(!1)),
+	                d = {
 	                  left: u.translateX,
 	                  top: u.translateY
 	                },
-	                f = Vs(p, h),
-	                d = o.points[l],
-	                y = new q(d.x - h.pathOffset.x, d.y - h.pathOffset.y).transform(h.calcOwnMatrix()),
-	                b = f.x - d.x,
-	                x = f.y - d.y,
-	                C = p.left - y.x,
-	                m = p.top - y.y;
+	                f = Vs(d, h),
+	                p = o.points[l],
+	                v = new q(p.x - h.pathOffset.x, p.y - h.pathOffset.y).transform(h.calcOwnMatrix()),
+	                b = f.x - p.x,
+	                x = f.y - p.y,
+	                C = d.left - v.x,
+	                m = d.top - v.y;
 	              t.warpvas.updateVertexCoord(n, i, a, f, !1), c.forEach(({
 	                attach: t,
 	                object: e,
 	                line: o,
-	                index: r
+	                index: s
 	              }) => {
-	                t[0].points[r].x += b, t[0].points[r].y += x, e.set({
+	                t[0].points[s].x += b, t[0].points[s].y += x, e.set({
 	                  left: e.left + C,
 	                  top: e.top + m
 	                }).setCoords(), o.set({
 	                  x1: e.left,
 	                  y1: e.top,
-	                  x2: p.left,
-	                  y2: p.top
+	                  x2: d.left,
+	                  y2: d.top
 	                });
 	              });
-	            }), r.size && (t.requestRender(!1, i, {
+	            }), s.size && (t.requestRender(!1, i, {
 	              skipHistoryRecording: !0
-	            }), r.clear());
+	            }), s.clear());
 	          },
-	          r = e => {
+	          s = e => {
 	            const o = e.target;
 	            o && "drag" === e.transform.action && ("activeSelection" === o.type && o.getObjects().some(this.controlObjects.includes.bind(this.controlObjects)) || this.controlObjects.includes(o) || this.subControlObjects.includes(o)) && t.record();
 	          };
-	        return o.on("object:moving", e), o.on("object:modified", r), () => {
-	          o.off("object:moving", e), o.off("object:modified", r);
+	        return o.on("object:moving", e), o.on("object:modified", s), () => {
+	          o.off("object:moving", e), o.off("object:modified", s);
 	        };
 	      }], [!0, () => {
 	        const t = () => {
 	          var t;
 	          const e = o.getActiveObjects(),
-	            r = new Set();
+	            s = new Set();
 	          for (const t of e) {
 	            const e = n.get(t);
 	            if (!e) continue;
-	            this._positionControlMap.get(e) && r.add(t);
+	            this._positionControlMap.get(e) && s.add(t);
 	          }
 	          Array.from(n.keys()).forEach(t => {
 	            t.set({
 	              opacity: 1,
-	              fill: r.has(t) ? this.options.subThemeColor : this.options.themeColor
+	              fill: s.has(t) ? this.options.subThemeColor : this.options.themeColor
 	            });
-	          }), r.size && (null === (t = o.getActiveObject()) || void 0 === t || t.set({
+	          }), s.size && (null === (t = o.getActiveObject()) || void 0 === t || t.set({
 	            perPixelTargetFind: !0,
 	            hasControls: !1,
 	            hasBorders: !1
-	          }), r.clear()), o.requestRenderAll();
+	          }), s.clear()), o.requestRenderAll();
 	        };
 	        return o.on("selection:created", t), o.on("selection:updated", t), o.on("selection:cleared", t), () => {
 	          o.off("selection:created", t), o.off("selection:updated", t), o.off("selection:cleared", t);
 	        };
 	      }], [l, () => {
 	        let e = null,
-	          r = null,
+	          s = null,
 	          n = null;
 	        const a = a => {
 	          if (1 !== a.e.buttons) return;
 	          const l = performance.now(),
 	            c = a.target === this._insertControlObject,
 	            h = a.target === t.warpvasObject;
-	          if (a.viewportPoint && this._insertControlObject && (c ? o.selection = !1 : (e = null, r = null, n = null, o.remove(this._insertControlObject)), h)) {
-	            const s = Rs(o, a.viewportPoint),
+	          if (a.viewportPoint && this._insertControlObject && (c ? o.selection = !1 : (e = null, s = null, n = null, o.remove(this._insertControlObject)), h)) {
+	            const r = Rs(o, a.viewportPoint),
 	              i = Vs({
-	                left: s.x,
-	                top: s.y
+	                left: r.x,
+	                top: r.y
 	              }, t.paths[0]);
 	            if (n = t.warpvas.getHitInfo(i), n) {
 	              const {
@@ -62277,12 +62313,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	                  after: o,
 	                  clickPart: a
 	                } = n,
-	                l = I$1([[o[0], o[1], o[3]], [o[2], o[1], o[3]]][a], [[t[0], t[1], t[3]], [t[2], t[1], t[3]]][a]);
-	              e = s, r = i.transform(ot(l));
+	                l = S$1([[o[0], o[1], o[3]], [o[2], o[1], o[3]]][a], [[t[0], t[1], t[3]], [t[2], t[1], t[3]]][a]);
+	              e = r, s = i.transform(ot(l));
 	            }
 	          }
 	          const u = e => {
-	              var r;
+	              var s;
 	              if (!e.viewportPoint) return;
 	              if (o.selection) return;
 	              if (!this._insertControlObject) return;
@@ -62295,13 +62331,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	                  y: a.y - this._insertControlObject.top
 	                },
 	                h = new WeakSet([]);
-	              n.forEachRegionBoundCoords((e, o, r, s) => {
-	                if (h.has(s)) return s.points;
-	                h.add(s);
-	                const n = t.curvePathMap.get(s),
+	              n.forEachRegionBoundCoords((e, o, s, r) => {
+	                if (h.has(r)) return r.points;
+	                h.add(r);
+	                const n = t.curvePathMap.get(r),
 	                  i = new q(l.x, l.y).transform(ot(n.calcOwnMatrix()), !0);
-	                return s.points.map(t => (t.x += i.x, t.y += i.y, t));
-	              }), [this._insertControlObject, t.warpvasObject, ...(null !== (r = t.paths) && void 0 !== r ? r : []), ...s].forEach(t => {
+	                return r.points.map(t => (t.x += i.x, t.y += i.y, t));
+	              }), [this._insertControlObject, t.warpvasObject, ...(null !== (s = t.paths) && void 0 !== s ? s : []), ...r].forEach(t => {
 	                t.set({
 	                  left: t.left + l.x,
 	                  top: t.top + l.y
@@ -62310,14 +62346,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	                skipHistoryRecording: !0
 	              });
 	            },
-	            p = s => {
+	            d = r => {
 	              var i;
-	              performance.now() - l < 200 && s.viewportPoint && this._insertControlObject && (c ? (o.remove(this._insertControlObject), null === (i = t.warpvas) || void 0 === i || i.splitRegionByPoint(n.rowIndex, n.colIndex, r), t.render(!0)) : e && (this._insertControlObject.set({
+	              performance.now() - l < 200 && r.viewportPoint && this._insertControlObject && (c ? (o.remove(this._insertControlObject), null === (i = t.warpvas) || void 0 === i || i.splitRegionByPoint(n.rowIndex, n.colIndex, s), t.render(!0)) : e && (this._insertControlObject.set({
 	                left: e.x,
 	                top: e.y
-	              }).setCoords(), o.add(this._insertControlObject), o.requestRenderAll())), c && t.record(), o.selection = !0, o.off("mouse:up", p), o.off("mouse:move", u);
+	              }).setCoords(), o.add(this._insertControlObject), o.requestRenderAll())), c && t.record(), o.selection = !0, o.off("mouse:up", d), o.off("mouse:move", u);
 	            };
-	          o.on("mouse:move", u), o.on("mouse:up", p);
+	          o.on("mouse:move", u), o.on("mouse:up", d);
 	        };
 	        return o.on("mouse:down", a), () => {
 	          o.off("mouse:down", a);
@@ -62325,34 +62361,34 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      }], [l, () => {
 	        const e = e => {
 	            var o;
-	            const r = [];
+	            const s = [];
 	            for (const t of e) {
 	              const e = n.get(t);
 	              if (!e) continue;
 	              const o = this._positionControlMap.get(e);
-	              o && r.push(o);
+	              o && s.push(o);
 	            }
-	            r && (null === (o = t.warpvas) || void 0 === o || o.removeRegion(...r.map(t => ({
+	            s && (null === (o = t.warpvas) || void 0 === o || o.removeRegion(...s.map(t => ({
 	              row: t.splitDotRowIndex,
 	              column: t.splitDotColIndex
 	            }))), t.render(!0));
 	          },
-	          r = t => {
+	          s = t => {
 	            if (["Delete", "Backspace"].includes(t.key)) {
 	              const t = o.getActiveObjects();
 	              if (!t) return;
 	              e(t);
 	            }
 	          };
-	        return window.addEventListener("keydown", r), () => {
-	          window.removeEventListener("keydown", r);
+	        return window.addEventListener("keydown", s), () => {
+	          window.removeEventListener("keydown", s);
 	        };
 	      }]],
 	      h = c.map(([t, e]) => t && e());
 	    return () => {
 	      h.forEach(t => {
 	        "function" == typeof t && t();
-	      }), this._insertControlObject && o.remove(this._insertControlObject), o.remove(...s), this._positionControlMap.clear(), n.clear();
+	      }), this._insertControlObject && o.remove(this._insertControlObject), o.remove(...r), this._positionControlMap.clear(), n.clear();
 	    };
 	  }
 	  _createDefaultControl(t) {
