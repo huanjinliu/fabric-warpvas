@@ -1,4 +1,4 @@
-import React, { useEffect, createContext, useState, useMemo } from 'react';
+import React, { useEffect, createContext, useState, useMemo, useCallback } from 'react';
 import { Link, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import classnames from 'classnames';
 import hljs from 'highlight.js/lib/core';
@@ -94,6 +94,16 @@ const Docs = () => {
     };
   }, []);
 
+  // 滚动到特定锚点处
+  const handleScrollTo = useCallback((id: string) => {
+    const element = document.getElementById(id);
+    if (!element) return;
+
+    const rect = element.getBoundingClientRect();
+    const container = document.querySelector('#docs')?.children[0];
+    container?.scrollTo({ top: rect.top + container.scrollTop });
+  }, []);
+
   return (
     <DocsContext.Provider value={{ placeholder, setPlaceholder }}>
       <div className={styles.docs}>
@@ -183,7 +193,7 @@ const Docs = () => {
                       <li className={styles.outlineGroupName}>{title}</li>
                       {children.map((child) => (
                         <li key={child.anchor}>
-                          <a href={`#${child.anchor}`}>{child.title}</a>
+                          <span onClick={() => handleScrollTo(child.anchor)}>{child.title}</span>
                         </li>
                       ))}
                     </>
@@ -191,7 +201,7 @@ const Docs = () => {
                 }
                 return (
                   <li key={anchor}>
-                    <a href={`#${anchor}`}>{title}</a>
+                    <span onClick={() => handleScrollTo(anchor)}>{title}</span>
                   </li>
                 );
               })}
