@@ -55164,12 +55164,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	  sqrt: a$1,
 	  pow: c$1
 	} = Math;
-	function h$2(t) {
+	function l$2(t) {
 	  return t < 0 ? -c$1(-t, 1 / 3) : c$1(t, 1 / 3);
 	}
-	const l$2 = Math.PI,
-	  u$1 = 2 * l$2,
-	  p$2 = l$2 / 2,
+	const h$2 = Math.PI,
+	  u$1 = 2 * h$2,
+	  p$2 = h$2 / 2,
 	  g$2 = Number.MAX_SAFE_INTEGER || 9007199254740991,
 	  f$2 = Number.MIN_SAFE_INTEGER || -9007199254740991,
 	  x$2 = {
@@ -55205,15 +55205,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          s,
 	          a,
 	          c = i * i,
-	          h = t * t,
-	          l = 0;
-	        2 === r ? (o = [o[0], o[1], o[2], x$2], e = c, s = i * t * 2, a = h) : 3 === r && (e = c * i, s = c * t * 3, a = i * h * 3, l = t * h);
+	          l = t * t,
+	          h = 0;
+	        2 === r ? (o = [o[0], o[1], o[2], x$2], e = c, s = i * t * 2, a = l) : 3 === r && (e = c * i, s = c * t * 3, a = i * l * 3, h = t * l);
 	        const u = {
-	          x: e * o[0].x + s * o[1].x + a * o[2].x + l * o[3].x,
-	          y: e * o[0].y + s * o[1].y + a * o[2].y + l * o[3].y,
+	          x: e * o[0].x + s * o[1].x + a * o[2].x + h * o[3].x,
+	          y: e * o[0].y + s * o[1].y + a * o[2].y + h * o[3].y,
 	          t: t
 	        };
-	        return n && (u.z = e * o[0].z + s * o[1].z + a * o[2].z + l * o[3].z), u;
+	        return n && (u.z = e * o[0].z + s * o[1].z + a * o[2].z + h * o[3].z), u;
 	      }
 	      const s = JSON.parse(JSON.stringify(e));
 	      for (; s.length > 1;) {
@@ -55231,23 +55231,23 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        s = e;
 	      let a,
 	        c = o[0],
-	        h = o[1],
-	        l = o[2],
+	        l = o[1],
+	        h = o[2],
 	        u = o[3];
-	      return c *= i, h *= t, 2 === s.length ? (a = c + h, {
-	        x: (c * s[0].x + h * s[1].x) / a,
-	        y: (c * s[0].y + h * s[1].y) / a,
-	        z: !!r && (c * s[0].z + h * s[1].z) / a,
+	      return c *= i, l *= t, 2 === s.length ? (a = c + l, {
+	        x: (c * s[0].x + l * s[1].x) / a,
+	        y: (c * s[0].y + l * s[1].y) / a,
+	        z: !!r && (c * s[0].z + l * s[1].z) / a,
 	        t: t
-	      }) : (c *= i, h *= 2 * i, l *= t * t, 3 === s.length ? (a = c + h + l, {
-	        x: (c * s[0].x + h * s[1].x + l * s[2].x) / a,
-	        y: (c * s[0].y + h * s[1].y + l * s[2].y) / a,
-	        z: !!r && (c * s[0].z + h * s[1].z + l * s[2].z) / a,
+	      }) : (c *= i, l *= 2 * i, h *= t * t, 3 === s.length ? (a = c + l + h, {
+	        x: (c * s[0].x + l * s[1].x + h * s[2].x) / a,
+	        y: (c * s[0].y + l * s[1].y + h * s[2].y) / a,
+	        z: !!r && (c * s[0].z + l * s[1].z + h * s[2].z) / a,
 	        t: t
-	      }) : (c *= i, h *= 1.5 * i, l *= 3 * i, u *= t * t * t, 4 === s.length ? (a = c + h + l + u, {
-	        x: (c * s[0].x + h * s[1].x + l * s[2].x + u * s[3].x) / a,
-	        y: (c * s[0].y + h * s[1].y + l * s[2].y + u * s[3].y) / a,
-	        z: !!r && (c * s[0].z + h * s[1].z + l * s[2].z + u * s[3].z) / a,
+	      }) : (c *= i, l *= 1.5 * i, h *= 3 * i, u *= t * t * t, 4 === s.length ? (a = c + l + h + u, {
+	        x: (c * s[0].x + l * s[1].x + h * s[2].x + u * s[3].x) / a,
+	        y: (c * s[0].y + l * s[1].y + h * s[2].y + u * s[3].y) / a,
+	        z: !!r && (c * s[0].z + l * s[1].z + h * s[2].z + u * s[3].z) / a,
 	        t: t
 	      }) : void 0));
 	    },
@@ -55348,10 +55348,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        s = e.x,
 	        a = e.y,
 	        c = n.x,
-	        h = n.y,
-	        l = r.x,
+	        l = n.y,
+	        h = r.x,
 	        u = r.y;
-	      return y$2.lli8(i, o, s, a, c, h, l, u);
+	      return y$2.lli8(i, o, s, a, c, l, h, u);
 	    },
 	    lli: function (t, e) {
 	      return y$2.lli4(t, t.c, e, e.c);
@@ -55470,11 +55470,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        return e !== n && 0 === r ? [(2 * e - n) / (2 * e - 2 * n)].filter(s) : [];
 	      }
 	      const c = i[0].y,
-	        l = i[1].y,
+	        h = i[1].y,
 	        p = i[2].y;
-	      let g = 3 * l - c - 3 * p + i[3].y,
-	        f = 3 * c - 6 * l + 3 * p,
-	        x = -3 * c + 3 * l,
+	      let g = 3 * h - c - 3 * p + i[3].y,
+	        f = 3 * c - 6 * h + 3 * p,
+	        x = -3 * c + 3 * h,
 	        d = c;
 	      if (y$2.approximately(g, 0)) {
 	        if (y$2.approximately(f, 0)) return y$2.approximately(x, 0) ? [] : [-d / x].filter(s);
@@ -55494,13 +55494,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          e = a$1(t * t * t),
 	          n = -b / (2 * e),
 	          i = o$1(n < -1 ? -1 : n > 1 ? 1 : n),
-	          c = 2 * h$2(e);
+	          c = 2 * l$2(e);
 	        return T = c * r$1(i / 3) - f / 3, z = c * r$1((i + u$1) / 3) - f / 3, S = c * r$1((i + 2 * u$1) / 3) - f / 3, [T, z, S].filter(s);
 	      }
-	      if (0 === w) return E = _ < 0 ? h$2(-_) : -h$2(_), T = 2 * E - f / 3, z = -E - f / 3, [T, z].filter(s);
+	      if (0 === w) return E = _ < 0 ? l$2(-_) : -l$2(_), T = 2 * E - f / 3, z = -E - f / 3, [T, z].filter(s);
 	      {
 	        const t = a$1(w);
-	        return E = h$2(-_ + t), C = h$2(_ + t), [E - C - f / 3].filter(s);
+	        return E = l$2(-_ + t), C = l$2(_ + t), [E - C - f / 3].filter(s);
 	      }
 	    },
 	    droots: function (t) {
@@ -55525,28 +55525,28 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    },
 	    curvature: function (t, e, r, i, o) {
 	      let s,
-	        h,
 	        l,
+	        h,
 	        u,
 	        p = 0,
 	        g = 0;
 	      const f = y$2.compute(t, e),
 	        x = y$2.compute(t, r),
 	        d = f.x * f.x + f.y * f.y;
-	      if (i ? (s = a$1(c$1(f.y * x.z - x.y * f.z, 2) + c$1(f.z * x.x - x.z * f.x, 2) + c$1(f.x * x.y - x.x * f.y, 2)), h = c$1(d + f.z * f.z, 1.5)) : (s = f.x * x.y - f.y * x.x, h = c$1(d, 1.5)), 0 === s || 0 === h) return {
+	      if (i ? (s = a$1(c$1(f.y * x.z - x.y * f.z, 2) + c$1(f.z * x.x - x.z * f.x, 2) + c$1(f.x * x.y - x.x * f.y, 2)), l = c$1(d + f.z * f.z, 1.5)) : (s = f.x * x.y - f.y * x.x, l = c$1(d, 1.5)), 0 === s || 0 === l) return {
 	        k: 0,
 	        r: 0
 	      };
-	      if (p = s / h, g = h / s, !o) {
+	      if (p = s / l, g = l / s, !o) {
 	        const o = y$2.curvature(t - .001, e, r, i, !0).k,
 	          s = y$2.curvature(t + .001, e, r, i, !0).k;
-	        u = (s - p + (p - o)) / 2, l = (n$1(s - p) + n$1(p - o)) / 2;
+	        u = (s - p + (p - o)) / 2, h = (n$1(s - p) + n$1(p - o)) / 2;
 	      }
 	      return {
 	        k: p,
 	        r: g,
 	        dk: u,
-	        adk: l
+	        adk: h
 	      };
 	    },
 	    inflections: function (t) {
@@ -55570,17 +55570,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      }
 	      const c = 2 * o;
 	      if (y$2.approximately(c, 0)) return [];
-	      const h = s * s - 4 * o * a;
-	      if (h < 0) return [];
-	      const l = Math.sqrt(h);
-	      return [(l - s) / c, -(s + l) / c].filter(function (t) {
+	      const l = s * s - 4 * o * a;
+	      if (l < 0) return [];
+	      const h = Math.sqrt(l);
+	      return [(h - s) / c, -(s + h) / c].filter(function (t) {
 	        return 0 <= t && t <= 1;
 	      });
 	    },
 	    bboxoverlap: function (t, e) {
 	      const r = ["x", "y"],
 	        i = r.length;
-	      for (let o, s, a, c, h = 0; h < i; h++) if (o = r[h], s = t[o].mid, a = e[o].mid, c = (t[o].size + e[o].size) / 2, n$1(s - a) >= c) return !1;
+	      for (let o, s, a, c, l = 0; l < i; l++) if (o = r[l], s = t[o].mid, a = e[o].mid, c = (t[o].size + e[o].size) / 2, n$1(s - a) >= c) return !1;
 	      return !0;
 	    },
 	    expandbox: function (t, e) {
@@ -55594,7 +55594,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      if (r.x.size + r.y.size < s && i.x.size + i.y.size < s) return [(o * (t._t1 + t._t2) / 2 | 0) / o + "/" + (o * (e._t1 + e._t2) / 2 | 0) / o];
 	      let a = t.split(.5),
 	        c = e.split(.5),
-	        h = [{
+	        l = [{
 	          left: a.left,
 	          right: c.left
 	        }, {
@@ -55607,30 +55607,30 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          left: a.right,
 	          right: c.left
 	        }];
-	      h = h.filter(function (t) {
+	      l = l.filter(function (t) {
 	        return y$2.bboxoverlap(t.left.bbox(), t.right.bbox());
 	      });
-	      let l = [];
-	      return 0 === h.length || (h.forEach(function (t) {
-	        l = l.concat(y$2.pairiteration(t.left, t.right, s));
-	      }), l = l.filter(function (t, e) {
-	        return l.indexOf(t) === e;
-	      })), l;
+	      let h = [];
+	      return 0 === l.length || (l.forEach(function (t) {
+	        h = h.concat(y$2.pairiteration(t.left, t.right, s));
+	      }), h = h.filter(function (t, e) {
+	        return h.indexOf(t) === e;
+	      })), h;
 	    },
 	    getccenter: function (t, e, n) {
 	      const o = e.x - t.x,
 	        a = e.y - t.y,
 	        c = n.x - e.x,
-	        h = n.y - e.y,
-	        l = o * r$1(p$2) - a * i$1(p$2),
+	        l = n.y - e.y,
+	        h = o * r$1(p$2) - a * i$1(p$2),
 	        g = o * i$1(p$2) + a * r$1(p$2),
-	        f = c * r$1(p$2) - h * i$1(p$2),
-	        x = c * i$1(p$2) + h * r$1(p$2),
+	        f = c * r$1(p$2) - l * i$1(p$2),
+	        x = c * i$1(p$2) + l * r$1(p$2),
 	        d = (t.x + e.x) / 2,
 	        m = (t.y + e.y) / 2,
 	        v = (e.x + n.x) / 2,
 	        b = (e.y + n.y) / 2,
-	        _ = d + l,
+	        _ = d + h,
 	        w = m + g,
 	        E = v + f,
 	        C = b + x,
@@ -55724,14 +55724,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      o && (a.z = e[t + 2]), s.push(a);
 	    }
 	    const c = this.order = s.length - 1,
-	      h = this.dims = ["x", "y"];
-	    o && h.push("z"), this.dimlen = h.length;
-	    const l = y$2.align(s, {
+	      l = this.dims = ["x", "y"];
+	    o && l.push("z"), this.dimlen = l.length;
+	    const h = y$2.align(s, {
 	        p1: s[0],
 	        p2: s[c]
 	      }),
 	      u = y$2.dist(s[0], s[c]);
-	    this._linear = l.reduce((t, e) => t + m$2(e.y), 0) < u / 50, this._lut = [], this._t1 = 0, this._t2 = 1, this.update();
+	    this._linear = h.reduce((t, e) => t + m$2(e.y), 0) < u / 50, this._lut = [], this._t1 = 0, this._t2 = 1, this.update();
 	  }
 	  static quadraticFromPoints(t, e, n, r) {
 	    if (void 0 === r && (r = .5), 0 === r) return new z(e, e, n);
@@ -55746,12 +55746,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    const s = i * (1 - r) / r,
 	      a = y$2.dist(t, n),
 	      c = (n.x - t.x) / a,
-	      h = (n.y - t.y) / a,
-	      l = i * c,
-	      u = i * h,
+	      l = (n.y - t.y) / a,
+	      h = i * c,
+	      u = i * l,
 	      p = s * c,
-	      g = s * h,
-	      f = e.x - l,
+	      g = s * l,
+	      f = e.x - h,
 	      x = e.y - u,
 	      d = e.x + p,
 	      m = e.y + g,
@@ -55863,12 +55863,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      s = (i + 1) / n,
 	      a = .1 / n;
 	    let c,
-	      h = r.mdist,
-	      l = o,
-	      u = l;
-	    h += 1;
-	    for (let e; l < s + a; l += a) c = this.compute(l), e = y$2.dist(t, c), e < h && (h = e, u = l);
-	    return u = u < 0 ? 0 : u > 1 ? 1 : u, c = this.compute(u), c.t = u, c.d = h, c;
+	      l = r.mdist,
+	      h = o,
+	      u = h;
+	    l += 1;
+	    for (let e; h < s + a; h += a) c = this.compute(h), e = y$2.dist(t, c), e < l && (l = e, u = h);
+	    return u = u < 0 ? 0 : u > 1 ? 1 : u, c = this.compute(u), c.t = u, c.d = l, c;
 	  }
 	  get(t) {
 	    return this.compute(t);
@@ -56068,8 +56068,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      s = n ? n(1) : t,
 	      a = [this.offset(0, 10), this.offset(1, 10)],
 	      c = [],
-	      h = y$2.lli4(a[0], a[0].c, a[1], a[1].c);
-	    if (!h) throw new Error("cannot scale this curve. Try reducing it first.");
+	      l = y$2.lli4(a[0], a[0].c, a[1], a[1].c);
+	    if (!l) throw new Error("cannot scale this curve. Try reducing it first.");
 	    return [0, 1].forEach(function (t) {
 	      const n = c[t * e] = y$2.copy(i[t * e]);
 	      n.x += (t ? s : o) * a[t].n.x, n.y += (t ? s : o) * a[t].n.y;
@@ -56077,15 +56077,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      if (2 !== e || !o) {
 	        var s = i[o + 1],
 	          a = {
-	            x: s.x - h.x,
-	            y: s.y - h.y
+	            x: s.x - l.x,
+	            y: s.y - l.y
 	          },
-	          l = n ? n((o + 1) / e) : t;
-	        n && !r && (l = -l);
+	          h = n ? n((o + 1) / e) : t;
+	        n && !r && (h = -h);
 	        var u = C$2(a.x * a.x + a.y * a.y);
 	        a.x /= u, a.y /= u, c[o + 1] = {
-	          x: s.x + l * a.x,
-	          y: s.y + l * a.y
+	          x: s.x + h * a.x,
+	          y: s.y + h * a.y
 	        };
 	      }
 	    }), new z(c)) : ([0, 1].forEach(t => {
@@ -56096,7 +56096,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          x: n.x + r.x,
 	          y: n.y + r.y
 	        };
-	      c[t + 1] = y$2.lli4(n, o, h, i[t + 1]);
+	      c[t + 1] = y$2.lli4(n, o, l, i[t + 1]);
 	    }), new z(c));
 	  }
 	  outline(t, e, n, r) {
@@ -56104,32 +56104,32 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      const i = this.normal(0),
 	        o = this.points[0],
 	        s = this.points[this.points.length - 1];
-	      let a, c, h;
+	      let a, c, l;
 	      void 0 === n && (n = t, r = e), a = {
 	        x: o.x + i.x * t,
 	        y: o.y + i.y * t
-	      }, h = {
+	      }, l = {
 	        x: s.x + i.x * n,
 	        y: s.y + i.y * n
 	      }, c = {
-	        x: (a.x + h.x) / 2,
-	        y: (a.y + h.y) / 2
+	        x: (a.x + l.x) / 2,
+	        y: (a.y + l.y) / 2
 	      };
-	      const l = [a, c, h];
+	      const h = [a, c, l];
 	      a = {
 	        x: o.x - i.x * e,
 	        y: o.y - i.y * e
-	      }, h = {
+	      }, l = {
 	        x: s.x - i.x * r,
 	        y: s.y - i.y * r
 	      }, c = {
-	        x: (a.x + h.x) / 2,
-	        y: (a.y + h.y) / 2
+	        x: (a.x + l.x) / 2,
+	        y: (a.y + l.y) / 2
 	      };
-	      const u = [h, c, a],
-	        p = y$2.makeline(u[2], l[0]),
-	        g = y$2.makeline(l[2], u[0]),
-	        f = [p, new z(l), g, new z(u)];
+	      const u = [l, c, a],
+	        p = y$2.makeline(u[2], h[0]),
+	        g = y$2.makeline(h[2], u[0]),
+	        f = [p, new z(h), g, new z(u)];
 	      return new d$2(f);
 	    }
 	    const i = this.reduce(),
@@ -56137,8 +56137,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      s = [];
 	    let a,
 	      c = [],
-	      h = 0,
-	      l = this.length();
+	      l = 0,
+	      h = this.length();
 	    const u = void 0 !== n && void 0 !== r;
 	    function p(t, e, n, r, i) {
 	      return function (o) {
@@ -56150,7 +56150,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    }
 	    i.forEach(function (i) {
 	      const o = i.length();
-	      u ? (s.push(i.scale(p(t, n, l, h, o))), c.push(i.scale(p(-e, -r, l, h, o)))) : (s.push(i.scale(t)), c.push(i.scale(-e))), h += o;
+	      u ? (s.push(i.scale(p(t, n, h, l, o))), c.push(i.scale(p(-e, -r, h, l, o)))) : (s.push(i.scale(t)), c.push(i.scale(-e))), l += o;
 	    }), c = c.map(function (t) {
 	      return a = t.points, a[3] ? t.points = [a[3], a[2], a[1], a[0]] : t.points = [a[2], a[1], a[0]], t;
 	    }).reverse();
@@ -56218,8 +56218,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      s = this.get(r - i),
 	      a = y$2.dist(t, e),
 	      c = y$2.dist(t, o),
-	      h = y$2.dist(t, s);
-	    return m$2(c - a) + m$2(h - a);
+	      l = y$2.dist(t, s);
+	    return m$2(c - a) + m$2(l - a);
 	  }
 	  _iterate(t, e) {
 	    let n,
@@ -56231,17 +56231,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        s,
 	        a,
 	        c,
-	        h,
-	        l = this.get(r),
+	        l,
+	        h = this.get(r),
 	        u = !1,
 	        p = !1,
 	        g = i,
 	        f = 1;
 	      do {
-	        if (p = u, c = a, g = (r + i) / 2, o = this.get(g), s = this.get(i), a = y$2.getccenter(l, o, s), a.interval = {
+	        if (p = u, c = a, g = (r + i) / 2, o = this.get(g), s = this.get(i), a = y$2.getccenter(h, o, s), a.interval = {
 	          start: r,
 	          end: i
-	        }, u = this._error(a, l, r, i) <= t, h = p && !u, h || (f = i), u) {
+	        }, u = this._error(a, h, r, i) <= t, l = p && !u, l || (f = i), u) {
 	          if (i >= 1) {
 	            if (a.interval.end = f = 1, c = a, i > 1) {
 	              let t = {
@@ -56257,7 +56257,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          }
 	          i += (i - r) / 2;
 	        } else i = g;
-	      } while (!h && n++ < 100);
+	      } while (!l && n++ < 100);
 	      if (n >= 100) break;
 	      c = c || a, e.push(c), r = f;
 	    } while (i < 1);
@@ -56308,15 +56308,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    const [n, r, i] = t,
 	      [o, s, a] = e,
 	      c = .1 / Math.abs([...t, ...e].reduce((t, e) => Math.min(t, e.x, e.y), -1)),
-	      h = (t, e, n) => {
+	      l = (t, e, n) => {
 	        const [r, i, o, s] = t.map(Number),
-	          [a, c, h, l] = e.map(Number),
+	          [a, c, l, h] = e.map(Number),
 	          [u, p, g, f] = n.map(Number),
-	          x = o - i * h / c,
-	          y = h - c * g / p,
-	          d = l - c * f / p,
+	          x = o - i * l / c,
+	          y = l - c * g / p,
+	          d = h - c * f / p,
 	          m = a - c * u / p,
-	          v = (x / y * d - (s - i * l / c)) / (x / y * m - (r - i * a / c)),
+	          v = (x / y * d - (s - i * h / c)) / (x / y * m - (r - i * a / c)),
 	          b = (d - m * v) / y;
 	        return {
 	          x: v,
@@ -56324,12 +56324,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          z: b
 	        };
 	      },
-	      l = [o.x + c, o.y + c, 1, n.x + c],
+	      h = [o.x + c, o.y + c, 1, n.x + c],
 	      u = [s.x + c, s.y + c, 1, r.x + c],
 	      p = [a.x + c, a.y + c, 1, i.x + c],
-	      g = h(l, u, p);
-	    l[3] = n.y + c, u[3] = r.y + c, p[3] = i.y + c;
-	    const f = h(l, u, p),
+	      g = l(h, u, p);
+	    h[3] = n.y + c, u[3] = r.y + c, p[3] = i.y + c;
+	    const f = l(h, u, p),
 	      x = g.x,
 	      y = g.y,
 	      d = g.z;
@@ -56369,10 +56369,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      x: n.x,
 	      y: o * n.x + a
 	    };
-	    const h = (c - a) / (o - s);
+	    const l = (c - a) / (o - s);
 	    return {
-	      x: h,
-	      y: o * h + a
+	      x: l,
+	      y: o * l + a
 	    };
 	  },
 	  calcMatrix: M$3,
@@ -56386,10 +56386,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        x: s,
 	        y: a,
 	        sourceScale: c = 1,
-	        destinationScale: h = 1
+	        destinationScale: l = 1
 	      } = r,
 	      {
-	        gridColor: l = {
+	        gridColor: h = {
 	          r: 255,
 	          g: 0,
 	          b: 0,
@@ -56417,37 +56417,37 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      },
 	      b = n.getContext("2d");
 	    b.clearRect(0, 0, n.width, n.height);
-	    const _ = Math.ceil(1 / (c * h));
-	    b.save(), b.transform(c * h, 0, 0, c * h, s * c * h, a * c * h);
+	    const _ = Math.ceil(1 / (c * l));
+	    b.save(), b.transform(c * l, 0, 0, c * l, s * c * l, a * c * l);
 	    const w = (t, n, r, i, o, s, a) => {
-	      const h = [t, r, o],
+	      const l = [t, r, o],
 	        x = new Path2D();
 	      for (let t = 0; t < 3; t++) {
-	        const e = h[t],
-	          n = h[(t + 1) % 3],
-	          r = h[(t + 2) % 3],
+	        const e = l[t],
+	          n = l[(t + 1) % 3],
+	          r = l[(t + 2) % 3],
 	          i = v(e, n, r, _),
 	          o = v(e, r, n, _);
 	        x.lineTo(i.x, i.y), x.lineTo(o.x, o.y);
 	      }
 	      if (u) {
 	        b.save(), b.clip(x);
-	        const h = m([t, r, o], [n, i, s]);
-	        b.transform(...h);
-	        const l = f(n, i, s),
+	        const l = m([t, r, o], [n, i, s]);
+	        b.transform(...l);
+	        const h = f(n, i, s),
 	          u = (a.x - 1) * c,
 	          p = (a.y - 1) * c,
-	          g = (l.width + 2) * c,
-	          y = (l.height + 2) * c,
+	          g = (h.width + 2) * c,
+	          y = (h.height + 2) * c,
 	          d = a.x - 1 / c,
 	          v = a.y - 1 / c,
-	          _ = l.width + 2 / c,
-	          w = l.height + 2 / c;
+	          _ = h.width + 2 / c,
+	          w = h.height + 2 / c;
 	        b.drawImage(e, u, p, g, y, d, v, _, w), b.restore();
 	      }
 	      if (g) {
 	        const e = Math.floor(2 / c);
-	        b.fillStyle = `rgba(${l.r}, ${l.g}, ${l.b}, ${l.a})`, b.fillRect(t.x - e / 2, t.y - e / 2, e, e);
+	        b.fillStyle = `rgba(${h.r}, ${h.g}, ${h.b}, ${h.a})`, b.fillRect(t.x - e / 2, t.y - e / 2, e, e);
 	      }
 	      if (p) {
 	        const t = Math.floor(1 / c);
@@ -56461,13 +56461,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        i.forEach((e, s) => {
 	          const a = i[s],
 	            c = i[s + 1],
-	            h = i[s + o + 2],
-	            l = i[s + o + 1],
+	            l = i[s + o + 2],
+	            h = i[s + o + 1],
 	            u = t.originalRegionPoints[n][r][s],
 	            p = t.originalRegionPoints[n][r][s + 1],
 	            g = t.originalRegionPoints[n][r][s + o + 2],
 	            f = t.originalRegionPoints[n][r][s + o + 1];
-	          c && h && s % (o + 1) < o && (w(a, u, c, p, l, f, u), w(h, g, c, p, l, f, u));
+	          c && l && s % (o + 1) < o && (w(a, u, c, p, h, f, u), w(l, g, c, p, h, f, u));
 	        });
 	      });
 	    }), b.restore(), n;
@@ -56494,10 +56494,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        y: s,
 	        width: a,
 	        height: c,
-	        sourceScale: h = 1
+	        sourceScale: l = 1
 	      } = r,
 	      {
-	        enableAntialias: l = !0,
+	        enableAntialias: h = !0,
 	        gridColor: u = {
 	          r: 255,
 	          g: 0,
@@ -56513,7 +56513,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        height: y
 	      } = e,
 	      d = n.getContext("webgl", {
-	        antialias: l
+	        antialias: h
 	      });
 	    if (!d) throw Error("[Warpvas] Failed to initialize WebGL. Your browser or device may not support it.");
 	    const m = {
@@ -56527,13 +56527,13 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        i.forEach((e, s) => {
 	          const a = i[s],
 	            c = i[s + 1],
-	            h = i[s + o + 2],
-	            l = i[s + o + 1],
+	            l = i[s + o + 2],
+	            h = i[s + o + 1],
 	            u = t.originalRegionPoints[n][r][s],
 	            p = t.originalRegionPoints[n][r][s + 1],
 	            g = t.originalRegionPoints[n][r][s + o + 2],
 	            f = t.originalRegionPoints[n][r][s + o + 1];
-	          c && h && s % (o + 1) < o && (m.before.push(u, p, f, g, p, f), m.after.push(a, c, l, h, c, l));
+	          c && l && s % (o + 1) < o && (m.before.push(u, p, f, g, p, f), m.after.push(a, c, h, l, c, h));
 	        });
 	      });
 	    });
@@ -56575,18 +56575,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          r: s,
 	          g: a,
 	          b: c,
-	          a: h
+	          a: l
 	        } = u,
-	        l = `${(s / 255).toFixed(1)}, ${(a / 255).toFixed(1)}, ${(c / 255).toFixed(1)}, ${h.toFixed(1)}`,
-	        x = _(v, `\n      void main(void) {\n        gl_FragColor = vec4(${l});\n      }\n    `);
+	        h = `${(s / 255).toFixed(1)}, ${(a / 255).toFixed(1)}, ${(c / 255).toFixed(1)}, ${l.toFixed(1)}`,
+	        x = _(v, `\n      void main(void) {\n        gl_FragColor = vec4(${h});\n      }\n    `);
 	      if (!x) throw Error("[Warpvas] Failed to initialize outline shader program.");
 	      d.bindBuffer(d.ARRAY_BUFFER, e.position), d.vertexAttribPointer(d.getAttribLocation(x, "aVertexPosition"), 2, r, i, 0, 0), d.enableVertexAttribArray(d.getAttribLocation(x, "aVertexPosition")), d.bindBuffer(d.ARRAY_BUFFER, e.textureCoord), d.vertexAttribPointer(d.getAttribLocation(x, "aTextureCoord"), 2, r, i, 0, 0), d.enableVertexAttribArray(d.getAttribLocation(x, "aTextureCoord")), d.useProgram(x), g && d.drawArrays(d.LINES, 0, 2 * m.before.length), f && d.drawArrays(d.POINTS, 0, 2 * m.before.length);
 	    })(C, (() => {
 	      const t = d.createBuffer();
 	      d.bindBuffer(d.ARRAY_BUFFER, t);
 	      const e = m.before.map((t, e) => {
-	        const n = [t.x / (x / h), t.y / (y / h)];
-	        return (e + 1) % 3 == 0 ? n.push(m.before[e - 2].x / (x / h), m.before[e - 2].y / (y / h)) : n.push(m.before[e + 1].x / (x / h), m.before[e + 1].y / (y / h)), n;
+	        const n = [t.x / (x / l), t.y / (y / l)];
+	        return (e + 1) % 3 == 0 ? n.push(m.before[e - 2].x / (x / l), m.before[e - 2].y / (y / l)) : n.push(m.before[e + 1].x / (x / l), m.before[e + 1].y / (y / l)), n;
 	      }).flat(1);
 	      d.bufferData(d.ARRAY_BUFFER, new Float32Array(e), d.STATIC_DRAW);
 	      const n = d.createBuffer();
@@ -56683,7 +56683,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        regionPoints: e,
 	        originalRegionPoints: a
 	      },
-	      h = k$3().collect({
+	      l = k$3().collect({
 	        warpvas: c,
 	        options: i,
 	        createWarpedCanvas: I$3,
@@ -56703,15 +56703,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	            calcPerpendicularIntersection: s,
 	            calcCoordDistance: a,
 	            calcRelativeCoord: c,
-	            calcMatrix: h
+	            calcMatrix: l
 	          } = e,
 	          {
-	            width: l,
+	            width: h,
 	            height: u,
 	            sourceScale: p = 1,
 	            destinationScale: g = 1
 	          } = n,
-	          f = new OffscreenCanvas(l * g * p, u * g * p),
+	          f = new OffscreenCanvas(h * g * p, u * g * p),
 	          x = new OffscreenCanvas(t.width, t.height),
 	          y = x.getContext("2d");
 	        return null == y || y.putImageData(t, 0, 0), i(r, x, f, n, {
@@ -56719,11 +56719,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          calcPerpendicularIntersection: s,
 	          calcCoordDistance: a,
 	          calcRelativeCoord: c,
-	          calcMatrix: h
+	          calcMatrix: l
 	        }).transferToImageBitmap();
 	      }),
-	      l = yield h.run(n);
-	    return h.terminate(), (r = null != r ? r : document.createElement("canvas")).width = l.width, r.height = l.height, r.getContext("2d").drawImage(l, 0, 0), r;
+	      h = yield l.run(n);
+	    return l.terminate(), (r = null != r ? r : document.createElement("canvas")).width = h.width, r.height = h.height, r.getContext("2d").drawImage(h, 0, 0), r;
 	  }),
 	  $$1 = (t, n, r, i) => e$1(void 0, void 0, void 0, function* () {
 	    const {
@@ -56745,7 +56745,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        regionPoints: e,
 	        originalRegionPoints: a
 	      },
-	      h = k$3().collect({
+	      l = k$3().collect({
 	        warpvas: c,
 	        options: i,
 	        createWarpedCanvas: j$2
@@ -56765,8 +56765,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          } = n;
 	        return i(r, t, new OffscreenCanvas(o * c * a, s * c * a), n).transferToImageBitmap();
 	      }),
-	      l = yield h.run(n);
-	    return h.terminate(), (r = null != r ? r : document.createElement("canvas")).width = l.width, r.height = l.height, r.getContext("2d").drawImage(l, 0, 0), r;
+	      h = yield l.run(n);
+	    return l.terminate(), (r = null != r ? r : document.createElement("canvas")).width = h.width, r.height = h.height, r.getContext("2d").drawImage(h, 0, 0), r;
 	  });
 	var N$2, H$2;
 	!function (t) {
@@ -56860,12 +56860,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      s = i[0],
 	      a = i[1],
 	      c = i[2];
-	    let h = 3;
-	    const l = [];
-	    for (let t = 0; t < s; t++) l.push({
-	      x: i[h],
-	      y: i[h + 1]
-	    }), h += 2;
+	    let l = 3;
+	    const h = [];
+	    for (let t = 0; t < s; t++) h.push({
+	      x: i[l],
+	      y: i[l + 1]
+	    }), l += 2;
 	    const u = [];
 	    for (let t = 0; t < a; t++) {
 	      const t = [];
@@ -56874,16 +56874,16 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        for (const t of o) {
 	          e[t] = [];
 	          for (let n = 0; n < 4; n++) e[t].push({
-	            x: i[h],
-	            y: i[h + 1]
-	          }), h += 2;
+	            x: i[l],
+	            y: i[l + 1]
+	          }), l += 2;
 	        }
 	        t.push(e);
 	      }
 	      u.push(t);
 	    }
 	    return {
-	      splitPoints: l,
+	      splitPoints: h,
 	      regionBounds: u
 	    };
 	  }
@@ -57122,11 +57122,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          } = n,
 	          a = Math.atan2(i, r),
 	          c = Math.atan2(s, o) - a,
-	          h = Math.sqrt(Math.pow(o, 2) + Math.pow(s, 2)) * Math.cos(c),
-	          l = h * Math.cos(a),
-	          u = h * Math.sin(a);
+	          l = Math.sqrt(Math.pow(o, 2) + Math.pow(s, 2)) * Math.cos(c),
+	          h = l * Math.cos(a),
+	          u = l * Math.sin(a);
 	        return {
-	          x: t.x + l,
+	          x: t.x + h,
 	          y: t.y + u
 	        };
 	      },
@@ -57171,11 +57171,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        var s, a;
 	        const c = null === (a = null === (s = this.regionBoundaryCurves[t]) || void 0 === s ? void 0 : s[e]) || void 0 === a ? void 0 : a[n];
 	        if (!c) return;
-	        const h = "first" === r ? o : c.points[0],
-	          l = "last" === r ? o : c.points[3];
+	        const l = "first" === r ? o : c.points[0],
+	          h = "last" === r ? o : c.points[3];
 	        c.points.forEach((t, e) => {
 	          if (!i && [1, 2].includes(e)) return;
-	          const n = this._createLinearBezier(h, l)[e];
+	          const n = this._createLinearBezier(l, h)[e];
 	          t.x = n.x, t.y = n.y;
 	        });
 	      },
@@ -57281,24 +57281,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      e.push([]), t.forEach((t, r) => {
 	        var i, o, s, a;
 	        const c = {};
-	        for (const h in t) {
-	          switch (h) {
+	        for (const l in t) {
+	          switch (l) {
 	            case "top":
 	              {
 	                const t = null === (o = null === (i = e[n - 1]) || void 0 === i ? void 0 : i[r]) || void 0 === o ? void 0 : o.bottom;
-	                t && (c[h] = t);
+	                t && (c[l] = t);
 	                break;
 	              }
 	            case "left":
 	              {
 	                const t = null === (a = null === (s = e[n]) || void 0 === s ? void 0 : s[r - 1]) || void 0 === a ? void 0 : a.right;
-	                t && (c[h] = t);
+	                t && (c[l] = t);
 	                break;
 	              }
 	          }
-	          if (!c[h]) {
-	            const e = t[h];
-	            c[h] = new z$2(e[0].x, e[0].y, e[1].x, e[1].y, e[2].x, e[2].y, e[3].x, e[3].y);
+	          if (!c[l]) {
+	            const e = t[l];
+	            c[l] = new z$2(e[0].x, e[0].y, e[1].x, e[1].y, e[2].x, e[2].y, e[3].x, e[3].y);
 	          }
 	        }
 	        e[e.length - 1].push(c);
@@ -57355,12 +57355,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	  getHitInfo(t) {
 	    let e = null;
 	    try {
-	      this.forEachSplitRegion(([n, r, i, o], s, a, c, h, l) => {
+	      this.forEachSplitRegion(([n, r, i, o], s, a, c, l, h) => {
 	        const u = B$3(t, n, r, o),
 	          p = B$3(t, i, r, o);
 	        if (u || p) throw e = {
-	          rowIndex: h,
-	          colIndex: l,
+	          rowIndex: l,
+	          colIndex: h,
 	          row: a,
 	          col: c,
 	          after: [n, r, i, o],
@@ -57380,9 +57380,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    let a = (n.x - i.x) / (o.x - i.x),
 	      c = (n.y - i.y) / (s.y - i.y);
 	    a < r && (a = 0), a > 1 - r && (a = 1), c < r && (c = 0), c > 1 - r && (c = 1);
-	    const h = [];
+	    const l = [];
 	    this.regionBoundaryCurves.forEach((e, n) => {
-	      if (n !== t || 0 === c || 1 === c) return void h.push(e.map(t => {
+	      if (n !== t || 0 === c || 1 === c) return void l.push(e.map(t => {
 	        const e = {};
 	        for (const n in t) e[n] = t[n].points;
 	        return e;
@@ -57400,7 +57400,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          } = n[0].split(c),
 	          {
 	            left: a,
-	            right: h
+	            right: l
 	          } = n[1].split(c);
 	        r.push({
 	          left: o.points,
@@ -57409,12 +57409,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	          bottom: e[1].points
 	        }), i.push({
 	          left: s.points,
-	          right: h.points,
+	          right: l.points,
 	          top: e[1].points,
 	          bottom: e[2].points
 	        });
-	      }), h.push(r, i);
-	    }), 0 !== a && 1 !== a && h.forEach((t, n) => {
+	      }), l.push(r, i);
+	    }), 0 !== a && 1 !== a && l.forEach((t, n) => {
 	      const {
 	          horizontal: r,
 	          vertical: i
@@ -57430,9 +57430,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        } = r[0].split(a),
 	        {
 	          left: c,
-	          right: l
+	          right: h
 	        } = r[1].split(a);
-	      h[n].splice(e, 1, {
+	      l[n].splice(e, 1, {
 	        left: i[0].points,
 	        right: i[1].points,
 	        top: o.points,
@@ -57441,12 +57441,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        left: i[1].points,
 	        right: i[2].points,
 	        top: s.points,
-	        bottom: l.points
+	        bottom: h.points
 	      });
 	    }), this.setWarpState([...this.splitPoints, {
 	      x: (0 === a ? i.x : 1 === a ? o.x : n.x) / this.source.width,
 	      y: (0 === c ? i.y : 1 === c ? s.y : n.y) / this.source.height
-	    }], h);
+	    }], l);
 	  }
 	  removeRegion(...t) {
 	    const e = [],
@@ -57505,15 +57505,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        i.forEach((e, s) => {
 	          const a = Math.floor(s / (o + 1)),
 	            c = s % (o + 1),
-	            h = i[s],
-	            l = i[s + 1],
+	            l = i[s],
+	            h = i[s + 1],
 	            u = i[s + o + 2],
 	            p = i[s + o + 1],
 	            g = this.originalRegionPoints[n][r][s],
 	            f = this.originalRegionPoints[n][r][s + 1],
 	            x = this.originalRegionPoints[n][r][s + o + 2],
 	            y = this.originalRegionPoints[n][r][s + o + 1];
-	          l && u && s % (o + 1) < o && t([h, l, u, p], [g, f, x, y], a, c, n, r);
+	          h && u && s % (o + 1) < o && t([l, h, u, p], [g, f, x, y], a, c, n, r);
 	        });
 	      });
 	    });
@@ -57648,14 +57648,14 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	  var e = typeof t;
 	  return null != t && ("object" == e || "function" == e);
 	}
-	var ht$1 = "[object AsyncFunction]",
-	  lt$1 = "[object Function]",
+	var lt$1 = "[object AsyncFunction]",
+	  ht$1 = "[object Function]",
 	  ut$1 = "[object GeneratorFunction]",
 	  pt$1 = "[object Proxy]";
 	function gt$1(t) {
 	  if (!ct$1(t)) return !1;
 	  var e = at$1(t);
-	  return e == lt$1 || e == ut$1 || e == ht$1 || e == pt$1;
+	  return e == ht$1 || e == ut$1 || e == lt$1 || e == pt$1;
 	}
 	var ft$1,
 	  xt$1 = K$1["__core-js_shared__"],
@@ -57782,7 +57782,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      return r;
 	    }(t.length, String) : [],
 	    c = a.length;
-	  for (var h in t) !e && !ie$1.call(t, h) || s && ("length" == h || i && ("offset" == h || "parent" == h) || o && ("buffer" == h || "byteLength" == h || "byteOffset" == h) || Ut$1(h, c)) || a.push(h);
+	  for (var l in t) !e && !ie$1.call(t, l) || s && ("length" == l || i && ("offset" == l || "parent" == l) || o && ("buffer" == l || "byteLength" == l || "byteOffset" == l) || Ut$1(l, c)) || a.push(l);
 	  return a;
 	}
 	var se$1 = Object.prototype;
@@ -57800,11 +57800,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	  for (var o in t) ("constructor" != o || !r && ae$1.call(t, o)) && i.push(o);
 	  return i;
 	}
-	function he$1(t) {
+	function le$1(t) {
 	  return jt$1(t) ? oe$1(t, !0) : ce$1(t);
 	}
-	var le$1 = Object.prototype,
-	  ue$1 = le$1.hasOwnProperty,
+	var he$1 = Object.prototype,
+	  ue$1 = he$1.hasOwnProperty,
 	  pe$1 = function (t, e) {
 	    return Bt$1(function (t, e, n) {
 	      return e = Y$1(void 0 === e ? t.length - 1 : e, 0), function () {
@@ -57835,10 +57835,10 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      if (!ct$1(n)) return !1;
 	      var r = typeof e;
 	      return !!("number" == r ? jt$1(n) && Ut$1(e, n.length) : "string" == r && (e in n)) && At$1(n[e], t);
-	    }(e[0], e[1], i) && (r = 1); ++n < r;) for (var o = e[n], s = he$1(o), a = -1, c = s.length; ++a < c;) {
-	      var h = s[a],
-	        l = t[h];
-	      (void 0 === l || At$1(l, le$1[h]) && !ue$1.call(t, h)) && (t[h] = o[h]);
+	    }(e[0], e[1], i) && (r = 1); ++n < r;) for (var o = e[n], s = le$1(o), a = -1, c = s.length; ++a < c;) {
+	      var l = s[a],
+	        h = t[l];
+	      (void 0 === h || At$1(h, he$1[l]) && !ue$1.call(t, l)) && (t[l] = o[l]);
 	    }
 	    return t;
 	  });
@@ -57865,10 +57865,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    super(), this.name = "__base__", this.options = {
 	      themeColor: fe$1,
 	      subThemeColor: xe$1
-	    }, this._styleSetters = {
-	      image: () => {},
-	      path: () => {}
-	    }, this.options = pe$1(t, this.options);
+	    }, this._styleSetters = {}, this.options = pe$1(t, this.options);
 	  }
 	  registerStyleSetter(t, e) {
 	    this._styleSetters = pe$1({
@@ -57879,22 +57876,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    return V$1.strategy(t);
 	  }
 	  render(t) {
-	    const e = t.canvas;
-	    if (!e) return;
+	    var e, n;
+	    const r = t.canvas;
+	    if (!r) return;
 	    const {
-	      warpvas: n,
-	      warpvasObject: r,
-	      paths: i = [],
-	      curvePathMap: o
+	      warpvas: i,
+	      warpvasObject: o,
+	      paths: s = [],
+	      curvePathMap: a
 	    } = t;
-	    if (!r || !n) return;
-	    this._styleSetters.image(r), e.add(r), (null == i ? void 0 : i.length) && e.add(...i);
-	    const s = t => {
-	      t.forEach((t, n, r) => {
-	        const i = o.get(t);
-	        if (i) if (0 === n || n === r.length - 1) {
-	          const t = i.getCenterPoint();
-	          i.set({
+	    if (!o || !i) return;
+	    null === (n = (e = this._styleSetters).image) || void 0 === n || n.call(e, o), r.add(o), (null == s ? void 0 : s.length) && r.add(...s);
+	    const c = t => {
+	      t.forEach((t, e, n) => {
+	        var i, o;
+	        const s = a.get(t);
+	        if (s) if (0 === e || e === n.length - 1) {
+	          const t = s.getCenterPoint();
+	          s.set({
 	            stroke: this.options.themeColor,
 	            strokeWidth: 1,
 	            strokeUniform: !0,
@@ -57903,24 +57902,24 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	            evented: !1,
 	            originX: "center",
 	            originY: "center"
-	          }), this._styleSetters.path(i), i.setPositionByOrigin(t, "center", "center");
-	        } else e.remove(i);
+	          }), null === (o = (i = this._styleSetters).path) || void 0 === o || o.call(i, s), s.setPositionByOrigin(t, "center", "center");
+	        } else r.remove(s);
 	      });
 	    };
-	    return null == n || n.regionCurves.forEach(t => {
+	    return null == i || i.regionCurves.forEach(t => {
 	      t.forEach(t => {
 	        const {
 	          horizontal: e,
 	          vertical: n
 	        } = t;
-	        s(e), s(n);
+	        c(e), c(n);
 	      });
 	    }), () => {
 	      const {
-	        warpvasObject: n,
-	        paths: r = []
+	        warpvasObject: e,
+	        paths: n = []
 	      } = t;
-	      n && e.remove(n), r.length && e.remove(...r);
+	      e && r.remove(e), n.length && r.remove(...n);
 	    };
 	  }
 	};
@@ -61835,8 +61834,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      r = -o / 2,
 	      n = this.rx ? Math.min(this.rx, e / 2) : 0,
 	      i = this.ry ? Math.min(this.ry, o / 2) : 0,
-	      l = 0 !== n || 0 !== i;
-	    t.beginPath(), t.moveTo(s + n, r), t.lineTo(s + e - n, r), l && t.bezierCurveTo(s + e - S$2 * n, r, s + e, r + S$2 * i, s + e, r + i), t.lineTo(s + e, r + o - i), l && t.bezierCurveTo(s + e, r + o - S$2 * i, s + e - S$2 * n, r + o, s + e - n, r + o), t.lineTo(s + n, r + o), l && t.bezierCurveTo(s + S$2 * n, r + o, s, r + o - S$2 * i, s, r + o - i), t.lineTo(s, r + i), l && t.bezierCurveTo(s, r + S$2 * i, s + S$2 * n, r, s + n, r), t.closePath(), this._renderPaintInOrder(t);
+	      a = 0 !== n || 0 !== i;
+	    t.beginPath(), t.moveTo(s + n, r), t.lineTo(s + e - n, r), a && t.bezierCurveTo(s + e - S$2 * n, r, s + e, r + S$2 * i, s + e, r + i), t.lineTo(s + e, r + o - i), a && t.bezierCurveTo(s + e, r + o - S$2 * i, s + e - S$2 * n, r + o, s + e - n, r + o), t.lineTo(s + n, r + o), a && t.bezierCurveTo(s + S$2 * n, r + o, s, r + o - S$2 * i, s, r + o - i), t.lineTo(s, r + i), a && t.bezierCurveTo(s, r + S$2 * i, s + S$2 * n, r, s + n, r), t.closePath(), this._renderPaintInOrder(t);
 	  }
 	  toObject() {
 	    let t = arguments.length > 0 && void 0 !== arguments[0] ? arguments[0] : [];
@@ -61856,7 +61855,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      {
 	        left: r$1 = 0,
 	        top: n = 0,
-	        width: a = 0,
+	        width: l = 0,
 	        height: h = 0,
 	        visible: u = !0
 	      } = s$1,
@@ -61864,9 +61863,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    return new this(s(s(s({}, e), d), {}, {
 	      left: r$1,
 	      top: n,
-	      width: a,
+	      width: l,
 	      height: h,
-	      visible: Boolean(u && a && h)
+	      visible: Boolean(u && l && h)
 	    }));
 	  }
 	};
@@ -61900,7 +61899,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        left: r,
 	        top: n,
 	        width: i,
-	        height: a
+	        height: l
 	      } = Mt([{
 	        x: t,
 	        y: e
@@ -61908,8 +61907,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        x: o,
 	        y: s
 	      }]),
-	      l = new q(r + i / 2, n + a / 2);
-	    this.setPositionByOrigin(l, _$1, _$1);
+	      a = new q(r + i / 2, n + l / 2);
+	    this.setPositionByOrigin(a, _$1, _$1);
 	  }
 	  _set(t, e) {
 	    return super._set(t, e), P$1.includes(t) && this._setWidthHeight(), this;
@@ -61943,12 +61942,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        height: n
 	      } = this,
 	      i = t <= e ? -1 : 1,
-	      a = o <= s ? -1 : 1;
+	      l = o <= s ? -1 : 1;
 	    return {
 	      x1: i * r / 2,
 	      x2: i * -r / 2,
-	      y1: a * n / 2,
-	      y2: a * -n / 2
+	      y1: l * n / 2,
+	      y2: l * -n / 2
 	    };
 	  }
 	  _toSVG() {
@@ -61966,9 +61965,9 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        x1: r$1 = 0,
 	        y1: n = 0,
 	        x2: i = 0,
-	        y2: a = 0
+	        y2: l = 0
 	      } = s;
-	    return new this([r$1, n, i, a], r(s, R$1));
+	    return new this([r$1, n, i, l], r(s, R$1));
 	  }
 	  static fromObject(t) {
 	    let {
@@ -61987,12 +61986,12 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	};
 	t$1(A$1, "type", "Line"), t$1(A$1, "cacheProperties", [...ge, ...P$1]), t$1(A$1, "ATTRIBUTE_NAMES", rs.concat(P$1)), I$2.setClass(A$1), I$2.setSVGClass(A$1);
 	const {
-	  calcMatrix: S$1
+	  calcMatrix: I$1
 	} = A$3;
-	var I$1;
+	var S$1;
 	!function (t) {
 	  t.TOP_LEFT = "tl", t.TOP_RIGHT = "tr", t.BOTTOM_LEFT = "bl", t.BOTTOM_RIGHT = "br";
-	}(I$1 || (I$1 = {}));
+	}(S$1 || (S$1 = {}));
 	let B$1 = class B extends ye$1 {
 	  constructor(t = {}) {
 	    super(t), this.name = "warp", this.options = {
@@ -62000,13 +61999,6 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      subThemeColor: xe$1,
 	      enableConstraintKey: "None",
 	      enableGridSplit: !0
-	    }, this._styleSetters = {
-	      image: () => {},
-	      path: () => {},
-	      control: t => t,
-	      curveControl: t => t,
-	      insertControl: t => t,
-	      line: t => {}
 	    }, this._positionControlMap = new Map([]), this._insertControlObject = null, this.options = pe$1(t, this.options);
 	  }
 	  static execute(t) {
@@ -62018,11 +62010,11 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	        const n = [],
 	          {
 	            vertical: i,
-	            horizontal: a
+	            horizontal: l
 	          } = t.regionCurves[s][o];
-	        for (let t = 0; t < a.length; t++) for (let e = 0; e < i.length; e++) {
-	          const o = i[e].get(t / (a.length - 1)),
-	            s = a[t].get(e / (i.length - 1));
+	        for (let t = 0; t < l.length; t++) for (let e = 0; e < i.length; e++) {
+	          const o = i[e].get(t / (l.length - 1)),
+	            s = l[t].get(e / (i.length - 1));
 	          n.push({
 	            x: (o.x + s.x) / 2,
 	            y: (o.y + s.y) / 2
@@ -62048,17 +62040,17 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	    return B.execute(t);
 	  }
 	  dirtyRender(t) {
-	    var e;
-	    const o = t.canvas;
-	    if (!o) return;
-	    const s = null === (e = t.warpvas) || void 0 === e ? void 0 : e.regionBoundaryCurves;
-	    if (!s) return;
-	    const r = [],
-	      n = new Map();
-	    this._insertControlObject = this._styleSetters.insertControl(this._createDefaultInsertControl(this.options.themeColor));
-	    const i = () => {
+	    var e, o, s, r;
+	    const n = t.canvas;
+	    if (!n) return;
+	    const i = null === (e = t.warpvas) || void 0 === e ? void 0 : e.regionBoundaryCurves;
+	    if (!i) return;
+	    const l = [],
+	      a = new Map();
+	    this._insertControlObject = null !== (r = null === (s = (o = this._styleSetters).insertControl) || void 0 === s ? void 0 : s.call(o, this._createDefaultInsertControl(this.options.themeColor))) && void 0 !== r ? r : this._createDefaultInsertControl(this.options.themeColor);
+	    const c = () => {
 	      var t, e;
-	      o.renderOnAddRemove = !1, this._positionControlMap.forEach(t => {
+	      n.renderOnAddRemove = !1, this._positionControlMap.forEach(t => {
 	        t.subControls.forEach(t => {
 	          var e;
 	          return null === (e = t.line.canvas) || void 0 === e ? void 0 : e.bringObjectToFront(t.line);
@@ -62071,53 +62063,54 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      }), this._positionControlMap.forEach(t => {
 	        var e;
 	        null === (e = t.majorControl.canvas) || void 0 === e || e.bringObjectToFront(t.majorControl);
-	      }), null === (e = null === (t = this._insertControlObject) || void 0 === t ? void 0 : t.canvas) || void 0 === e || e.bringObjectToFront(this._insertControlObject), o.renderOnAddRemove = !0, o.requestRenderAll();
+	      }), null === (e = null === (t = this._insertControlObject) || void 0 === t ? void 0 : t.canvas) || void 0 === e || e.bringObjectToFront(this._insertControlObject), n.renderOnAddRemove = !0, n.requestRenderAll();
 	    };
-	    s.forEach((e, s) => {
-	      e.forEach((e, i) => {
-	        const a = e;
-	        Object.entries(a).forEach(([e]) => {
-	          const l = a[e],
-	            c = t.curvePathMap.get(l),
-	            h = l.points.map(t => new q(t.x - c.pathOffset.x, t.y - c.pathOffset.y).transform(c.calcOwnMatrix()));
-	          h.forEach((t, a) => {
-	            if (0 === a || 3 === a) return;
-	            const c = [0, 0, 3, 3][a],
-	              u = h[c],
-	              d = {
-	                top: [I$1.TOP_LEFT, I$1.TOP_RIGHT],
-	                bottom: [I$1.BOTTOM_LEFT, I$1.BOTTOM_RIGHT],
-	                right: [I$1.TOP_RIGHT, I$1.BOTTOM_RIGHT],
-	                left: [I$1.TOP_LEFT, I$1.BOTTOM_LEFT]
-	              }[e][Math.sign(c)],
-	              f = s + (d.startsWith("b") ? 1 : 0),
-	              p = i + (d.endsWith("r") ? 1 : 0),
-	              v = `${f}-${p}`;
-	            let b = this._positionControlMap.get(v);
-	            if (!b) {
-	              const t = this._styleSetters.control(this._createDefaultControl(this.options.themeColor));
+	    i.forEach((e, o) => {
+	      e.forEach((e, s) => {
+	        const r = e;
+	        Object.entries(r).forEach(([e]) => {
+	          const i = r[e],
+	            c = t.curvePathMap.get(i),
+	            h = i.points.map(t => new q(t.x - c.pathOffset.x, t.y - c.pathOffset.y).transform(c.calcOwnMatrix()));
+	          h.forEach((t, r) => {
+	            var c, u, d, f, p, v, b, y;
+	            if (0 === r || 3 === r) return;
+	            const x = [0, 0, 3, 3][r],
+	              C = h[x],
+	              g = {
+	                top: [S$1.TOP_LEFT, S$1.TOP_RIGHT],
+	                bottom: [S$1.BOTTOM_LEFT, S$1.BOTTOM_RIGHT],
+	                right: [S$1.TOP_RIGHT, S$1.BOTTOM_RIGHT],
+	                left: [S$1.TOP_LEFT, S$1.BOTTOM_LEFT]
+	              }[e][Math.sign(x)],
+	              m = o + (g.startsWith("b") ? 1 : 0),
+	              O = s + (g.endsWith("r") ? 1 : 0),
+	              _ = `${m}-${O}`;
+	            let j = this._positionControlMap.get(_);
+	            if (!j) {
+	              const t = null !== (d = null === (u = (c = this._styleSetters).control) || void 0 === u ? void 0 : u.call(c, this._createDefaultControl(this.options.themeColor))) && void 0 !== d ? d : this._createDefaultControl(this.options.themeColor);
 	              t.set({
-	                left: u.x,
-	                top: u.y
-	              }), o.add(t), r.push(t), b = {
+	                left: C.x,
+	                top: C.y
+	              }), n.add(t), l.push(t), j = {
 	                majorControl: t,
-	                curve: l,
-	                rowIndex: s,
-	                colIndex: i,
-	                splitDotRowIndex: f,
-	                splitDotColIndex: p,
-	                vertexIndex: c,
-	                vertexType: d,
+	                curve: i,
+	                rowIndex: o,
+	                colIndex: s,
+	                splitDotRowIndex: m,
+	                splitDotColIndex: O,
+	                vertexIndex: x,
+	                vertexType: g,
 	                subControls: []
 	              };
 	            }
-	            if (!b.subControls.find(t => t.attach[0] === l && t.attach[1] === c)) {
-	              const e = this._styleSetters.curveControl(this._createDefaultCurveControl());
+	            if (!j.subControls.find(t => t.attach[0] === i && t.attach[1] === x)) {
+	              const e = null !== (v = null === (p = (f = this._styleSetters).curveControl) || void 0 === p ? void 0 : p.call(f, this._createDefaultCurveControl())) && void 0 !== v ? v : this._createDefaultCurveControl();
 	              e.set({
 	                left: t.x,
 	                top: t.y
 	              });
-	              const s = new A$1([t.x, t.y, u.x, u.y], {
+	              const o = new A$1([t.x, t.y, C.x, C.y], {
 	                stroke: "rgba(200, 200, 200, 0.8)",
 	                strokeWidth: 1,
 	                strokeUniform: !0,
@@ -62127,66 +62120,66 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	                originX: "center",
 	                originY: "center"
 	              });
-	              this._styleSetters.line(s), o.add(s, e), r.push(s, e), b.subControls.push({
-	                attach: [l, c],
+	              null === (y = (b = this._styleSetters).line) || void 0 === y || y.call(b, o), n.add(o, e), l.push(o, e), j.subControls.push({
+	                attach: [i, x],
 	                object: e,
-	                line: s,
-	                index: a
+	                line: o,
+	                index: r
 	              });
 	            }
-	            this._positionControlMap.set(v, b), n.set(b.majorControl, v);
+	            this._positionControlMap.set(_, j), a.set(j.majorControl, _);
 	          });
 	        });
 	      });
-	    }), i(), this._positionControlMap.forEach(e => {
+	    }), c(), this._positionControlMap.forEach(e => {
 	      const {
-	        majorControl: s,
-	        subControls: r
+	        majorControl: o,
+	        subControls: s
 	      } = e;
-	      r.forEach(({
+	      s.forEach(({
 	        attach: [e],
-	        object: o,
+	        object: s,
 	        line: r,
 	        index: n
 	      }) => {
-	        o.on("moving", () => {
-	          const a = t.curvePathMap.get(e),
-	            l = Vs(o, a),
-	            c = e.points[n],
-	            h = l.x - c.x,
-	            u = l.y - c.y;
-	          o.set({
-	            angle: 90 + 180 * Math.atan2(o.top - s.top, o.left - s.left) / Math.PI
+	        s.on("moving", () => {
+	          const i = t.curvePathMap.get(e),
+	            l = Vs(s, i),
+	            a = e.points[n],
+	            h = l.x - a.x,
+	            u = l.y - a.y;
+	          s.set({
+	            angle: 90 + 180 * Math.atan2(s.top - o.top, s.left - o.left) / Math.PI
 	          }).setCoords(), e.points[n].x += h, e.points[n].y += u, r.set({
-	            x1: o.left,
-	            y1: o.top,
-	            x2: s.left,
-	            y2: s.top
-	          }), t.requestRender(!1, i, {
+	            x1: s.left,
+	            y1: s.top,
+	            x2: o.left,
+	            y2: o.top
+	          }), t.requestRender(!1, c, {
 	            skipHistoryRecording: !0
 	          });
 	        });
-	      }), s.on("selected", () => {
-	        o.getActiveObject() === s && r.forEach(({
+	      }), o.on("selected", () => {
+	        n.getActiveObject() === o && s.forEach(({
 	          object: t,
 	          line: e
 	        }) => {
-	          var o;
-	          t.set("visible", !0), e.set("visible", !0), null === (o = s.canvas) || void 0 === o || o.requestRenderAll();
+	          var s;
+	          t.set("visible", !0), e.set("visible", !0), null === (s = o.canvas) || void 0 === s || s.requestRenderAll();
 	        });
-	      }), s.on("deselected", () => {
-	        r.forEach(({
+	      }), o.on("deselected", () => {
+	        s.forEach(({
 	          object: t,
 	          line: e
 	        }) => {
-	          var o;
-	          t.set("visible", !1), e.set("visible", !1), null === (o = s.canvas) || void 0 === o || o.requestRenderAll();
+	          var s;
+	          t.set("visible", !1), e.set("visible", !1), null === (s = o.canvas) || void 0 === s || s.requestRenderAll();
 	        });
-	      }), r.forEach(({
+	      }), s.forEach(({
 	        object: t
 	      }) => {
 	        t.on("selected", () => {
-	          r.forEach(({
+	          s.forEach(({
 	            object: t,
 	            line: e
 	          }) => {
@@ -62194,7 +62187,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	            t.set("visible", !0), e.set("visible", !0), null === (o = t.canvas) || void 0 === o || o.requestRenderAll();
 	          });
 	        }), t.on("deselected", () => {
-	          r.forEach(({
+	          s.forEach(({
 	            object: t,
 	            line: e
 	          }) => {
@@ -62205,43 +62198,43 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      });
 	    });
 	    const {
-	        enableConstraintKey: a,
-	        enableGridSplit: l
+	        enableConstraintKey: h,
+	        enableGridSplit: u
 	      } = this.options,
-	      c = [["NONE" !== a.toUpperCase(), Bs(o, a)], [!0, () => {
+	      d = [["NONE" !== h.toUpperCase(), Bs(n, h)], [!0, () => {
 	        const e = () => {
-	            const e = o.getActiveObjects(),
-	              s = new Set();
+	            const e = n.getActiveObjects(),
+	              o = new Set();
 	            for (const t of e) {
-	              const e = n.get(t);
+	              const e = a.get(t);
 	              if (!e) continue;
-	              this._positionControlMap.get(e) && s.add(t);
+	              this._positionControlMap.get(e) && o.add(t);
 	            }
 	            Array.from(this._positionControlMap.values()).forEach(e => {
-	              if (!s.has(e.majorControl)) return;
+	              if (!o.has(e.majorControl)) return;
 	              const {
-	                  curve: o,
+	                  curve: s,
 	                  majorControl: r,
 	                  rowIndex: n,
 	                  colIndex: i,
-	                  vertexType: a,
-	                  vertexIndex: l,
+	                  vertexType: l,
+	                  vertexIndex: a,
 	                  subControls: c
 	                } = e,
-	                h = t.curvePathMap.get(o),
+	                h = t.curvePathMap.get(s),
 	                u = lt(r.calcTransformMatrix(!1)),
 	                d = {
 	                  left: u.translateX,
 	                  top: u.translateY
 	                },
 	                f = Vs(d, h),
-	                p = o.points[l],
+	                p = s.points[a],
 	                v = new q(p.x - h.pathOffset.x, p.y - h.pathOffset.y).transform(h.calcOwnMatrix()),
 	                b = f.x - p.x,
 	                x = f.y - p.y,
 	                C = d.left - v.x,
 	                m = d.top - v.y;
-	              t.warpvas.updateVertexCoord(n, i, a, f, !1), c.forEach(({
+	              t.warpvas.updateVertexCoord(n, i, l, f, !1), c.forEach(({
 	                attach: t,
 	                object: e,
 	                line: o,
@@ -62257,113 +62250,115 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	                  y2: d.top
 	                });
 	              });
-	            }), s.size && (t.requestRender(!1, i, {
+	            }), o.size && (t.requestRender(!1, c, {
 	              skipHistoryRecording: !0
-	            }), s.clear());
+	            }), o.clear());
 	          },
-	          s = e => {
+	          o = e => {
 	            const o = e.target;
 	            o && "drag" === e.transform.action && ("activeSelection" === o.type && o.getObjects().some(this.controlObjects.includes.bind(this.controlObjects)) || this.controlObjects.includes(o) || this.subControlObjects.includes(o)) && t.record();
 	          };
-	        return o.on("object:moving", e), o.on("object:modified", s), () => {
-	          o.off("object:moving", e), o.off("object:modified", s);
+	        return n.on("object:moving", e), n.on("object:modified", o), () => {
+	          n.off("object:moving", e), n.off("object:modified", o);
 	        };
 	      }], [!0, () => {
 	        const t = () => {
 	          var t;
-	          const e = o.getActiveObjects(),
-	            s = new Set();
+	          const e = n.getActiveObjects(),
+	            o = new Set();
 	          for (const t of e) {
-	            const e = n.get(t);
+	            const e = a.get(t);
 	            if (!e) continue;
-	            this._positionControlMap.get(e) && s.add(t);
+	            this._positionControlMap.get(e) && o.add(t);
 	          }
-	          Array.from(n.keys()).forEach(t => {
+	          Array.from(a.keys()).forEach(t => {
 	            t.set({
+	              opacity: 1
+	            }), this._styleSetters.control || t.set({
 	              opacity: 1,
-	              fill: s.has(t) ? this.options.subThemeColor : this.options.themeColor
+	              fill: o.has(t) ? this.options.subThemeColor : this.options.themeColor
 	            });
-	          }), s.size && (null === (t = o.getActiveObject()) || void 0 === t || t.set({
+	          }), o.size && (null === (t = n.getActiveObject()) || void 0 === t || t.set({
 	            perPixelTargetFind: !0,
 	            hasControls: !1,
 	            hasBorders: !1
-	          }), s.clear()), o.requestRenderAll();
+	          }), o.clear()), n.requestRenderAll();
 	        };
-	        return o.on("selection:created", t), o.on("selection:updated", t), o.on("selection:cleared", t), () => {
-	          o.off("selection:created", t), o.off("selection:updated", t), o.off("selection:cleared", t);
+	        return n.on("selection:created", t), n.on("selection:updated", t), n.on("selection:cleared", t), () => {
+	          n.off("selection:created", t), n.off("selection:updated", t), n.off("selection:cleared", t);
 	        };
-	      }], [l, () => {
+	      }], [u, () => {
 	        let e = null,
-	          s = null,
-	          n = null;
-	        const a = a => {
-	          if (1 !== a.e.buttons) return;
-	          const l = performance.now(),
-	            c = a.target === this._insertControlObject,
-	            h = a.target === t.warpvasObject;
-	          if (a.viewportPoint && this._insertControlObject && (c ? o.selection = !1 : (e = null, s = null, n = null, o.remove(this._insertControlObject)), h)) {
-	            const r = Rs(o, a.viewportPoint),
-	              i = Vs({
-	                left: r.x,
-	                top: r.y
+	          o = null,
+	          s = null;
+	        const r = r => {
+	          if (1 !== r.e.buttons) return;
+	          const i = performance.now(),
+	            a = r.target === this._insertControlObject,
+	            h = r.target === t.warpvasObject;
+	          if (r.viewportPoint && this._insertControlObject && (a ? n.selection = !1 : (e = null, o = null, s = null, n.remove(this._insertControlObject)), h)) {
+	            const i = Rs(n, r.viewportPoint),
+	              l = Vs({
+	                left: i.x,
+	                top: i.y
 	              }, t.paths[0]);
-	            if (n = t.warpvas.getHitInfo(i), n) {
+	            if (s = t.warpvas.getHitInfo(l), s) {
 	              const {
 	                  before: t,
-	                  after: o,
-	                  clickPart: a
-	                } = n,
-	                l = S$1([[o[0], o[1], o[3]], [o[2], o[1], o[3]]][a], [[t[0], t[1], t[3]], [t[2], t[1], t[3]]][a]);
-	              e = r, s = i.transform(ot(l));
+	                  after: r,
+	                  clickPart: n
+	                } = s,
+	                a = I$1([[r[0], r[1], r[3]], [r[2], r[1], r[3]]][n], [[t[0], t[1], t[3]], [t[2], t[1], t[3]]][n]);
+	              e = i, o = l.transform(ot(a));
 	            }
 	          }
 	          const u = e => {
-	              var s;
+	              var o;
 	              if (!e.viewportPoint) return;
-	              if (o.selection) return;
+	              if (n.selection) return;
 	              if (!this._insertControlObject) return;
-	              if (!c) return;
-	              const n = t.warpvas;
-	              if (!n) return;
-	              const a = Rs(o, e.viewportPoint),
-	                l = {
-	                  x: a.x - this._insertControlObject.left,
-	                  y: a.y - this._insertControlObject.top
+	              if (!a) return;
+	              const s = t.warpvas;
+	              if (!s) return;
+	              const r = Rs(n, e.viewportPoint),
+	                i = {
+	                  x: r.x - this._insertControlObject.left,
+	                  y: r.y - this._insertControlObject.top
 	                },
 	                h = new WeakSet([]);
-	              n.forEachRegionBoundCoords((e, o, s, r) => {
+	              s.forEachRegionBoundCoords((e, o, s, r) => {
 	                if (h.has(r)) return r.points;
 	                h.add(r);
 	                const n = t.curvePathMap.get(r),
-	                  i = new q(l.x, l.y).transform(ot(n.calcOwnMatrix()), !0);
-	                return r.points.map(t => (t.x += i.x, t.y += i.y, t));
-	              }), [this._insertControlObject, t.warpvasObject, ...(null !== (s = t.paths) && void 0 !== s ? s : []), ...r].forEach(t => {
+	                  l = new q(i.x, i.y).transform(ot(n.calcOwnMatrix()), !0);
+	                return r.points.map(t => (t.x += l.x, t.y += l.y, t));
+	              }), [this._insertControlObject, t.warpvasObject, ...(null !== (o = t.paths) && void 0 !== o ? o : []), ...l].forEach(t => {
 	                t.set({
-	                  left: t.left + l.x,
-	                  top: t.top + l.y
+	                  left: t.left + i.x,
+	                  top: t.top + i.y
 	                }).setCoords();
-	              }), t.requestRender(!1, i, {
+	              }), t.requestRender(!1, c, {
 	                skipHistoryRecording: !0
 	              });
 	            },
 	            d = r => {
-	              var i;
-	              performance.now() - l < 200 && r.viewportPoint && this._insertControlObject && (c ? (o.remove(this._insertControlObject), null === (i = t.warpvas) || void 0 === i || i.splitRegionByPoint(n.rowIndex, n.colIndex, s), t.render(!0)) : e && (this._insertControlObject.set({
+	              var l;
+	              performance.now() - i < 200 && r.viewportPoint && this._insertControlObject && (a ? (n.remove(this._insertControlObject), null === (l = t.warpvas) || void 0 === l || l.splitRegionByPoint(s.rowIndex, s.colIndex, o), t.render(!0)) : e && (this._insertControlObject.set({
 	                left: e.x,
 	                top: e.y
-	              }).setCoords(), o.add(this._insertControlObject), o.requestRenderAll())), c && t.record(), o.selection = !0, o.off("mouse:up", d), o.off("mouse:move", u);
+	              }).setCoords(), n.add(this._insertControlObject), n.requestRenderAll())), a && t.record(), n.selection = !0, n.off("mouse:up", d), n.off("mouse:move", u);
 	            };
-	          o.on("mouse:move", u), o.on("mouse:up", d);
+	          n.on("mouse:move", u), n.on("mouse:up", d);
 	        };
-	        return o.on("mouse:down", a), () => {
-	          o.off("mouse:down", a);
+	        return n.on("mouse:down", r), () => {
+	          n.off("mouse:down", r);
 	        };
-	      }], [l, () => {
+	      }], [u, () => {
 	        const e = e => {
 	            var o;
 	            const s = [];
 	            for (const t of e) {
-	              const e = n.get(t);
+	              const e = a.get(t);
 	              if (!e) continue;
 	              const o = this._positionControlMap.get(e);
 	              o && s.push(o);
@@ -62373,22 +62368,22 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	              column: t.splitDotColIndex
 	            }))), t.render(!0));
 	          },
-	          s = t => {
+	          o = t => {
 	            if (["Delete", "Backspace"].includes(t.key)) {
-	              const t = o.getActiveObjects();
+	              const t = n.getActiveObjects();
 	              if (!t) return;
 	              e(t);
 	            }
 	          };
-	        return window.addEventListener("keydown", s), () => {
-	          window.removeEventListener("keydown", s);
+	        return window.addEventListener("keydown", o), () => {
+	          window.removeEventListener("keydown", o);
 	        };
 	      }]],
-	      h = c.map(([t, e]) => t && e());
+	      f = d.map(([t, e]) => t && e());
 	    return () => {
-	      h.forEach(t => {
+	      f.forEach(t => {
 	        "function" == typeof t && t();
-	      }), this._insertControlObject && o.remove(this._insertControlObject), o.remove(...r), this._positionControlMap.clear(), n.clear();
+	      }), this._insertControlObject && n.remove(this._insertControlObject), n.remove(...l), this._positionControlMap.clear(), a.clear();
 	    };
 	  }
 	  _createDefaultControl(t) {
@@ -64277,11 +64272,7 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      enableDragResize: !0,
 	      minimumDragThreshold: 50,
 	      enableConstraintKey: "None"
-	    }, this._objectControlMap = new Map([]), this._styleSetters = {
-	      image: () => {},
-	      path: () => {},
-	      control: t => t
-	    }, this.options = pe$1(t, this.options);
+	    }, this._objectControlMap = new Map([]), this.options = pe$1(t, this.options);
 	  }
 	  static execute(t) {
 	    return H(t);
@@ -64302,17 +64293,18 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	      e.forEach((e, i) => {
 	        const s = e;
 	        Object.entries(s).forEach(([e]) => {
-	          const c = s[e],
-	            a = {
+	          var c, a, u;
+	          const l = s[e],
+	            h = {
 	              top: L.TOP_LEFT,
 	              bottom: L.BOTTOM_RIGHT,
 	              right: L.TOP_RIGHT,
 	              left: L.BOTTOM_LEFT
 	            }[e],
-	            u = t.curvePathMap.get(c),
-	            l = c.points.map(t => new q(t.x - u.pathOffset.x, t.y - u.pathOffset.y).transform(u.calcOwnMatrix())),
-	            h = this._styleSetters.control(this._createDefaultControl()),
-	            x = {
+	            x = t.curvePathMap.get(l),
+	            f = l.points.map(t => new q(t.x - x.pathOffset.x, t.y - x.pathOffset.y).transform(x.calcOwnMatrix())),
+	            y = null !== (u = null === (a = (c = this._styleSetters).control) || void 0 === a ? void 0 : a.call(c, this._createDefaultControl())) && void 0 !== u ? u : this._createDefaultControl(),
+	            p = {
 	              first: 0,
 	              last: 3
 	            }[{
@@ -64321,15 +64313,15 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	              bottom: "last",
 	              left: "last"
 	            }[e]];
-	          h.set({
-	            left: l[x].x,
-	            top: l[x].y
-	          }), n.add(h), this._objectControlMap.set(h, {
-	            curve: c,
-	            targetPointIdx: x,
+	          y.set({
+	            left: f[p].x,
+	            top: f[p].y
+	          }), n.add(y), this._objectControlMap.set(y, {
+	            curve: l,
+	            targetPointIdx: p,
 	            rowIndex: r,
 	            colIndex: i,
-	            vertexType: a
+	            vertexType: h
 	          });
 	        });
 	      });

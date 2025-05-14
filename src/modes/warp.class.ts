@@ -202,26 +202,6 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
   };
 
   /**
-   * 样式设置器集合
-   *
-   * 用于自定义扭曲变形模式中各种元素的样式：
-   * - image: 变形后的贴图样式
-   * - path: 网格边界线的样式
-   * - control: 顶点控制点的样式
-   * - curveControl: 曲线控制点的样式
-   * - insertControl: 临时控制点（中间插入点）的样式
-   * - line: 控制点连接线的样式
-   */
-  protected _styleSetters = {
-    image: () => {},
-    path: () => {},
-    control: (control: FabricObject) => control,
-    curveControl: (control: FabricObject) => control,
-    insertControl: (control: FabricObject) => control,
-    line: (line: Line) => {},
-  };
-
-  /**
    * 控制点位置映射表
    *
    * 存储控制点与其位置信息的映射关系：
@@ -391,9 +371,10 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
     const objectControlMap = new Map<FabricObject, string>();
 
     // 插入交互点
-    this._insertControlObject = this._styleSetters.insertControl(
-      this._createDefaultInsertControl(this.options.themeColor),
-    );
+    this._insertControlObject =
+      this._styleSetters.insertControl?.(
+        this._createDefaultInsertControl(this.options.themeColor),
+      ) ?? this._createDefaultInsertControl(this.options.themeColor);
 
     // 更新元素次序（主要控制点在最上层，次要控制点在第二层，连接线在第三层）
     const restoreObjectsOrder = () => {
@@ -454,9 +435,9 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
             // 如果已经存在对应顶点元素则直接复用
             let controlPostionMap = this._positionControlMap.get(positionID);
             if (!controlPostionMap) {
-              const control = this._styleSetters.control(
-                this._createDefaultControl(this.options.themeColor),
-              );
+              const control =
+                this._styleSetters.control?.(this._createDefaultControl(this.options.themeColor)) ??
+                this._createDefaultControl(this.options.themeColor);
               control.set({
                 left: vertexPoint.x,
                 top: vertexPoint.y,
@@ -481,7 +462,9 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
               return item.attach[0] === curve && item.attach[1] === vertexIndex;
             });
             if (!hadCreated) {
-              const subControl = this._styleSetters.curveControl(this._createDefaultCurveControl());
+              const subControl =
+                this._styleSetters.curveControl?.(this._createDefaultCurveControl()) ??
+                this._createDefaultCurveControl();
               subControl.set({
                 left: point.x,
                 top: point.y,
@@ -498,7 +481,7 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
                 originX: 'center',
                 originY: 'center',
               });
-              this._styleSetters.line(line);
+              this._styleSetters.line?.(line);
               fabricCanvas.add(line, subControl);
               allObjects.push(line, subControl);
               controlPostionMap.subControls.push({
@@ -859,10 +842,15 @@ class Warp extends BaseMode<WarpObjects, WarpOptions> {
         Array.from(objectControlMap.keys()).forEach((object) => {
           object.set({
             opacity: 1,
-            fill: selectControlObjects.has(object)
-              ? this.options.subThemeColor
-              : this.options.themeColor,
           });
+          if (!this._styleSetters.control) {
+            object.set({
+              opacity: 1,
+              fill: selectControlObjects.has(object)
+                ? this.options.subThemeColor
+                : this.options.themeColor,
+            });
+          }
         });
 
         if (selectControlObjects.size) {

@@ -155,20 +155,6 @@ class Perspective extends BaseMode<
   >([]);
 
   /**
-   * 样式设置器集合
-   *
-   * 用于自定义透视变形模式中各种元素的样式：
-   * - image: 变形后的贴图样式
-   * - path: 网格边界线的样式
-   * - control: 配置对角控制点的样式
-   */
-  protected _styleSetters = {
-    image: () => {},
-    path: () => {},
-    control: (control: FabricObject) => control,
-  };
-
-  /**
    * 创建透视变形模式实例
    *
    * 初始化一个透视变形模式。
@@ -289,7 +275,9 @@ class Perspective extends BaseMode<
           );
 
           // 控制点
-          const control = this._styleSetters.control(this._createDefaultControl());
+          const control =
+            this._styleSetters.control?.(this._createDefaultControl()) ??
+            this._createDefaultControl();
           const dotPosition = (
             {
               top: 'first',

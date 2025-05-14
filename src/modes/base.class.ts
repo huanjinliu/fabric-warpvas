@@ -36,14 +36,14 @@ export type BaseStyleSetters<T = Record<string, (...rgs: any[]) => FabricObject>
    *
    * @param image - fabric.Image 实例，代表变形对象，无论是什么 Fabric 对象，在进入变形后操作对象都是 fabric.Image 实例
    */
-  image: (image: FabricImage) => void;
+  image?: (image: FabricImage) => void;
 
   /**
    * 配置网格边界线的样式
    *
    * @param path - fabric.Path 实例，代表网格的边界线
    */
-  path: (path: Path) => void;
+  path?: (path: Path) => void;
 };
 
 /**
@@ -112,10 +112,7 @@ class BaseMode<Objects, Options> extends AbstractMode {
    *
    * @see registerStyleSetter 了解如何通过 API 设置自定义样式
    */
-  protected _styleSetters = {
-    image: () => {},
-    path: () => {},
-  } as BaseStyleSetters<Objects>;
+  protected _styleSetters: BaseStyleSetters<Partial<Objects>> = {};
 
   /**
    * 创建变形模式实例
@@ -215,7 +212,7 @@ class BaseMode<Objects, Options> extends AbstractMode {
     if (!warpvasObject || !warpvas) return;
 
     // 配置变形图像样式并添加到画布上
-    this._styleSetters.image(warpvasObject);
+    this._styleSetters.image?.(warpvasObject);
     fabricCanvas.add(warpvasObject);
 
     // 添加网格路径对象列表
@@ -238,7 +235,7 @@ class BaseMode<Objects, Options> extends AbstractMode {
             originX: 'center',
             originY: 'center',
           });
-          this._styleSetters.path(path);
+          this._styleSetters.path?.(path);
           // 重置回原路径中心，避免轮廓宽度使路径发生偏移
           path.setPositionByOrigin(originCenterPoint, 'center', 'center');
         } else {
