@@ -17,15 +17,15 @@ hljs.registerLanguage('typescript', typescript);
 export const DEFAULT_PLACEHOLDER = './resources/images/block.png';
 
 export const DocsContext = createContext<{
-  placeholder: HTMLImageElement | undefined;
-  setPlaceholder: React.Dispatch<React.SetStateAction<HTMLImageElement | undefined>>;
+  placeholder: HTMLImageElement | null;
+  setPlaceholder: React.Dispatch<React.SetStateAction<HTMLImageElement | null>>;
 }>({
-  placeholder: undefined,
+  placeholder: null,
   setPlaceholder: () => {},
 });
 
 const Docs = () => {
-  const [placeholder, setPlaceholder] = useState<HTMLImageElement>();
+  const [placeholder, setPlaceholder] = useState<HTMLImageElement | null>(null);
   const [outlineVisible, setOutlineVisible] = useState<boolean>(false);
 
   const location = useLocation();

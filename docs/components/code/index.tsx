@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import classnames from 'classnames';
 import styles from './style.less';
 import hljs from 'highlight.js';
@@ -126,4 +126,4 @@ const Code: React.FC<CodeProps> = ({
   );
 };
 
-export default Code;
+export default memo(Code);
