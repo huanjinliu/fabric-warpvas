@@ -3,7 +3,7 @@
 [English](README.md) | [中文](README.cn.md)
 
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
-![Version](https://img.shields.io/badge/version-1.0.3-green.svg)
+![Version](https://img.shields.io/badge/version-1.1.0-green.svg)
 
 ### 项目介绍
 
