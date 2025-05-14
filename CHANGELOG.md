@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/huanjinliu/fabric-warpvas/compare/v1.1.0...v1.1.1) (2025-05-14)
+
+
+### Bug Fixes
+
+* **mode:** 修复变形模式自定义样式收到主题色影响 ([8f8a848](https://github.com/huanjinliu/fabric-warpvas/commit/8f8a848805f6212a5057797c4a59042a04436228))
+
 ## [1.1.0](https://github.com/huanjinliu/fabric-warpvas/compare/v1.0.3...v1.1.0) (2025-05-14)
 
 ### 1.0.3 (2025-05-14)
