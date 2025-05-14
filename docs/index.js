@@ -44216,8 +44216,8 @@ Please change the parent <Route path="${parentPath}"> to <Route path="${parentPa
 	            React.createElement(Markdown$1, { path: "./api/index/classes/FabricWarpvas.md" }),
 	            React.createElement(Markdown$1, { path: "./api/index/classes/AbstractMode.md" }),
 	            React.createElement(Divide, { id: "inbuilt-modes-class", title: "\u53D8\u5F62\u6A21\u5F0F\u7C7B" }),
-	            React.createElement(Markdown$1, { path: "./api/modes/classes/Perspective.md" }),
-	            React.createElement(Markdown$1, { path: "./api/modes/classes/Warp.md" }))));
+	            React.createElement(Markdown$1, { path: "./api/index/classes/Perspective.md" }),
+	            React.createElement(Markdown$1, { path: "./api/index/classes/Warp.md" }))));
 	};
 
 	function e$3(t, e, r) {

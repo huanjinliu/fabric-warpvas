@@ -15,9 +15,13 @@ import {
 import type { Bezier } from 'bezier-js';
 import { Warpvas, utils } from 'warpvas';
 import defaults from 'lodash-es/defaults';
-import type { FabricWarpvas } from '../fabric-warpvas.class';
+import type { FabricWarpvas } from '../core/fabric-warpvas.class';
 import BaseMode, { BaseOptions, SUB_THEME_COLOR, THEME_COLOR } from './base.class';
-import { calcFabricRelativeCoord, calcFabricCanvasCoord, registerLimitMoveEvent } from '@utils';
+import {
+  calcFabricRelativeCoord,
+  calcFabricCanvasCoord,
+  registerLimitMoveEvent,
+} from '../core/utils';
 
 const { calcMatrix } = utils;
 

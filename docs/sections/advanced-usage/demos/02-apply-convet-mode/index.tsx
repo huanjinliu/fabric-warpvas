@@ -7,7 +7,7 @@ import Warp from 'fabric-warpvas/modes/warp';
 import { Canvas, Code, TextSlider, TextSwitch } from 'docs/components';
 import type { CanvasHandlers } from 'docs/components/canvas';
 import { DocsContext } from 'docs/docs';
-import { calcFabricCanvasCoord, calcFabricRelativeCoord } from '@utils';
+import { calcFabricCanvasCoord, calcFabricRelativeCoord } from 'src/core/utils';
 import styles from './style.less';
 
 const { calcCoordDistance, calcRelativeCoord } = utils;

@@ -2,33 +2,36 @@
 
 ***
 
-# Class: Perspective
+# Class: Warp
 
-透视变形模式
+扭曲变形模式类
 
-提供图像的透视变形功能，通过四个对角控制点实现自由透视效果。
+提供图像的扭曲变形功能。
 
 交互说明：
-1. 拖动控制点实现透视的变换（PS：形成三角形后无法进一步透视变换）
-2. 空白区域持续拖拽形成整体变形（当 enableDragResize 为 true 时生效）
-3. 按住设置按键限制控制点拖动只向水平或垂直方向移动（当 enableConstraintKey 设置为具体按键时生效）
+1. 拖动交互点实现扭曲点的变换，支持框选
+2. 点击内部区域，会出现临时交互点
+3. 拖动临时交互点实现整体移动
+4. 点击临时交互点实现变形区域分割
+5. 选中交互点后点击Delete实现扭曲点的删除（PS：四个原始对角交互点无法被删除）
+6. 按住设置按键限制控制点拖动只向水平或垂直方向移动（当 enableConstraintKey 设置为具体按键时生效）
 
 ## Example
 
 ```typescript
 import { fabric } from 'fabric';
 import { FabricWarpvas } from 'fabric-warpvas';
-import Perspective from 'fabric-warpvas/modes/perspective';
+import Warp from 'fabric-warpvas/modes/warp';
 
 // 创建 fabricWarpvas 实例
 const canvas = new fabric.Canvas('canvas');
 const fabricWarpvas = new FabricWarpvas(canvas);
 
-// 创建透视模式
-const perspective = new Perspective({ themeColor: '#FF0000' });  // 交互元素使用红色主题色
+// 创建扭曲模式
+const warp = new Warp({ themeColor: '#FF0000' });  // 交互元素使用红色主题色
 
 // 自定义模式中的控制点样式
-perspective.registerStyleSetter('control', (control) => {
+warp.registerStyleSetter('control', (control) => {
     control.set({
       radius: 10,
       fill: 'blue',
@@ -38,46 +41,51 @@ perspective.registerStyleSetter('control', (control) => {
 });
 
 // 进入变形态
-fabricWarpvas.enterEditing(image, null, perspective);
+fabricWarpvas.enterEditing(image, null, warp);
 ```
 
 ## Remarks
 
-使用注意：四个对角控制点形成三角形后无法进一步拖拽，这会导致无效的透视效果
+原始对象默认保持可见，需要手动隐藏
+
+## See
+
+- BaseMode 变形模式基类
+- [FabricWarpvas](FabricWarpvas.md) 主要功能类
 
 ## Extends
 
-- `BaseMode`\<\{ `control`: (`object`) => `FabricObject`; \}, `PerspectiveOptions`\>
+- `BaseMode`\<`WarpObjects`, `WarpOptions`\>
 
 ## Constructors
 
-### new Perspective()
+### new Warp()
 
-> **new Perspective**(`options`): [`Perspective`](Perspective.md)
+> **new Warp**(`options`): [`Warp`](Warp.md)
 
-创建透视变形模式实例
+创建扭曲变形模式实例
 
-初始化一个透视变形模式。
+初始化一个新的扭曲变形模式。
 
 #### Parameters
 
 ##### options
 
-`Partial`\<`PerspectiveOptions`\> = `{}`
+`Partial`\<`WarpOptions`\> = `{}`
 
 #### Returns
 
-[`Perspective`](Perspective.md)
+[`Warp`](Warp.md)
 
 #### Overrides
 
-`BaseMode< { /** * 配置对角控制点样式回调 * @param object - 默认的控制点对象 * @returns 作为控制点对象的fabric元素对象，可使用默认对象以外的新对象 */ control: (object: FabricObject) => FabricObject; }, PerspectiveOptions >.constructor`
+`BaseMode<WarpObjects, WarpOptions>.constructor`
 
 ## Properties
 
 ### name
 
-> **name**: `string` = `'perspective'`
+> **name**: `string` = `'warp'`
 
 变形模式的唯一标识名称
 
@@ -89,7 +97,7 @@ fabricWarpvas.enterEditing(image, null, perspective);
 
 ### options
 
-> **options**: `Required`\<`PerspectiveOptions`\>
+> **options**: `Required`\<`WarpOptions`\>
 
 模式配置
 
@@ -105,30 +113,74 @@ fabricWarpvas.enterEditing(image, null, perspective);
 
 > **get** **controlObjects**(): `FabricObject`\<`Partial`\<`FabricObjectProps`\>, `SerializedObjectProps`, `ObjectEvents`\>[]
 
-获取当前所有的控制点对象
+获取所有顶点控制点
 
-返回当前透视变形模式中的所有控制点对象。
-
-##### Example
-
-```typescript
-// 1.隐藏所有控制点
-perspective.controlObjects.forEach(control => {
-  control.set({ visible: false });
-});
-canvas.renderAll();
-
-// 2.将所有控制点移到最上层
-perspective.controlObjects.forEach(control => {
-  canvas.bringObjectToFront(control);
-});
-```
+返回所有用于控制贴图顶点的主控制点对象列表。
+这些控制点位于贴图的四个角和边缘分割点位置。
 
 ##### Returns
 
 `FabricObject`\<`Partial`\<`FabricObjectProps`\>, `SerializedObjectProps`, `ObjectEvents`\>[]
 
-返回所有控制点对象的数组
+顶点控制点对象数组
+
+***
+
+### insertControlObject
+
+#### Get Signature
+
+> **get** **insertControlObject**(): `null` \| `FabricObject`\<`Partial`\<`FabricObjectProps`\>, `SerializedObjectProps`, `ObjectEvents`\>
+
+获取当前激活的插入控制点
+
+返回当前正在交互的插入点对象。
+当用户点击贴图内部时会创建此控制点，
+用户可以通过点击它来在该位置添加新的分割点。
+
+##### Returns
+
+`null` \| `FabricObject`\<`Partial`\<`FabricObjectProps`\>, `SerializedObjectProps`, `ObjectEvents`\>
+
+插入控制点对象，如果不存在则返回 null
+
+***
+
+### lineObjects
+
+#### Get Signature
+
+> **get** **lineObjects**(): `Line`\<`Partial`\<`FabricObjectProps`\>, `SerializedLineProps`, `ObjectEvents`\>[]
+
+获取所有控制点连接线
+
+返回所有连接主控制点和曲线控制点的线段对象列表。
+这些线段用于可视化控制点之间的关系。
+
+##### Returns
+
+`Line`\<`Partial`\<`FabricObjectProps`\>, `SerializedLineProps`, `ObjectEvents`\>[]
+
+连接线对象数组
+
+***
+
+### subControlObjects
+
+#### Get Signature
+
+> **get** **subControlObjects**(): `FabricObject`\<`Partial`\<`FabricObjectProps`\>, `SerializedObjectProps`, `ObjectEvents`\>[]
+
+获取所有曲线控制点
+
+返回所有用于调整曲线形状的次要控制点对象列表。
+这些控制点位于边缘曲线的中间位置，用于调整曲线的弯曲程度。
+
+##### Returns
+
+`FabricObject`\<`Partial`\<`FabricObjectProps`\>, `SerializedObjectProps`, `ObjectEvents`\>[]
+
+曲线控制点对象数组
 
 ## Methods
 
@@ -136,13 +188,13 @@ perspective.controlObjects.forEach(control => {
 
 > **dirtyRender**(`fabricWarpvas`): `undefined` \| () => `void`
 
-在脏渲染后执行的钩子，用于渲染透视变形的交互元素
+在脏渲染后执行的钩子，用于渲染变形的交互元素
 
 #### Parameters
 
 ##### fabricWarpvas
 
-[`FabricWarpvas`](../../index/classes/FabricWarpvas.md)
+[`FabricWarpvas`](FabricWarpvas.md)
 
 FabricWarpvas 实例，提供操作接口
 
@@ -150,21 +202,17 @@ FabricWarpvas 实例，提供操作接口
 
 `undefined` \| () => `void`
 
-返回清理函数，用于移除所有控制点和事件监听器
+清理函数，用于移除所有控制元素和事件监听
 
 #### Example
 
 ```typescript
 // 进入交互会自动调用
-const cleanup = perspective.dirtyRender(fabricWarpvas);
+const cleanup = warp.dirtyRender(fabricWarpvas);
 
 // 退出交互时清理
 cleanup();
 ```
-
-#### Remarks
-
-无效的透视变形会自动回退到上一个有效状态
 
 #### Overrides
 
@@ -176,9 +224,9 @@ cleanup();
 
 > **execute**(`warpvas`): `Coord`[][][]
 
-执行透视变形计算
+执行扭曲变形计算
 
-代理方法，调用静态方法 [Perspective.execute](Perspective.md#execute-2) 进行实际的透视变形计算。
+代理方法，调用静态方法 [Warp.execute](Warp.md#execute-2) 进行实际的扭曲变形计算。
 
 #### Parameters
 
@@ -186,7 +234,7 @@ cleanup();
 
 `Warpvas`
 
-需要进行透视变形的贴图对象
+需要进行扭曲变形的贴图对象
 
 #### Returns
 
@@ -196,7 +244,7 @@ cleanup();
 
 #### See
 
-[Perspective.execute](Perspective.md#execute-2) 具体实现细节
+[Warp.execute](Warp.md#execute-2) 具体实现细节
 
 #### Overrides
 
@@ -212,7 +260,7 @@ cleanup();
 
 #### Type Parameters
 
-• **K** *extends* `"control"`
+• **K** *extends* keyof `WarpObjects`
 
 样式设置器的标签类型，必须是 T 中定义的键之一
 
@@ -226,7 +274,7 @@ cleanup();
 
 ##### setter
 
-`object`\[`K`\]
+`WarpObjects`\[`K`\]
 
 样式设置器的回调函数，用于设置元素的样式
 
@@ -267,7 +315,7 @@ mode.registerStyleSetter('image', (image) => {
 
 ##### fabricWarpvas
 
-[`FabricWarpvas`](../../index/classes/FabricWarpvas.md)
+[`FabricWarpvas`](FabricWarpvas.md)
 
 Fabric 变形工具实例，包含画布和变形状态
 
@@ -313,9 +361,12 @@ class CustomMode extends BaseMode {
 
 > `static` **execute**(`warpvas`): `Coord`[][][]
 
-计算透视变形的网格分割点
+计算贴图的分割点坐标
 
-该方法实现了透视变形的核心算法，依赖于 warpvas-perspective 库。
+根据贴图的网格曲线计算分割点的位置坐标。该方法会：
+1. 遍历所有网格单元
+2. 计算横向和纵向曲线的交点
+3. 生成用于变形的控制点网格
 
 #### Parameters
 
@@ -323,22 +374,13 @@ class CustomMode extends BaseMode {
 
 `Warpvas`
 
-需要进行透视变形的贴图对象
+需要进行变形的贴图对象
 
 #### Returns
 
 `Coord`[][][]
 
-返回三维数组，表示网格的分割点坐标：
+返回三维数组：
 - 第一维：行索引
 - 第二维：列索引
-- 第三维：点的坐标 {x, y}
-
-#### Throws
-
-当四个顶点形成无效的透视形状时抛出错误
-
-#### Remarks
-
-1. 顶点的移动范围会受到透视有效性的限制
-2. 当线条平行时会使用默认点代替交点
+- 第三维：分割点坐标 {x, y}

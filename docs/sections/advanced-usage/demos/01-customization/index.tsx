@@ -8,7 +8,7 @@ import { Canvas } from 'docs/components';
 import type { CanvasHandlers } from 'docs/components/canvas';
 import { DocsContext } from 'docs/docs';
 import styles from './style.less';
-import { calcFabricCanvasCoord, calcFabricRelativeCoord } from '@utils';
+import { calcFabricCanvasCoord, calcFabricRelativeCoord } from 'src/core/utils';
 const { calcCoordDistance, calcRelativeCoord } = utils;
 
 export class ConvexMode extends AbstractMode {

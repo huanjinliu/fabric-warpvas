@@ -14,20 +14,12 @@ import replace from '@rollup/plugin-replace';
 import postcss from 'rollup-plugin-postcss';
 import { visualizer } from 'rollup-plugin-visualizer';
 import postcssLess from 'postcss-less';
+import { defineConfig } from 'rollup';
 
 const build = () => {
-  const config = {
-    input: 'src/index.ts',
+  const config = defineConfig({
+    input: 'src/core/index.ts',
     output: [
-      {
-        file: 'dist/index.min.js',
-        format: 'umd',
-        sourcemap: true,
-        name: 'fabricWarpvas',
-        globals: {
-          fabric: 'fabric',
-        },
-      },
       {
         file: 'dist/index.esm.js',
         format: 'es',
@@ -55,7 +47,7 @@ const build = () => {
       if (warning.code === 'CIRCULAR_DEPENDENCY') return;
       warn(warning);
     },
-  };
+  });
   if (process.env.NODE_ENV === 'production' && !process.env.ROLLUP_WATCH) {
     config.plugins.push(visualizer());
   }
@@ -72,7 +64,7 @@ const build_modes = () => {
     }
     return map;
   }, {});
-  return {
+  return defineConfig({
     input: inputs,
     output: [
       {
@@ -83,16 +75,6 @@ const build_modes = () => {
           return `${name}.esm.js`;
         },
         sourcemap: true,
-      },
-      {
-        dir: 'modes',
-        format: 'cjs',
-        entryFileNames: (chunkInfo) => {
-          const name = chunkInfo.name.replace('.class.ts', '');
-          return `${name}.js`;
-        },
-        sourcemap: true,
-        exports: 'named',
       },
     ],
     external: ['fabric'],
@@ -117,11 +99,52 @@ const build_modes = () => {
       if (warning.code === 'CIRCULAR_DEPENDENCY') return;
       warn(warning);
     },
-  };
+  });
+};
+
+const build_umd = () => {
+  const config = defineConfig({
+    input: 'src/index.ts',
+    output: [
+      {
+        file: 'dist/index.min.js',
+        format: 'umd',
+        sourcemap: true,
+        name: 'fabricWarpvas',
+        globals: {
+          fabric: 'fabric',
+        },
+      },
+    ],
+    external: ['fabric'],
+    plugins: [
+      resolve(),
+      commonjs(),
+      json(),
+      typescript({
+        exclude: ['docs/**/*', 'jest.config.ts'],
+      }),
+      babel({
+        babelHelpers: 'bundled',
+      }),
+      cleanup({
+        comments: 'none',
+      }),
+      terser(),
+    ],
+    onwarn: (warning, warn) => {
+      if (warning.code === 'CIRCULAR_DEPENDENCY') return;
+      warn(warning);
+    },
+  });
+  if (process.env.NODE_ENV === 'production' && !process.env.ROLLUP_WATCH) {
+    config.plugins.push(visualizer());
+  }
+  return config;
 };
 
 const build_serve = () => {
-  const config = {
+  const config = defineConfig({
     input: 'docs/index.tsx',
     output: [
       {
@@ -165,7 +188,7 @@ const build_serve = () => {
       if (warning.code === 'CIRCULAR_DEPENDENCY') return;
       warn(warning);
     },
-  };
+  });
   if (process.env.ROLLUP_WATCH) {
     config.plugins.push(
       serve({
@@ -185,6 +208,7 @@ const build_serve = () => {
 const configs = {
   base: build(),
   theme: build_modes(),
+  umd: build_umd(),
   serve: process.env.NODE_ENV === 'development' ? build_serve() : undefined,
 };
 

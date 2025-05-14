@@ -10,9 +10,13 @@ import type { Bezier } from 'bezier-js';
 import type { Warpvas } from 'warpvas';
 import perspective from 'warpvas-perspective';
 import defaults from 'lodash-es/defaults';
-import type { FabricWarpvas } from '../fabric-warpvas.class';
+import type { FabricWarpvas } from '../core/fabric-warpvas.class';
 import BaseMode, { BaseOptions, SUB_THEME_COLOR, THEME_COLOR } from './base.class';
-import { calcFabricCanvasCoord, calcFabricRelativeCoord, registerLimitMoveEvent } from '@utils';
+import {
+  calcFabricCanvasCoord,
+  calcFabricRelativeCoord,
+  registerLimitMoveEvent,
+} from '../core/utils';
 
 /**
  * 变形区域的顶点类型枚举

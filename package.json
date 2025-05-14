@@ -22,18 +22,17 @@
   },
   "homepage": "https://huanjinliu.github.io/fabric-warpvas",
   "main": "dist/index.min.js",
+  "browser": "dist/index.min.js",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
-      "import": "./dist/index.esm.js",
-      "require": "./dist/index.min.js"
+      "import": "./dist/index.esm.js"
     },
     "./modes/*": {
       "types": "./dist/modes/*.class.d.ts",
-      "import": "./modes/*.esm.js",
-      "require": "./modes/*.js"
+      "import": "./modes/*.esm.js"
     }
   },
   "scripts": {

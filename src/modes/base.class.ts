@@ -2,8 +2,8 @@ import type { FabricImage, FabricObject, Path } from 'fabric';
 import type { Bezier } from 'bezier-js';
 import { Warpvas } from 'warpvas';
 import defaults from 'lodash-es/defaults';
-import type { FabricWarpvas } from '../fabric-warpvas.class';
-import { AbstractMode } from '../abstract-mode.class';
+import type { FabricWarpvas } from '../core/fabric-warpvas.class';
+import { AbstractMode } from '../core/abstract-mode.class';
 
 /**
  * 默认主题色
