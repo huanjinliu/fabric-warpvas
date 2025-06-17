@@ -8,6 +8,7 @@ import {
 } from 'fabric/es';
 import type { Bezier } from 'bezier-js';
 import type { Warpvas } from 'warpvas';
+import { utils } from 'warpvas';
 import perspective from 'warpvas-perspective';
 import defaults from 'lodash-es/defaults';
 import type { FabricWarpvas } from '../core/fabric-warpvas.class';
@@ -310,6 +311,12 @@ class Perspective extends BaseMode<
       const handleMovingControl = (
         e: BasicTransformEvent<TPointerEvent> & {
           target: FabricObject;
+          transform: {
+            original: {
+              left: number;
+              top: number;
+            };
+          };
         },
       ) => {
         if (!e.target) return;
@@ -323,14 +330,60 @@ class Perspective extends BaseMode<
         const pathMatrix = path.calcOwnMatrix();
         const point = calcFabricRelativeCoord(object, path);
 
-        // 记录旧的位置，如果无效变换则复原原位置
-        const cachePoint = { ...curve.points[targetPointIdx] };
         try {
           fabricWarpvas.warpvas!.updateVertexCoord(rowIndex, colIndex, vertexType, point);
           fabricWarpvas.render(false, { skipHistoryRecording: true });
         } catch {
-          // 复原点的位置
-          fabricWarpvas.warpvas!.updateVertexCoord(rowIndex, colIndex, vertexType, cachePoint);
+          // 目标位置
+          const targetPosition = { x: object.left, y: object.top };
+          // 原始位置
+          const originPosition = { x: e.transform.original.left, y: e.transform.original.top };
+          // 目标位置与原始位置的距离
+          const targetOriginDistance = utils.calcCoordDistance(targetPosition, originPosition);
+
+          // 计算与其余三个边角形成线的交点
+          const otherCorners = this.controlObjects.filter((item) => item !== object);
+          const otherEdgeIntersections = otherCorners
+            .map((edge, index, arr) => {
+              const edge1 = edge;
+              const edge2 = arr[(index + 1) % arr.length];
+              const line1 = [
+                { x: edge1.left, y: edge1.top },
+                { x: edge2.left, y: edge2.top },
+              ];
+              const line2 = [targetPosition, originPosition];
+
+              const intersection = utils.calcIntersection(line1[0], line1[1], line2[0], line2[1]);
+              if (!intersection) return;
+
+              if (
+                utils.calcCoordDistance(intersection, originPosition) > targetOriginDistance ||
+                utils.calcCoordDistance(intersection, targetPosition) > targetOriginDistance
+              )
+                return;
+
+              return intersection;
+            })
+            .filter(Boolean);
+
+          // 取离原始点最近的交点
+          otherEdgeIntersections.sort(
+            (a, b) =>
+              utils.calcCoordDistance(originPosition, a!) -
+              utils.calcCoordDistance(originPosition, b!),
+          );
+          const nearestIntersection = otherEdgeIntersections[0]!;
+
+          // 由于刚好是交点会导致透视无法生成，所以需要往原始点偏移部分像素（默认1）
+          const coord = utils.calcRelativeCoord(nearestIntersection, originPosition, 1);
+
+          // 限制位置
+          fabricWarpvas.warpvas!.updateVertexCoord(
+            rowIndex,
+            colIndex,
+            vertexType,
+            calcFabricRelativeCoord({ left: coord.x, top: coord.y }, path),
+          );
           fabricWarpvas.render(false, { skipHistoryRecording: true });
           const points = curve.points.map((point) =>
             new Point(point.x - path.pathOffset.x, point.y - path.pathOffset.y).transform(
@@ -362,6 +415,7 @@ class Perspective extends BaseMode<
           fabricWarpvas.record();
         }
       };
+
       fabricCanvas.on('object:moving', handleMovingControl);
       fabricCanvas.on('object:modified', handleSaveTransformRecord);
       return () => {
