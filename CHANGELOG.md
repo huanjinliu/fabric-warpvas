@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/huanjinliu/fabric-warpvas/compare/v1.1.1...v1.2.0) (2025-06-17)
+
+
+### Features
+
+* 优化透视模式的移动限制交互逻辑 ([41a1ab6](https://github.com/huanjinliu/fabric-warpvas/commit/41a1ab6d4f38235334bee4a8b46ea8389ae89e9a))
+
+
+### Bug Fixes
+
+* 移除keepAlive避免图像替换失败 ([050dcda](https://github.com/huanjinliu/fabric-warpvas/commit/050dcda832756b3165ca3e2495518b3ee894cf6a))
+
 ### [1.1.1](https://github.com/huanjinliu/fabric-warpvas/compare/v1.1.0...v1.1.1) (2025-05-14)
 
 
